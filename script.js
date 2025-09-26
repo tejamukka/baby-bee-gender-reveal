@@ -64,6 +64,56 @@ function openInvitation() {
     }, 500);
 }
 
+// Travel locations modal functions
+function showTravelLocations() {
+    const modal = document.getElementById('travel-modal');
+    if (modal) {
+        modal.style.display = 'block';
+        modal.style.opacity = '0';
+        setTimeout(() => {
+            modal.style.opacity = '1';
+        }, 10);
+    }
+}
+
+function closeTravelLocations() {
+    const modal = document.getElementById('travel-modal');
+    if (modal) {
+        modal.style.opacity = '0';
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('travel-modal');
+    if (event.target === modal) {
+        closeTravelLocations();
+    }
+}
+
+// RSVP Attendance Selection
+function selectAttendance(value) {
+    // Remove selected class from all buttons
+    document.querySelectorAll('.attendance-btn').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+    
+    // Add selected class to clicked button
+    const selectedBtn = document.querySelector(`.attendance-${value}`);
+    if (selectedBtn) {
+        selectedBtn.classList.add('selected');
+    }
+    
+    // Set the hidden input value
+    const hiddenInput = document.getElementById('attending');
+    if (hiddenInput) {
+        hiddenInput.value = value;
+    }
+}
+
 // Floating particles removed for now to fix click issues
 
 // Mobile Navigation Toggle
@@ -135,6 +185,13 @@ rsvpForm.addEventListener('submit', function(e) {
 });
 
 function showRSVPSuccess() {
+    // Get the attendance value to show appropriate message
+    const attendingValue = document.getElementById('attending').value;
+    const nameValue = document.getElementById('name').value;
+    
+    // Show funny bee messages based on RSVP response
+    showFunnyBeeMessage(attendingValue, nameValue);
+    
     rsvpForm.style.display = 'none';
     rsvpSuccess.style.display = 'block';
     
@@ -147,6 +204,69 @@ function showRSVPSuccess() {
         rsvpSuccess.style.opacity = '1';
         rsvpSuccess.style.transform = 'translateY(0)';
     }, 100);
+}
+
+// Funny bee messages based on RSVP response
+function showFunnyBeeMessage(attending, name) {
+    const titleElement = document.getElementById('success-title');
+    const messageElement = document.getElementById('success-message');
+    
+    if (attending === 'yes') {
+        const yesMessages = [
+            {
+                title: "You're BEE-lievable! 🐝",
+                message: "We're buzzing with excitement that you'll be joining our hive! Get ready for some sweet celebrations!"
+            },
+            {
+                title: "Honey, you're the BEE's knees! 🍯",
+                message: "Your RSVP has us doing the happy dance! Can't wait to see you at our gender reveal party!"
+            },
+            {
+                title: "You're absolutely BEE-autiful! ✨",
+                message: "Thanks for making our day sweeter than honey! We're counting down the days until we celebrate together!"
+            },
+            {
+                title: "You're the BEE-all and end-all! 🎉",
+                message: "Your positive response has us buzzing with joy! Get ready for the most exciting reveal ever!"
+            },
+            {
+                title: "You're BEE-yond amazing! 🌟",
+                message: "We're so grateful you'll be part of our special day! It's going to be un-BEE-lievably fun!"
+            }
+        ];
+        
+        const randomMessage = yesMessages[Math.floor(Math.random() * yesMessages.length)];
+        titleElement.textContent = randomMessage.title;
+        messageElement.textContent = randomMessage.message;
+        
+    } else {
+        const noMessages = [
+            {
+                title: "We're BEE-reaved but understanding! 😢",
+                message: "We'll miss you at our celebration, but we know you'll be there in spirit! Thanks for letting us know!"
+            },
+            {
+                title: "You're still BEE-loved! 💕",
+                message: "Even though you can't make it, you're still part of our hive! We'll share all the sweet moments with you!"
+            },
+            {
+                title: "You're BEE-yond thoughtful! 🤗",
+                message: "Thanks for taking the time to let us know! We appreciate your honesty and can't wait to celebrate with you another time!"
+            },
+            {
+                title: "You're still the BEE's knees! 🐝",
+                message: "We'll miss you at the party, but we know you're cheering us on from wherever you are! Thanks for being awesome!"
+            },
+            {
+                title: "You're BEE-autiful inside and out! ✨",
+                message: "Even though you can't join us, your support means the world! We'll make sure to share all the buzz with you!"
+            }
+        ];
+        
+        const randomMessage = noMessages[Math.floor(Math.random() * noMessages.length)];
+        titleElement.textContent = randomMessage.title;
+        messageElement.textContent = randomMessage.message;
+    }
 }
 
 // Notification System

@@ -6,6 +6,8 @@
     <title>What Will Baby Bee? - Gender Reveal Party</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- AddEvent Calendar Widget -->
+    <script type="text/javascript" src="https://addevent.com/libs/atc/1.6.1/atc.min.js" async defer></script>
 </head>
 <body>
     <!-- Postcard Opening Animation -->
@@ -14,7 +16,7 @@
             <div class="wax-seal">💌</div>
             <div class="envelope-text">
                 <div class="to-line">To: Our Dearest Friends & Family</div>
-                <div class="from-line">From: Teja & Suppu</div>
+                <div class="from-line">From: Teja & Supraja</div>
                 <div class="click-hint">Click to open</div>
             </div>
         </div>
@@ -27,62 +29,145 @@
             
             <div class="journey-content">
                 <div class="journey-item">
-                    <div class="journey-year">2019</div>
+                    <div class="journey-year">2020</div>
                     <div class="journey-icon">💕</div>
                     <div class="journey-text">
                         <h3>The Beginning</h3>
-                        <p>Our eyes met across the room, and in that moment, we knew our story was just beginning.</p>
-                    </div>
-                </div>
-                
-                <div class="journey-item">
-                    <div class="journey-year">2020</div>
-                    <div class="journey-icon">🏠</div>
-                    <div class="journey-text">
-                        <h3>Building Our Nest</h3>
-                        <p>We moved in together, creating our first home filled with love and dreams.</p>
+                        <p>It all started with a text message, hours of calls, meeting in person, and we got married in May 2021. Our wedding planning through the complexities of peak COVID brought us even closer together.</p>
                     </div>
                 </div>
                 
                 <div class="journey-item">
                     <div class="journey-year">2021</div>
-                    <div class="journey-icon">💍</div>
+                    <div class="journey-icon">💒</div>
                     <div class="journey-text">
-                        <h3>The Proposal</h3>
-                        <p>Under the stars, we said "yes" to forever and began planning our happily ever after.</p>
+                        <h3>Our Wedding Day - May 13th</h3>
+                        <p>The most beautiful day of our lives - we became one in love and commitment, celebrating our union despite the challenges of the pandemic.</p>
                     </div>
                 </div>
                 
                 <div class="journey-item">
                     <div class="journey-year">2022</div>
-                    <div class="journey-icon">💒</div>
+                    <div class="journey-icon">🏠</div>
                     <div class="journey-text">
-                        <h3>Our Wedding Day</h3>
-                        <p>The most beautiful day of our lives - we became one in love and commitment.</p>
+                        <h3>Building Our Dream Home</h3>
+                        <p>It was a lot of hustle, but we landed our dream home at 6565 Scenery Ct. Now it's time to add more dreams to our home with our baby along the way.</p>
                     </div>
                 </div>
                 
-                <div class="journey-item">
-                    <div class="journey-year">2023</div>
+                <div class="journey-item" onclick="showTravelLocations()">
+                    <div class="journey-year">2023-2024</div>
                     <div class="journey-icon">✈️</div>
                     <div class="journey-text">
                         <h3>Adventures Together</h3>
-                        <p>We explored the world hand in hand, creating memories and strengthening our bond.</p>
+                        <p>We traveled like there was no tomorrow, exploring the world hand in hand and creating memories that will last a lifetime. <span class="click-hint-small">Click to see our adventures!</span></p>
                     </div>
                 </div>
                 
                 <div class="journey-item">
-                    <div class="journey-year">2024</div>
+                    <div class="journey-year">2025</div>
                     <div class="journey-icon">🐝</div>
                     <div class="journey-text">
                         <h3>What Will Baby Bee?</h3>
-                        <p>Our greatest adventure yet begins! A tiny heartbeat joins our own.</p>
+                        <p>Our greatest adventure yet begins! A tiny heartbeat joins our own, and we can't wait to discover what our little one will be.</p>
                     </div>
                 </div>
             </div>
             
             <div class="postcard-footer">
                 <button class="open-invitation-btn" onclick="openInvitation()">Open the Invitation</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Travel Locations Modal -->
+    <div id="travel-modal" class="travel-modal">
+        <div class="travel-modal-content">
+            <div class="travel-modal-header">
+                <h2>20 National Parks in 2 Years! 🏔️</h2>
+                <span class="close-travel" onclick="closeTravelLocations()">&times;</span>
+            </div>
+            <div class="travel-locations">
+                <div class="travel-location">
+                    <div class="location-icon">🏔️</div>
+                    <div class="location-name">Yosemite National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🏜️</div>
+                    <div class="location-name">Grand Canyon National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🌲</div>
+                    <div class="location-name">Redwood National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🏔️</div>
+                    <div class="location-name">Sequoia National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🌋</div>
+                    <div class="location-name">Lassen Volcanic National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🏔️</div>
+                    <div class="location-name">Kings Canyon National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🌊</div>
+                    <div class="location-name">Channel Islands National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🏜️</div>
+                    <div class="location-name">Death Valley National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🌲</div>
+                    <div class="location-name">Crater Lake National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🏔️</div>
+                    <div class="location-name">Mount Rainier National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🌲</div>
+                    <div class="location-name">Olympic National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🏔️</div>
+                    <div class="location-name">North Cascades National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🏜️</div>
+                    <div class="location-name">Zion National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🏔️</div>
+                    <div class="location-name">Bryce Canyon National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🏜️</div>
+                    <div class="location-name">Arches National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🏔️</div>
+                    <div class="location-name">Canyonlands National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🏜️</div>
+                    <div class="location-name">Capitol Reef National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🏔️</div>
+                    <div class="location-name">Rocky Mountain National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🌲</div>
+                    <div class="location-name">Great Sand Dunes National Park</div>
+                </div>
+                <div class="travel-location">
+                    <div class="location-icon">🏔️</div>
+                    <div class="location-name">Mesa Verde National Park</div>
+                </div>
             </div>
         </div>
     </div>
@@ -124,8 +209,9 @@
             <h1 class="main-title">What Will Baby Bee?</h1>
             <p class="subtitle">Join us for a Gender Reveal</p>
             <div class="event-details">
-                <p class="date">Saturday, October 25th at 11 AM</p>
-                <p class="location">Teja & Suppu's Hive 🏠</p>
+                <p class="date">Saturday, October 25th starts at 11 AM</p>
+                <p class="location">Teja & Supraja's Hive 🏠</p>
+                <p class="address">6565 Scenery Ct, San Jose, CA 95120</p>
             </div>
             <button class="cta-button" onclick="scrollToSection('rsvp')">Buzz In Your RSVP</button>
         </div>
@@ -133,11 +219,12 @@
 
     <!-- RSVP Section -->
     <section id="rsvp" class="rsvp-section">
+        <div class="rsvp-bee">🐝</div>
         <div class="container">
             <h2 class="section-title">RSVP</h2>
             <p class="section-subtitle">Let us know if you'll be joining our hive!</p>
             
-            <form class="rsvp-form" id="rsvpForm">
+            <form class="rsvp-form" id="rsvpForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
                 <div class="form-group">
                     <label for="name">Your Name *</label>
                     <input type="text" id="name" name="name" required>
@@ -152,29 +239,35 @@
                     <label for="guests">Number of Guests *</label>
                     <select id="guests" name="guests" required>
                         <option value="">Select number of guests</option>
-                        <option value="1">Just me (1)</option>
-                        <option value="2">Me + 1 (2)</option>
-                        <option value="3">Me + 2 (3)</option>
-                        <option value="4">Me + 3 (4)</option>
-                        <option value="5">Me + 4 (5)</option>
+                        <option value="1">🐝 Just me (1)</option>
+                        <option value="2">🐝🐝 Me + 1 (2)</option>
+                        <option value="3">🐝🐝🐝 Me + 2 (3)</option>
+                        <option value="4">🐝🐝🐝🐝 Me + 3 (4)</option>
+                        <option value="5">🐝🐝🐝🐝🐝 Me + 4 (5)</option>
                     </select>
                 </div>
                 
                 <div class="form-group">
                     <label for="attending">Will you be attending? *</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="attending" value="yes" required>
-                            <span class="radio-custom"></span>
-                            Yes, I'll be there! 🐝
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="attending" value="no" required>
-                            <span class="radio-custom"></span>
-                            Sorry, can't make it 😢
-                        </label>
+                    <div class="attendance-buttons">
+                        <button type="button" class="attendance-btn attendance-yes" onclick="selectAttendance('yes')">
+                            <span class="btn-icon">🐝</span>
+                            <span class="btn-text">Yes, I will bee there!</span>
+                            <span class="btn-subtext">Can't wait to celebrate!</span>
+                        </button>
+                        <button type="button" class="attendance-btn attendance-no" onclick="selectAttendance('no')">
+                            <span class="btn-icon">😢</span>
+                            <span class="btn-text">Sorry, can't make it</span>
+                            <span class="btn-subtext">Will be there in spirit!</span>
+                        </button>
                     </div>
+                    <input type="hidden" id="attending" name="attending" required>
                 </div>
+                
+                <!-- Hidden fields for Formspree -->
+                <input type="hidden" name="_subject" value="New RSVP for Baby Bee Gender Reveal!">
+                <input type="hidden" name="_replyto" value="">
+                <input type="hidden" name="_next" value="">
                 
                 <div class="form-group">
                     <label for="message">Special Message (Optional)</label>
@@ -185,9 +278,9 @@
             </form>
             
             <div class="rsvp-success" id="rsvpSuccess" style="display: none;">
-                <div class="success-icon">🎉</div>
-                <h3>Thank you for your RSVP!</h3>
-                <p>We're so excited to celebrate with you!</p>
+                <div class="success-icon">🐝</div>
+                <h3 id="success-title">Thank you for your RSVP!</h3>
+                <p id="success-message">We're so excited to celebrate with you!</p>
             </div>
         </div>
     </section>
@@ -200,46 +293,26 @@
             
             <div class="registry-grid">
                 <div class="registry-item">
-                    <div class="item-image">🛏️</div>
-                    <h3>Nursery Essentials</h3>
-                    <p>Crib, changing table, and nursery decor</p>
-                    <a href="#" class="registry-link">View on Amazon</a>
+                    <div class="item-image">🛒</div>
+                    <h3>Amazon Registry</h3>
+                    <p>Everything from nursery essentials to baby gear</p>
+                    <a href="https://www.amazon.com/baby-reg/teja-supraja" target="_blank" class="registry-link">View on Amazon</a>
+                </div>
+                
+                <div class="registry-item">
+                    <div class="item-image">🎯</div>
+                    <h3>Target Registry</h3>
+                    <p>Baby clothes, feeding supplies, and more</p>
+                    <a href="https://www.target.com/baby-registry/teja-supraja" target="_blank" class="registry-link">View on Target</a>
                 </div>
                 
                 <div class="registry-item">
                     <div class="item-image">👶</div>
-                    <h3>Baby Clothes</h3>
-                    <p>Onesies, sleepers, and adorable outfits</p>
-                    <a href="#" class="registry-link">View on Target</a>
+                    <h3>Babylist Registry</h3>
+                    <p>Curated list of our favorite baby items</p>
+                    <a href="https://www.babylist.com/teja-supraja" target="_blank" class="registry-link">View on Babylist</a>
                 </div>
                 
-                <div class="registry-item">
-                    <div class="item-image">🍼</div>
-                    <h3>Feeding Supplies</h3>
-                    <p>Bottles, bibs, and feeding accessories</p>
-                    <a href="#" class="registry-link">View on BuyBuy Baby</a>
-                </div>
-                
-                <div class="registry-item">
-                    <div class="item-image">🧸</div>
-                    <h3>Toys & Books</h3>
-                    <p>Educational toys and bedtime stories</p>
-                    <a href="#" class="registry-link">View on Etsy</a>
-                </div>
-                
-                <div class="registry-item">
-                    <div class="item-image">🚗</div>
-                    <h3>Travel Gear</h3>
-                    <p>Car seat, stroller, and travel accessories</p>
-                    <a href="#" class="registry-link">View on Amazon</a>
-                </div>
-                
-                <div class="registry-item">
-                    <div class="item-image">🎁</div>
-                    <h3>Gift Cards</h3>
-                    <p>Amazon, Target, or any baby store</p>
-                    <a href="#" class="registry-link">Send Gift Card</a>
-                </div>
             </div>
         </div>
     </section>
@@ -260,9 +333,27 @@
                 <div class="detail-card">
                     <div class="detail-icon">📍</div>
                     <h3>Location</h3>
-                    <p>Teja & Suppu's Hive</p>
-                    <p>123 Honey Lane, Sweet City, SC 12345</p>
-                    <a href="#" class="map-link">Get Directions</a>
+                    <p>Teja & Supraja's Hive</p>
+                    <p>6565 Scenery Ct, San Jose, CA 95120</p>
+                    <a href="https://maps.google.com/maps?q=6565+Scenery+Ct,+San+Jose,+CA+95120" target="_blank" class="map-link">Get Directions</a>
+                </div>
+                
+                <div class="detail-card">
+                    <div class="detail-icon">📅</div>
+                    <h3>Add to Calendar</h3>
+                    <p>Save the date and get reminders!</p>
+                    <!-- AddEvent Button -->
+                    <div title="Add to Calendar" class="addeventatc">
+                        Add to Calendar
+                        <span class="start">10/25/2024 11:00 AM</span>
+                        <span class="end">10/25/2024 02:00 PM</span>
+                        <span class="timezone">America/Los_Angeles</span>
+                        <span class="title">Baby Bee Gender Reveal Party</span>
+                        <span class="description">Join Teja & Supraja for their gender reveal celebration! What will baby bee? 🐝</span>
+                        <span class="location">6565 Scenery Ct, San Jose, CA 95120</span>
+                        <span class="organizer">Teja & Supraja</span>
+                        <span class="organizer_email">tejamukka@gmail.com</span>
+                    </div>
                 </div>
                 
                 <div class="detail-card">
@@ -303,9 +394,9 @@
                 </div>
                 <div class="footer-section">
                     <h4>Contact</h4>
-                    <p>Teja & Suppu</p>
-                    <p>Email: teja.suppu@email.com</p>
-                    <p>Phone: (555) 123-4567</p>
+                    <p>Teja & Supraja</p>
+                    <p>Email: tejamukka@gmail.com</p>
+                    <p>Phone: (682) 408-1746</p>
                 </div>
             </div>
             <div class="footer-bottom">

@@ -1,0 +1,4 @@
+[remote "origin"]
+    url = git@github.com:tejamukka/baby-bee-gender-reveal.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+
