@@ -6,6 +6,17 @@
     <title>What Will Baby Bee? - Gender Reveal Party</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- 
+    IMPORTANT: Replace 'winnie-pooh-decor.jpg' with the actual image from your social media post
+    The image should show your beautiful Winnie the Pooh baby shower setup with:
+    - Soft pink/lavender and peach/blush backdrop panels
+    - Balloon garlands in light pink, peach, and cream
+    - Winnie the Pooh cutout with HUNNY pot
+    - Bees scattered across the panels
+    - "Oh Baby" neon sign
+    - Honeycomb decorations
+    - Sunflowers in a vase
+    -->
     <!-- AddEvent Calendar Widget -->
     <script type="text/javascript" src="https://addevent.com/libs/atc/1.6.1/atc.min.js" async defer></script>
 </head>
@@ -208,6 +219,9 @@
         <div class="hero-content">
             <h1 class="main-title">Oh Baby! What Will Baby Bee? 🍯</h1>
             <p class="subtitle">Join us for a Winnie the Pooh themed Gender Reveal</p>
+            <div class="hunny-pot-reference">
+                <span class="hunny-text">🍯 HUNNY 🍯</span>
+            </div>
             <div class="event-details">
                 <p class="date">Saturday, October 25th starts at 11 AM</p>
                 <p class="location">Teja & Supraja's Hive 🏠</p>
@@ -238,7 +252,7 @@
         <div class="baby-bee-guide">🐝</div>
         <div class="container">
             <div class="rsvp-header">
-                <button class="back-to-story-btn" onclick="scrollToSection('hero')">
+                <button class="back-to-story-btn" onclick="showPostcardStory()">
                     <span class="back-icon">←</span>
                     <span class="back-text">Back to Our Story</span>
                 </button>
@@ -250,14 +264,6 @@
                     <button class="view-submissions-btn" onclick="showRSVPSubmissions()">
                         <span class="submissions-icon">📊</span>
                         <span class="submissions-text">View RSVPs</span>
-                    </button>
-                    <button class="evite-backup-btn" onclick="openEviteBackup()" title="RSVP on Evite (Backup)">
-                        <span class="evite-icon">📧</span>
-                        <span class="evite-text">Evite Backup</span>
-                    </button>
-                    <button class="demo-mode-btn" onclick="toggleDemoMode()" title="Toggle between demo and real mode">
-                        <span class="demo-icon">🧪</span>
-                        <span class="demo-text">Demo Mode</span>
                     </button>
                 </div>
             </div>
@@ -386,28 +392,12 @@
                 <h4>Help us prepare for Baby Bee! 🎁</h4>
                 <p>Check out our registry to help us get ready for our little one's arrival! We're using eco-friendly materials for an unforgettable celebration! 🌱</p>
                     
-                    <div class="success-registry-links">
-                        <a href="https://www.amazon.com/baby-reg/teja-supraja" target="_blank" class="success-registry-link amazon">
+                    <div class="success-registry-single">
+                        <a href="https://www.amazon.com/baby-reg/teja-mukka-january-2026-sanjose/321NAVMSWVSFH?ref_=cm_sw_r_apin_dp_6R40G52KKG1MHT6XXJCB&language=en-US" target="_blank" class="success-registry-link amazon">
                             <div class="registry-icon">🛒</div>
                             <div class="registry-info">
-                                <h5>Amazon</h5>
+                                <h5>Amazon Registry</h5>
                                 <p>Baby essentials & more</p>
-                            </div>
-                        </a>
-                        
-                        <a href="https://www.target.com/baby-registry" target="_blank" class="success-registry-link target">
-                            <div class="registry-icon">🎯</div>
-                            <div class="registry-info">
-                                <h5>Target</h5>
-                                <p>Nursery & baby gear</p>
-                            </div>
-                        </a>
-                        
-                        <a href="https://www.babylist.com" target="_blank" class="success-registry-link babylist">
-                            <div class="registry-icon">👶</div>
-                            <div class="registry-info">
-                                <h5>Babylist</h5>
-                                <p>Everything we need</p>
                             </div>
                         </a>
                     </div>
@@ -440,15 +430,6 @@
                     </div>
                 </div>
                 
-                <div class="evite-backup-section">
-                    <h4>📧 Evite Backup RSVP</h4>
-                    <p>Alternative RSVP method with built-in count tracking</p>
-                    <button class="evite-rsvp-btn" onclick="openEviteBackup()">
-                        <span class="evite-btn-icon">📧</span>
-                        <span class="evite-btn-text">RSVP on Evite</span>
-                    </button>
-                    <p class="evite-note">Use Evite as backup if main RSVP has issues</p>
-                </div>
             </div>
             
             <div class="rsvp-list">
@@ -465,65 +446,6 @@
         </div>
     </div>
 
-    <!-- Edit RSVP Modal -->
-    <div id="editRSVPModal" class="rsvp-modal" style="display: none;">
-        <div class="rsvp-modal-content">
-            <div class="rsvp-modal-header">
-                <h3>Edit RSVP ✏️</h3>
-                <button class="close-modal-btn" onclick="closeEditRSVPModal()">&times;</button>
-            </div>
-            
-            <form id="editRSVPForm" class="edit-rsvp-form">
-                <div class="form-group">
-                    <label for="editName">Name *</label>
-                    <input type="text" id="editName" name="name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="editEmail">Email *</label>
-                    <input type="email" id="editEmail" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="editGuests">Number of Guests *</label>
-                    <select id="editGuests" name="guests" required>
-                        <option value="1">🐝 Just me (1)</option>
-                        <option value="2">🐝🐝 Me + 1 (2)</option>
-                        <option value="3">🐝🐝🐝 Me + 2 (3)</option>
-                        <option value="4">🐝🐝🐝🐝 Me + 3 (4)</option>
-                        <option value="5">🐝🐝🐝🐝🐝 Me + 4 (5)</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="editAttending">Will you be attending? *</label>
-                    <div class="attendance-buttons">
-                        <button type="button" class="attendance-btn attendance-yes" onclick="selectEditAttendance('yes')">
-                            <span class="btn-icon">🐝</span>
-                            <span class="btn-text">Yes, I will bee there!</span>
-                            <span class="btn-subtext">Can't wait to celebrate!</span>
-                        </button>
-                        <button type="button" class="attendance-btn attendance-no" onclick="selectEditAttendance('no')">
-                            <span class="btn-icon">😢</span>
-                            <span class="btn-text">Sorry, can't make it</span>
-                            <span class="btn-subtext">Will be there in spirit!</span>
-                        </button>
-                    </div>
-                    <input type="hidden" id="editAttending" name="attending" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="editMessage">Special Message (Optional)</label>
-                    <textarea id="editMessage" name="message" rows="4" placeholder="Share your excitement or any special notes..."></textarea>
-                </div>
-                
-                <div class="modal-actions">
-                    <button type="button" class="cancel-btn" onclick="closeEditRSVPModal()">Cancel</button>
-                    <button type="submit" class="save-btn">💾 Save Changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <!-- Registry Section -->
     <section id="registry" class="registry-section">
@@ -531,28 +453,13 @@
             <h2 class="section-title">Baby Registry</h2>
             <p class="section-subtitle">Help us prepare our hive for the little one!</p>
             
-            <div class="registry-grid">
-                <div class="registry-item">
+            <div class="registry-single">
+                <div class="registry-item centered">
                     <div class="item-image">🛒</div>
                     <h3>Amazon Registry</h3>
                     <p>Everything from nursery essentials to baby gear</p>
-                    <a href="https://www.amazon.com/baby-reg/teja-supraja" target="_blank" class="registry-link">View on Amazon</a>
+                    <a href="https://www.amazon.com/baby-reg/teja-mukka-january-2026-sanjose/321NAVMSWVSFH?ref_=cm_sw_r_apin_dp_6R40G52KKG1MHT6XXJCB&language=en-US" target="_blank" class="registry-link">View on Amazon</a>
                 </div>
-                
-                <div class="registry-item">
-                    <div class="item-image">🎯</div>
-                    <h3>Target Registry</h3>
-                    <p>Baby clothes, feeding supplies, and more</p>
-                    <a href="https://www.target.com/baby-registry/teja-supraja" target="_blank" class="registry-link">View on Target</a>
-                </div>
-                
-                <div class="registry-item">
-                    <div class="item-image">👶</div>
-                    <h3>Babylist Registry</h3>
-                    <p>Curated list of our favorite baby items</p>
-                    <a href="https://www.babylist.com/teja-supraja" target="_blank" class="registry-link">View on Babylist</a>
-                </div>
-                
             </div>
         </div>
     </section>
