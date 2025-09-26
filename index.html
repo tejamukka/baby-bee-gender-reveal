@@ -8,8 +8,87 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Postcard Opening Animation -->
+    <div id="postcard-overlay" class="postcard-overlay">
+        <div class="envelope" id="envelope" onclick="openPostcard()">
+            <div class="wax-seal">💌</div>
+            <div class="envelope-text">
+                <div class="to-line">To: Our Dearest Friends & Family</div>
+                <div class="from-line">From: Teja & Suppu</div>
+                <div class="click-hint">Click to open</div>
+            </div>
+        </div>
+        
+        <div class="postcard" id="postcard">
+            <div class="postcard-header">
+                <h2 class="postcard-title">Our 5-Year Journey</h2>
+                <div class="decorative-line"></div>
+            </div>
+            
+            <div class="journey-content">
+                <div class="journey-item">
+                    <div class="journey-year">2019</div>
+                    <div class="journey-icon">💕</div>
+                    <div class="journey-text">
+                        <h3>The Beginning</h3>
+                        <p>Our eyes met across the room, and in that moment, we knew our story was just beginning.</p>
+                    </div>
+                </div>
+                
+                <div class="journey-item">
+                    <div class="journey-year">2020</div>
+                    <div class="journey-icon">🏠</div>
+                    <div class="journey-text">
+                        <h3>Building Our Nest</h3>
+                        <p>We moved in together, creating our first home filled with love and dreams.</p>
+                    </div>
+                </div>
+                
+                <div class="journey-item">
+                    <div class="journey-year">2021</div>
+                    <div class="journey-icon">💍</div>
+                    <div class="journey-text">
+                        <h3>The Proposal</h3>
+                        <p>Under the stars, we said "yes" to forever and began planning our happily ever after.</p>
+                    </div>
+                </div>
+                
+                <div class="journey-item">
+                    <div class="journey-year">2022</div>
+                    <div class="journey-icon">💒</div>
+                    <div class="journey-text">
+                        <h3>Our Wedding Day</h3>
+                        <p>The most beautiful day of our lives - we became one in love and commitment.</p>
+                    </div>
+                </div>
+                
+                <div class="journey-item">
+                    <div class="journey-year">2023</div>
+                    <div class="journey-icon">✈️</div>
+                    <div class="journey-text">
+                        <h3>Adventures Together</h3>
+                        <p>We explored the world hand in hand, creating memories and strengthening our bond.</p>
+                    </div>
+                </div>
+                
+                <div class="journey-item">
+                    <div class="journey-year">2024</div>
+                    <div class="journey-icon">🐝</div>
+                    <div class="journey-text">
+                        <h3>What Will Baby Bee?</h3>
+                        <p>Our greatest adventure yet begins! A tiny heartbeat joins our own.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="postcard-footer">
+                <button class="open-invitation-btn" onclick="openInvitation()">Open the Invitation</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" id="main-navbar" style="display: none;">
         <div class="nav-container">
             <div class="nav-logo">🐝 Baby Bee</div>
             <ul class="nav-menu">

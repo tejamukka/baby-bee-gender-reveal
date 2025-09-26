@@ -5,6 +5,358 @@
     box-sizing: border-box;
 }
 
+/* Postcard Opening Animation */
+.postcard-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2c1810 0%, #5d4e37 50%, #8b4513 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    overflow: hidden;
+}
+
+.envelope {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #d4a574 0%, #b8860b 100%);
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    z-index: 10;
+    position: relative;
+}
+
+.envelope:hover {
+    transform: scale(1.05);
+}
+
+.envelope.clicked {
+    transform: scale(0.8);
+    opacity: 0;
+}
+
+.wax-seal {
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, #8b4513 0%, #654321 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    animation: pulse 2s infinite;
+    margin-bottom: 40px;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.envelope-text {
+    text-align: center;
+    color: #2c1810;
+    font-family: 'Dancing Script', cursive;
+}
+
+.to-line {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.from-line {
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+.click-hint {
+    font-size: 22px;
+    font-weight: 400;
+    color: #654321;
+    margin-top: 25px;
+    font-style: italic;
+    opacity: 0.9;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.postcard {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #fef9e7 0%, #fdf2d1 100%);
+    border-radius: 0;
+    box-shadow: none;
+    display: none;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+.postcard.open {
+    display: flex;
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.postcard-header {
+    text-align: center;
+    padding: 20px 40px 15px 40px;
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, rgba(255, 215, 0, 0.1) 100%);
+    border-radius: 0;
+    flex-shrink: 0;
+}
+
+.postcard-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 36px;
+    color: #8b4513;
+    margin-bottom: 10px;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.decorative-line {
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #d4a574, #ffd700, #d4a574);
+    margin: 0 auto 15px auto;
+    border-radius: 2px;
+}
+
+.timeline-subtitle {
+    font-size: 12px;
+    color: #8b4513;
+    font-style: italic;
+    margin: 0;
+    opacity: 0.8;
+}
+
+.journey-content {
+    flex: 1;
+    padding: 30px 40px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.journey-item {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(212, 165, 116, 0.2);
+    backdrop-filter: blur(5px);
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 700px;
+    min-height: 80px;
+}
+
+.journey-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.journey-year {
+    font-family: 'Dancing Script', cursive;
+    font-size: 20px;
+    font-weight: 600;
+    color: #8b4513;
+    min-width: 70px;
+    text-align: center;
+    margin-right: 20px;
+}
+
+.journey-icon {
+    font-size: 28px;
+    margin-right: 20px;
+    min-width: 35px;
+    text-align: center;
+}
+
+.journey-text {
+    flex: 1;
+}
+
+.journey-text h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 22px;
+    color: #8b4513;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.journey-text p {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #5d4e37;
+    margin: 0;
+}
+
+.postcard-footer {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, rgba(255, 215, 0, 0.1) 100%);
+    border-radius: 0;
+    border-top: 2px solid rgba(212, 165, 116, 0.3);
+    flex-shrink: 0;
+}
+
+.open-invitation-btn {
+    background: linear-gradient(135deg, #d4a574 0%, #b8860b 100%);
+    color: white;
+    border: none;
+    padding: 20px 50px;
+    border-radius: 30px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 28px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+}
+
+.open-invitation-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #b8860b 0%, #d4a574 100%);
+}
+
+/* Scrollbar styling for story content */
+.story-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.story-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.story-content::-webkit-scrollbar-thumb {
+    background: #d4a574;
+    border-radius: 3px;
+}
+
+.story-content::-webkit-scrollbar-thumb:hover {
+    background: #b8860b;
+}
+
+/* Enhanced scrollbar for timeline */
+.timeline-wrapper::-webkit-scrollbar {
+    width: 6px;
+}
+
+.timeline-wrapper::-webkit-scrollbar-track {
+    background: rgba(212, 165, 116, 0.1);
+    border-radius: 3px;
+}
+
+.timeline-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #d4a574, #ffd700);
+    border-radius: 3px;
+}
+
+.timeline-wrapper::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #b8860b, #d4a574);
+}
+
+/* Mobile responsiveness for postcard */
+@media (max-width: 768px) {
+    .envelope, .postcard {
+        width: 350px;
+        height: 280px;
+    }
+    
+    .postcard-header {
+        padding: 12px 15px 8px 15px;
+    }
+    
+    .postcard-title {
+        font-size: 24px;
+    }
+    
+    .journey-content {
+        padding: 15px;
+        gap: 12px;
+    }
+    
+    .journey-item {
+        padding: 12px;
+    }
+    
+    .journey-year {
+        font-size: 16px;
+        min-width: 50px;
+        margin-right: 12px;
+    }
+    
+    .journey-icon {
+        font-size: 20px;
+        margin-right: 12px;
+        min-width: 25px;
+    }
+    
+    .journey-text h3 {
+        font-size: 16px;
+    }
+    
+    .journey-text p {
+        font-size: 12px;
+    }
+    
+    .wax-seal {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+    
+    .to-line {
+        font-size: 18px;
+    }
+    
+    .from-line {
+        font-size: 16px;
+    }
+    
+    .click-hint {
+        font-size: 14px;
+    }
+}
+
 body {
     font-family: 'Open Sans', sans-serif;
     line-height: 1.6;

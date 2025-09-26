@@ -1,3 +1,71 @@
+// Postcard Opening Animation
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, setting up postcard');
+    
+    // Simple setup without particles for now
+    const envelope = document.getElementById('envelope');
+    const postcard = document.getElementById('postcard');
+    
+    if (envelope && postcard) {
+        console.log('Postcard elements found');
+    } else {
+        console.log('Postcard elements NOT found');
+        console.log('Envelope:', envelope);
+        console.log('Postcard:', postcard);
+    }
+});
+
+// Simple function to open postcard
+function openPostcard() {
+    console.log('Opening postcard');
+    const envelope = document.getElementById('envelope');
+    const postcard = document.getElementById('postcard');
+    
+    if (!envelope || !postcard) {
+        console.log('Elements not found');
+        return;
+    }
+    
+    // Hide envelope
+    envelope.classList.add('clicked');
+    
+    // Show postcard after a short delay
+    setTimeout(() => {
+        postcard.classList.add('open');
+        console.log('Postcard opened');
+    }, 300);
+}
+
+// Function to open the main invitation
+function openInvitation() {
+    console.log('Opening invitation');
+    const postcardOverlay = document.getElementById('postcard-overlay');
+    const mainNavbar = document.getElementById('main-navbar');
+    
+    if (!postcardOverlay || !mainNavbar) {
+        console.log('Elements not found for invitation opening');
+        return;
+    }
+    
+    // Hide postcard overlay
+    postcardOverlay.style.opacity = '0';
+    postcardOverlay.style.transform = 'scale(0.8)';
+    
+    // Show main navbar and content
+    setTimeout(() => {
+        postcardOverlay.style.display = 'none';
+        mainNavbar.style.display = 'block';
+        
+        // Scroll to top of main content
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }, 500);
+}
+
+// Floating particles removed for now to fix click issues
+
 // Mobile Navigation Toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
