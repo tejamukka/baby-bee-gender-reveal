@@ -206,39 +206,287 @@
         <div class="bee bee-3">🐝</div>
         
         <div class="hero-content">
-            <h1 class="main-title">What Will Baby Bee?</h1>
-            <p class="subtitle">Join us for a Gender Reveal</p>
+            <h1 class="main-title">Oh Baby! What Will Baby Bee? 🍯</h1>
+            <p class="subtitle">Join us for a Winnie the Pooh themed Gender Reveal</p>
             <div class="event-details">
                 <p class="date">Saturday, October 25th starts at 11 AM</p>
                 <p class="location">Teja & Supraja's Hive 🏠</p>
                 <p class="address">6565 Scenery Ct, San Jose, CA 95120</p>
             </div>
-            <button class="cta-button" onclick="scrollToSection('rsvp')">Buzz In Your RSVP</button>
+            
+           <div class="baby-love-story">
+               <div class="story-icon">🍯</div>
+               <p class="story-text">
+                   <span class="story-highlight">"Oh Baby! Although I will be only 5 months old in the womb, I am the sweetest honey from 5 years of love."</span>
+               </p>
+               <p class="story-description">
+                   From that first text message to adventures across 20 national parks, to saying "I do" under the stars—this little one carries every laugh, every challenge overcome, and every dream we've built together.
+               </p>
+               <p class="story-description">
+                   Like Winnie the Pooh's hunny pot, our little bee is the sweetest treasure from our 5-year journey of love, adventure, and unbreakable bonds! 🍯🐝💕
+               </p>
+           </div>
+            
+            <button class="cta-button" id="rsvpButton" onclick="scrollToRSVP()">Join Our Hunny Pot Party! 🍯</button>
         </div>
     </section>
 
     <!-- RSVP Section -->
     <section id="rsvp" class="rsvp-section">
         <div class="rsvp-bee">🐝</div>
+        <div class="mama-bee-guide">🐝</div>
+        <div class="baby-bee-guide">🐝</div>
         <div class="container">
-            <h2 class="section-title">RSVP</h2>
-            <p class="section-subtitle">Let us know if you'll be joining our hive!</p>
+            <div class="rsvp-header">
+                <button class="back-to-story-btn" onclick="scrollToSection('hero')">
+                    <span class="back-icon">←</span>
+                    <span class="back-text">Back to Our Story</span>
+                </button>
+                <div class="rsvp-title-section">
+                    <h2 class="section-title">RSVP to Our Hunny Pot Party! 🍯</h2>
+                    <p class="section-subtitle">Let us know if you'll be joining our Winnie the Pooh celebration!</p>
+                </div>
+                <div class="rsvp-controls">
+                    <button class="view-submissions-btn" onclick="showRSVPSubmissions()">
+                        <span class="submissions-icon">📊</span>
+                        <span class="submissions-text">View RSVPs</span>
+                    </button>
+                    <button class="evite-backup-btn" onclick="openEviteBackup()" title="RSVP on Evite (Backup)">
+                        <span class="evite-icon">📧</span>
+                        <span class="evite-text">Evite Backup</span>
+                    </button>
+                    <button class="demo-mode-btn" onclick="toggleDemoMode()" title="Toggle between demo and real mode">
+                        <span class="demo-icon">🧪</span>
+                        <span class="demo-text">Demo Mode</span>
+                    </button>
+                </div>
+            </div>
             
-            <form class="rsvp-form" id="rsvpForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="rsvp-container">
+                <form class="rsvp-form" id="rsvpForm" action="https://formspree.io/f/xrbyegqe" method="POST">
+                    <div class="form-group">
+                        <label for="name">Your Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="guests">Number of Guests *</label>
+                        <select id="guests" name="guests" required>
+                            <option value="">Select number of guests</option>
+                            <option value="1">🐝 Just me (1)</option>
+                            <option value="2">🐝🐝 Me + 1 (2)</option>
+                            <option value="3">🐝🐝🐝 Me + 2 (3)</option>
+                            <option value="4">🐝🐝🐝🐝 Me + 3 (4)</option>
+                            <option value="5">🐝🐝🐝🐝🐝 Me + 4 (5)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="attending">Will you be attending? *</label>
+                        <div class="attendance-buttons">
+                            <button type="button" class="attendance-btn attendance-yes" onclick="selectAttendance('yes')">
+                                <span class="btn-icon">🐝</span>
+                                <span class="btn-text">Yes, I will bee there!</span>
+                                <span class="btn-subtext">Can't wait to celebrate!</span>
+                            </button>
+                            <button type="button" class="attendance-btn attendance-no" onclick="selectAttendance('no')">
+                                <span class="btn-icon">😢</span>
+                                <span class="btn-text">Sorry, can't make it</span>
+                                <span class="btn-subtext">Will be there in spirit!</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="attending" name="attending" required>
+                    </div>
+                    
+                    <!-- Hidden fields for Formspree -->
+                    <input type="hidden" name="_subject" value="New RSVP for Baby Bee Gender Reveal!">
+                    <input type="hidden" name="_replyto" value="">
+                    <input type="hidden" name="_next" value="">
+                    
+                    <div class="form-group">
+                        <label for="message">Special Message (Optional)</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Share your excitement or any special notes..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Submit RSVP</button>
+                </form>
+                
+                <div class="rsvp-fun-facts">
+                    <h3>Sweet Baby Facts While You RSVP! 🍯</h3>
+                    <div class="rsvp-fact-container">
+                        <div class="rsvp-fact-item active" id="rsvpFact1">
+                            <div class="fact-icon">👂</div>
+                            <p class="fact-text">At 5 months in the womb, I can hear your voices and recognize familiar sounds - just like Pooh recognizing his hunny!</p>
+                        </div>
+                        <div class="rsvp-fact-item" id="rsvpFact2">
+                            <div class="fact-icon">🎵</div>
+                            <p class="fact-text">I'm already responding to music and may kick when I hear my favorite songs - especially Winnie the Pooh tunes!</p>
+                        </div>
+                        <div class="rsvp-fact-item" id="rsvpFact3">
+                            <div class="fact-icon">🍯</div>
+                            <p class="fact-text">I'm developing my unique personality and sleep patterns while growing strong - sweet as honey!</p>
+                        </div>
+                        <div class="rsvp-fact-item" id="rsvpFact4">
+                            <div class="fact-icon">🤸</div>
+                            <p class="fact-text">I'm practicing my first movements - kicking, stretching, and even hiccuping like a little bouncing Tigger!</p>
+                        </div>
+                        <div class="rsvp-fact-item" id="rsvpFact5">
+                            <div class="fact-icon">💕</div>
+                            <p class="fact-text">I can feel your love and emotions, creating our first special bond - sweeter than the sweetest hunny!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="rsvp-carousel-controls">
+                        <button class="carousel-btn prev-btn" onclick="previousRSVPFact()" title="Previous fact">
+                            <span>‹</span>
+                        </button>
+                        <div class="rsvp-fact-indicator">
+                            <span class="rsvp-dot active" data-fact="1"></span>
+                            <span class="rsvp-dot" data-fact="2"></span>
+                            <span class="rsvp-dot" data-fact="3"></span>
+                            <span class="rsvp-dot" data-fact="4"></span>
+                            <span class="rsvp-dot" data-fact="5"></span>
+                        </div>
+                        <button class="carousel-btn next-btn" onclick="nextRSVPFact()" title="Next fact">
+                            <span>›</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="rsvp-success" id="rsvpSuccess" style="display: none;">
+                <div class="success-icon">🐝</div>
+                <h3 id="success-title">Thank you for your RSVP!</h3>
+                <p id="success-message">We're so excited to celebrate with you!</p>
+                
+                <div class="success-calendar-section">
+                    <h4>Don't forget to save the date! 📅</h4>
+                    <p>Add our gender reveal party to your calendar so you don't miss it!</p>
+                    
+                    <!-- AddEvent Button for Success Page -->
+                    <div title="Add to Calendar" class="addeventatc success-calendar-btn">
+                        Add to Calendar
+                        <span class="start">10/25/2024 11:00 AM</span>
+                        <span class="end">10/25/2024 02:00 PM</span>
+                        <span class="timezone">America/Los_Angeles</span>
+                        <span class="title">Baby Bee Gender Reveal Party</span>
+                        <span class="description">Join Teja & Supraja for their gender reveal celebration! What will baby bee? 🐝</span>
+                        <span class="location">6565 Scenery Ct, San Jose, CA 95120</span>
+                        <span class="organizer">Teja & Supraja</span>
+                        <span class="organizer_email">tejamukka@gmail.com</span>
+                    </div>
+                </div>
+                
+            <div class="success-registry-section">
+                <h4>Help us prepare for Baby Bee! 🎁</h4>
+                <p>Check out our registry to help us get ready for our little one's arrival! We're using eco-friendly materials for an unforgettable celebration! 🌱</p>
+                    
+                    <div class="success-registry-links">
+                        <a href="https://www.amazon.com/baby-reg/teja-supraja" target="_blank" class="success-registry-link amazon">
+                            <div class="registry-icon">🛒</div>
+                            <div class="registry-info">
+                                <h5>Amazon</h5>
+                                <p>Baby essentials & more</p>
+                            </div>
+                        </a>
+                        
+                        <a href="https://www.target.com/baby-registry" target="_blank" class="success-registry-link target">
+                            <div class="registry-icon">🎯</div>
+                            <div class="registry-info">
+                                <h5>Target</h5>
+                                <p>Nursery & baby gear</p>
+                            </div>
+                        </a>
+                        
+                        <a href="https://www.babylist.com" target="_blank" class="success-registry-link babylist">
+                            <div class="registry-icon">👶</div>
+                            <div class="registry-info">
+                                <h5>Babylist</h5>
+                                <p>Everything we need</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP Submissions Modal -->
+    <div id="rsvpModal" class="rsvp-modal" style="display: none;">
+        <div class="rsvp-modal-content">
+            <div class="rsvp-modal-header">
+                <h3>RSVP Submissions & Summary 📊</h3>
+                <button class="close-modal-btn" onclick="closeRSVPModal()">&times;</button>
+            </div>
+            
+            <div class="rsvp-summary">
+                <div class="summary-stats">
+                    <div class="stat-card attending">
+                        <div class="stat-number" id="attendingCount">0</div>
+                        <div class="stat-label">Attending</div>
+                    </div>
+                    <div class="stat-card not-attending">
+                        <div class="stat-number" id="notAttendingCount">0</div>
+                        <div class="stat-label">Can't Make It</div>
+                    </div>
+                    <div class="stat-card total-guests">
+                        <div class="stat-number" id="totalGuestsCount">0</div>
+                        <div class="stat-label">Total Guests</div>
+                    </div>
+                </div>
+                
+                <div class="evite-backup-section">
+                    <h4>📧 Evite Backup RSVP</h4>
+                    <p>Alternative RSVP method with built-in count tracking</p>
+                    <button class="evite-rsvp-btn" onclick="openEviteBackup()">
+                        <span class="evite-btn-icon">📧</span>
+                        <span class="evite-btn-text">RSVP on Evite</span>
+                    </button>
+                    <p class="evite-note">Use Evite as backup if main RSVP has issues</p>
+                </div>
+            </div>
+            
+            <div class="rsvp-list">
+                <h4>All RSVP Submissions</h4>
+                <div class="rsvp-entries" id="rsvpEntries">
+                    <p class="no-rsvps">No RSVPs submitted yet. Be the first to RSVP! 🐝</p>
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="export-btn" onclick="exportRSVPs()">📥 Export RSVPs</button>
+                <button class="close-btn" onclick="closeRSVPModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit RSVP Modal -->
+    <div id="editRSVPModal" class="rsvp-modal" style="display: none;">
+        <div class="rsvp-modal-content">
+            <div class="rsvp-modal-header">
+                <h3>Edit RSVP ✏️</h3>
+                <button class="close-modal-btn" onclick="closeEditRSVPModal()">&times;</button>
+            </div>
+            
+            <form id="editRSVPForm" class="edit-rsvp-form">
                 <div class="form-group">
-                    <label for="name">Your Name *</label>
-                    <input type="text" id="name" name="name" required>
+                    <label for="editName">Name *</label>
+                    <input type="text" id="editName" name="name" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" required>
+                    <label for="editEmail">Email *</label>
+                    <input type="email" id="editEmail" name="email" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="guests">Number of Guests *</label>
-                    <select id="guests" name="guests" required>
-                        <option value="">Select number of guests</option>
+                    <label for="editGuests">Number of Guests *</label>
+                    <select id="editGuests" name="guests" required>
                         <option value="1">🐝 Just me (1)</option>
                         <option value="2">🐝🐝 Me + 1 (2)</option>
                         <option value="3">🐝🐝🐝 Me + 2 (3)</option>
@@ -248,42 +496,34 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="attending">Will you be attending? *</label>
+                    <label for="editAttending">Will you be attending? *</label>
                     <div class="attendance-buttons">
-                        <button type="button" class="attendance-btn attendance-yes" onclick="selectAttendance('yes')">
+                        <button type="button" class="attendance-btn attendance-yes" onclick="selectEditAttendance('yes')">
                             <span class="btn-icon">🐝</span>
                             <span class="btn-text">Yes, I will bee there!</span>
                             <span class="btn-subtext">Can't wait to celebrate!</span>
                         </button>
-                        <button type="button" class="attendance-btn attendance-no" onclick="selectAttendance('no')">
+                        <button type="button" class="attendance-btn attendance-no" onclick="selectEditAttendance('no')">
                             <span class="btn-icon">😢</span>
                             <span class="btn-text">Sorry, can't make it</span>
                             <span class="btn-subtext">Will be there in spirit!</span>
                         </button>
                     </div>
-                    <input type="hidden" id="attending" name="attending" required>
+                    <input type="hidden" id="editAttending" name="attending" required>
                 </div>
-                
-                <!-- Hidden fields for Formspree -->
-                <input type="hidden" name="_subject" value="New RSVP for Baby Bee Gender Reveal!">
-                <input type="hidden" name="_replyto" value="">
-                <input type="hidden" name="_next" value="">
                 
                 <div class="form-group">
-                    <label for="message">Special Message (Optional)</label>
-                    <textarea id="message" name="message" rows="4" placeholder="Share your excitement or any special notes..."></textarea>
+                    <label for="editMessage">Special Message (Optional)</label>
+                    <textarea id="editMessage" name="message" rows="4" placeholder="Share your excitement or any special notes..."></textarea>
                 </div>
                 
-                <button type="submit" class="submit-btn">Submit RSVP</button>
+                <div class="modal-actions">
+                    <button type="button" class="cancel-btn" onclick="closeEditRSVPModal()">Cancel</button>
+                    <button type="submit" class="save-btn">💾 Save Changes</button>
+                </div>
             </form>
-            
-            <div class="rsvp-success" id="rsvpSuccess" style="display: none;">
-                <div class="success-icon">🐝</div>
-                <h3 id="success-title">Thank you for your RSVP!</h3>
-                <p id="success-message">We're so excited to celebrate with you!</p>
-            </div>
         </div>
-    </section>
+    </div>
 
     <!-- Registry Section -->
     <section id="registry" class="registry-section">
@@ -363,6 +603,21 @@
                     <p>• Delicious food & drinks</p>
                     <p>• Games & activities</p>
                     <p>• Photo opportunities</p>
+                </div>
+                
+                <div class="detail-card fun-facts-card">
+                    <div class="detail-icon">🌟</div>
+                    <h3>Fun Baby Facts</h3>
+                    <div class="fun-fact-container">
+                        <p class="fun-fact-text" id="funFactText">Loading fun facts...</p>
+                        <div class="fun-fact-indicator">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="detail-card">
