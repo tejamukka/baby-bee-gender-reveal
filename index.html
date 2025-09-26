@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Will Baby Bee? - Gender Reveal Party</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">🐝 Baby Bee</div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#rsvp" class="nav-link">RSVP</a></li>
+                <li><a href="#registry" class="nav-link">Registry</a></li>
+                <li><a href="#details" class="nav-link">Details</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="honeycomb-bg">
+            <div class="honeycomb honeycomb-1"></div>
+            <div class="honeycomb honeycomb-2"></div>
+            <div class="honeycomb honeycomb-3"></div>
+            <div class="honeycomb honeycomb-4"></div>
+            <div class="honeycomb honeycomb-5"></div>
+            <div class="honeycomb honeycomb-6"></div>
+        </div>
+        
+        <div class="bee bee-1">🐝</div>
+        <div class="bee bee-2">🐝</div>
+        <div class="bee bee-3">🐝</div>
+        
+        <div class="hero-content">
+            <h1 class="main-title">What Will Baby Bee?</h1>
+            <p class="subtitle">Join us for a Gender Reveal</p>
+            <div class="event-details">
+                <p class="date">Saturday, October 25th at 11 AM</p>
+                <p class="location">Teja & Suppu's Hive 🏠</p>
+            </div>
+            <button class="cta-button" onclick="scrollToSection('rsvp')">Buzz In Your RSVP</button>
+        </div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section id="rsvp" class="rsvp-section">
+        <div class="container">
+            <h2 class="section-title">RSVP</h2>
+            <p class="section-subtitle">Let us know if you'll be joining our hive!</p>
+            
+            <form class="rsvp-form" id="rsvpForm">
+                <div class="form-group">
+                    <label for="name">Your Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="guests">Number of Guests *</label>
+                    <select id="guests" name="guests" required>
+                        <option value="">Select number of guests</option>
+                        <option value="1">Just me (1)</option>
+                        <option value="2">Me + 1 (2)</option>
+                        <option value="3">Me + 2 (3)</option>
+                        <option value="4">Me + 3 (4)</option>
+                        <option value="5">Me + 4 (5)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="attending">Will you be attending? *</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="attending" value="yes" required>
+                            <span class="radio-custom"></span>
+                            Yes, I'll be there! 🐝
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="attending" value="no" required>
+                            <span class="radio-custom"></span>
+                            Sorry, can't make it 😢
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Special Message (Optional)</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Share your excitement or any special notes..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit RSVP</button>
+            </form>
+            
+            <div class="rsvp-success" id="rsvpSuccess" style="display: none;">
+                <div class="success-icon">🎉</div>
+                <h3>Thank you for your RSVP!</h3>
+                <p>We're so excited to celebrate with you!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registry Section -->
+    <section id="registry" class="registry-section">
+        <div class="container">
+            <h2 class="section-title">Baby Registry</h2>
+            <p class="section-subtitle">Help us prepare our hive for the little one!</p>
+            
+            <div class="registry-grid">
+                <div class="registry-item">
+                    <div class="item-image">🛏️</div>
+                    <h3>Nursery Essentials</h3>
+                    <p>Crib, changing table, and nursery decor</p>
+                    <a href="#" class="registry-link">View on Amazon</a>
+                </div>
+                
+                <div class="registry-item">
+                    <div class="item-image">👶</div>
+                    <h3>Baby Clothes</h3>
+                    <p>Onesies, sleepers, and adorable outfits</p>
+                    <a href="#" class="registry-link">View on Target</a>
+                </div>
+                
+                <div class="registry-item">
+                    <div class="item-image">🍼</div>
+                    <h3>Feeding Supplies</h3>
+                    <p>Bottles, bibs, and feeding accessories</p>
+                    <a href="#" class="registry-link">View on BuyBuy Baby</a>
+                </div>
+                
+                <div class="registry-item">
+                    <div class="item-image">🧸</div>
+                    <h3>Toys & Books</h3>
+                    <p>Educational toys and bedtime stories</p>
+                    <a href="#" class="registry-link">View on Etsy</a>
+                </div>
+                
+                <div class="registry-item">
+                    <div class="item-image">🚗</div>
+                    <h3>Travel Gear</h3>
+                    <p>Car seat, stroller, and travel accessories</p>
+                    <a href="#" class="registry-link">View on Amazon</a>
+                </div>
+                
+                <div class="registry-item">
+                    <div class="item-image">🎁</div>
+                    <h3>Gift Cards</h3>
+                    <p>Amazon, Target, or any baby store</p>
+                    <a href="#" class="registry-link">Send Gift Card</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Details Section -->
+    <section id="details" class="details-section">
+        <div class="container">
+            <h2 class="section-title">Event Details</h2>
+            
+            <div class="details-grid">
+                <div class="detail-card">
+                    <div class="detail-icon">📅</div>
+                    <h3>Date & Time</h3>
+                    <p>Saturday, October 25th, 2024</p>
+                    <p>11:00 AM - 2:00 PM</p>
+                </div>
+                
+                <div class="detail-card">
+                    <div class="detail-icon">📍</div>
+                    <h3>Location</h3>
+                    <p>Teja & Suppu's Hive</p>
+                    <p>123 Honey Lane, Sweet City, SC 12345</p>
+                    <a href="#" class="map-link">Get Directions</a>
+                </div>
+                
+                <div class="detail-card">
+                    <div class="detail-icon">🎉</div>
+                    <h3>What to Expect</h3>
+                    <p>• Gender reveal ceremony</p>
+                    <p>• Delicious food & drinks</p>
+                    <p>• Games & activities</p>
+                    <p>• Photo opportunities</p>
+                </div>
+                
+                <div class="detail-card">
+                    <div class="detail-icon">👕</div>
+                    <h3>Dress Code</h3>
+                    <p>Casual & comfortable</p>
+                    <p>Feel free to wear yellow, black, or white to match our bee theme!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🐝 Baby Bee Gender Reveal</h3>
+                    <p>Celebrating the arrival of our little one!</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#rsvp">RSVP</a></li>
+                        <li><a href="#registry">Registry</a></li>
+                        <li><a href="#details">Details</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Teja & Suppu</p>
+                    <p>Email: teja.suppu@email.com</p>
+                    <p>Phone: (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Baby Bee Gender Reveal. Made with 💛 and lots of buzz!</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

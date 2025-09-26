@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSVP Data Viewer - Baby Bee Gender Reveal</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #fef9e7 0%, #fdf2d1 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #8b4513;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .rsvp-item {
+            background: #fef9e7;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #d4a574;
+        }
+        .rsvp-item h3 {
+            color: #8b4513;
+            margin: 0 0 10px 0;
+        }
+        .rsvp-item p {
+            margin: 5px 0;
+            color: #5d4e37;
+        }
+        .attending-yes {
+            border-left-color: #28a745;
+        }
+        .attending-no {
+            border-left-color: #dc3545;
+        }
+        .clear-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+        .clear-btn:hover {
+            background: #c82333;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: linear-gradient(45deg, #ffd700, #ffb347);
+            color: #8b4513;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐝 RSVP Data Viewer</h1>
+        <p style="text-align: center; color: #5d4e37; margin-bottom: 30px;">
+            This page shows all RSVP submissions stored locally in your browser.
+        </p>
+        
+        <div class="stats" id="stats">
+            <!-- Stats will be populated by JavaScript -->
+        </div>
+        
+        <button class="clear-btn" onclick="clearAllRSVPs()">Clear All RSVPs</button>
+        
+        <div id="rsvpList">
+            <!-- RSVP items will be populated by JavaScript -->
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="index.html" style="color: #d4a574; text-decoration: none; font-weight: 600;">
+                ← Back to Main Website
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function loadRSVPs() {
+            const rsvps = JSON.parse(localStorage.getItem('rsvps') || '[]');
+            const rsvpList = document.getElementById('rsvpList');
+            const stats = document.getElementById('stats');
+            
+            if (rsvps.length === 0) {
+                rsvpList.innerHTML = '<p style="text-align: center; color: #5d4e37; font-style: italic;">No RSVPs submitted yet.</p>';
+                stats.innerHTML = '<div class="stat-card"><div class="stat-number">0</div><div>Total RSVPs</div></div>';
+                return;
+            }
+            
+            // Calculate stats
+            const totalRSVPs = rsvps.length;
+            const attendingYes = rsvps.filter(rsvp => rsvp.attending === 'yes').length;
+            const attendingNo = rsvps.filter(rsvp => rsvp.attending === 'no').length;
+            const totalGuests = rsvps.reduce((sum, rsvp) => sum + parseInt(rsvp.guests), 0);
+            
+            // Display stats
+            stats.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${totalRSVPs}</div>
+                    <div>Total RSVPs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${attendingYes}</div>
+                    <div>Attending</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${attendingNo}</div>
+                    <div>Not Attending</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${totalGuests}</div>
+                    <div>Total Guests</div>
+                </div>
+            `;
+            
+            // Display RSVPs
+            rsvpList.innerHTML = rsvps.map((rsvp, index) => `
+                <div class="rsvp-item ${rsvp.attending === 'yes' ? 'attending-yes' : 'attending-no'}">
+                    <h3>${rsvp.name}</h3>
+                    <p><strong>Email:</strong> ${rsvp.email}</p>
+                    <p><strong>Guests:</strong> ${rsvp.guests}</p>
+                    <p><strong>Attending:</strong> ${rsvp.attending === 'yes' ? 'Yes 🐝' : 'No 😢'}</p>
+                    ${rsvp.message ? `<p><strong>Message:</strong> ${rsvp.message}</p>` : ''}
+                    <p><strong>Submitted:</strong> ${new Date(rsvp.timestamp).toLocaleString()}</p>
+                </div>
+            `).join('');
+        }
+        
+        function clearAllRSVPs() {
+            if (confirm('Are you sure you want to clear all RSVP data? This action cannot be undone.')) {
+                localStorage.removeItem('rsvps');
+                loadRSVPs();
+                alert('All RSVP data has been cleared.');
+            }
+        }
+        
+        // Load RSVPs when page loads
+        document.addEventListener('DOMContentLoaded', loadRSVPs);
+    </script>
+</body>
+</html>
