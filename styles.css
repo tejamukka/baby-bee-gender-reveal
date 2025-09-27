@@ -64,11 +64,11 @@
 
 /* Bee Cursor Theme */
 * {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48dGV4dCB5PSIxOCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzhGNEE1MyI+8J+QvzwvdGV4dD48L3N2Zz4='), auto;
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48dGV4dCB5PSIxOCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzhGNEE1MyI+8J+QnTwvdGV4dD48L3N2Zz4K'), auto;
 }
 
 button, a, .clickable, .carousel-btn, .gender-btn, .open-invitation-btn, .cta-button, .nav-link, .instagram-link, [onclick] {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48dGV4dCB5PSIxOCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzhGNEE1MyI+8J+QvzwvdGV4dD48L3N2Zz4='), pointer;
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48dGV4dCB5PSIxOCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzhGNEE1MyI+8J+QnTwvdGV4dD48L3N2Zz4K'), pointer;
 }
 
 input, textarea, select {
