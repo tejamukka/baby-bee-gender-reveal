@@ -1488,10 +1488,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Add a welcome message
-    setTimeout(() => {
-        showNotification('Welcome to our Baby Bee Gender Reveal! 🐝', 'success');
-    }, 1000);
     
     // Start fun facts rotation
     setTimeout(() => {

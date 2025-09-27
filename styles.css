@@ -644,10 +644,18 @@ a[href] {
     filter: drop-shadow(0 2px 4px rgba(212, 165, 116, 0.3));
 }
 
-/* Subtle hover effect for 2025 */
+/* Enhanced hover effect for 2025 - makes it clear it's clickable */
 .year-2025.upcoming-event:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(212, 165, 116, 0.3);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 193, 7, 0.15) 100%);
+    border-color: #b8860b;
+    cursor: pointer;
+}
+
+.year-2025.upcoming-event:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(212, 165, 116, 0.4);
 }
 
 .postcard-footer {
