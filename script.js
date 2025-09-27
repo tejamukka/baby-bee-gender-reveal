@@ -656,7 +656,7 @@ function updateCarouselDots() {
 
 // Google Sheets Integration
 const GOOGLE_SHEET_ID = '1Go42OxeU6Tge4ZgRQwMjdzdd_jWIVa5bgqZAYgNz6p0'; // Replace with your actual Sheet ID
-const GOOGLE_APPS_SCRIPT_URL = 'AKfycbzd6QFLdsOq2AH84Gy638OyZs_v3h8_sKK72GVMLNguzOb_dSUPwYC8MWckvbLJt0XysA'; // Your new Apps Script URL
+const GOOGLE_APPS_SCRIPT_URL = 'AehSKLgSoHCDcsfqXfqBGtdP5kM9PdTWqG_5y7zSjGKsgIEZraCLdtXxxoDbB-FTVtxXdu-7xTiqiplug99dCknNkxVIuiS8fWmmD6rsemApgZXwkfhzWIQD_Bg2pO3Bv6uFQVr4srMPHbN368IEqFw02UIfEky-TupHCwUIt1pVmZ0Pw45xIcBSQTfBxaTmlh28nXugRVwiXL_tttDbeeXkyZXWVWyOk4HFa3Ub856FNswO-WNnYG04vkEQeuXUVAoiHjpNzsVyCvyLPrldszEE_HlywDN-ykw3cFn8QRuPPDhZV_tgVEt57Wy07U6CBg'; // Your new Apps Script URL
 
 // JSONP helper function to bypass CORS
 function fetchWithJSONP(url) {
@@ -699,7 +699,7 @@ function fetchWithJSONP(url) {
 async function loadMessagesFromGoogleSheets() {
     try {
         // Use JSONP approach to bypass CORS
-        const data = await fetchWithJSONP(`https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec?action=getMessages`);
+        const data = await fetchWithJSONP(`https://script.googleusercontent.com/macros/echo?user_content_key=${GOOGLE_APPS_SCRIPT_URL}&lib=ML7_d65y8CrJeN108pd3Jt0XJYFaWHX5l&action=getMessages`);
         
         if (data.success && data.messages && data.messages.length > 0) {
             // Clear featured messages and add Google Sheets messages
@@ -730,7 +730,7 @@ async function loadMessagesFromGoogleSheets() {
 // Submit message to Google Sheets
 async function submitMessageToGoogleSheets(name, message, prediction) {
     try {
-        const response = await fetch(`https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec`, {
+        const response = await fetch(`https://script.googleusercontent.com/macros/echo?user_content_key=${GOOGLE_APPS_SCRIPT_URL}&lib=ML7_d65y8CrJeN108pd3Jt0XJYFaWHX5l`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
