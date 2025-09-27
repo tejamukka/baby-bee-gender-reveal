@@ -742,6 +742,17 @@
             console.log('Sample messages:', typeof sampleMessages !== 'undefined' ? sampleMessages : 'undefined');
             console.log('Carousel track:', document.getElementById('messages-track'));
         };
+        
+        // Force load messages immediately if carousel exists
+        setTimeout(() => {
+            const carousel = document.querySelector('.messages-carousel');
+            if (carousel) {
+                console.log('Force loading messages from inline script...');
+                if (typeof loadMessages === 'function') {
+                    loadMessages();
+                }
+            }
+        }, 1000);
     </script>
 </body>
 </html>

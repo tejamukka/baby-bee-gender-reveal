@@ -769,6 +769,8 @@ async function submitMessageToGoogleSheets(name, message, prediction) {
 // Load messages (skip Google Sheets completely for now)
 function loadDisqusMessages() {
     console.log('Loading sample messages directly (Google Sheets disabled due to CORS)');
+    // Clear any existing featured messages to ensure we show sample messages
+    featuredMessages.length = 0;
     loadMessages();
 }
 
@@ -868,7 +870,9 @@ window.addEventListener('load', function() {
         const carousel = document.querySelector('.messages-carousel');
         if (carousel && totalSlides === 0) {
             console.log('Backup: Loading messages on window load...');
-            loadDisqusMessages();
+            // Force load sample messages directly
+            featuredMessages.length = 0;
+            loadMessages();
         }
     }, 500);
 });
