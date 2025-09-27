@@ -62,47 +62,17 @@
     left: 100%;
 }
 
-/* Bee Cursor Theme - Enhanced with proper encoding */
+/* Bee Cursor Theme */
 * {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4='), auto !important;
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48dGV4dCB5PSIxOCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzhGNEE1MyI+8J+QvzwvdGV4dD48L3N2Zz4='), auto;
 }
 
-/* Force bee cursor on all elements - highest priority */
-html, body, div, span, p, h1, h2, h3, h4, h5, h6, section, article, aside, nav, header, footer, main {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4='), auto !important;
+button, a, .clickable, .carousel-btn, .gender-btn, .open-invitation-btn, .cta-button, .nav-link, .instagram-link, [onclick] {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48dGV4dCB5PSIxOCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzhGNEE1MyI+8J+QvzwvdGV4dD48L3N2Zz4='), pointer;
 }
 
-/* Override any browser default cursors */
-*:not(input):not(textarea):not(select) {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4='), auto !important;
-}
-
-/* Interactive elements with special bee cursor */
-button, a, .clickable, .carousel-btn, .gender-btn, .open-invitation-btn, .cta-button, .nav-link, .instagram-link {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4='), pointer !important;
-}
-
-/* Hover effects for bee cursor */
-button:hover, a:hover, .clickable:hover, .carousel-btn:hover, .gender-btn:hover, .open-invitation-btn:hover, .cta-button:hover, .nav-link:hover, .instagram-link:hover {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyOCIgZmlsbD0iI2Q0YTU3NCI+8J+QvTwvdGV4dD48L3N2Zz4='), pointer !important;
-    transform: scale(1.02);
-    transition: transform 0.2s ease;
-}
-
-/* Special bee cursor for active states */
-button:active, .cta-button:active, .open-invitation-btn:active, .gender-btn:active {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNiIgZmlsbD0iI2ZmOGMwMCI+8J+QvzwvdGV4dD48L3N2Zz4='), pointer !important;
-}
-
-/* Bee cursor for text selection */
-::selection {
-    background: rgba(255, 215, 0, 0.3);
-    color: #8b4513;
-}
-
-/* Bee cursor for input fields */
 input, textarea, select {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+4p2U8J+QvTwvdGV4dD48L3N2Zz4='), text !important;
+    cursor: text;
 }
 
 /* Honey Drop Game Styles */
@@ -214,7 +184,7 @@ input, textarea, select {
 .honey-drop {
     position: absolute;
     font-size: 3rem;
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4='), pointer !important;
+    cursor: pointer;
     user-select: none;
     z-index: 10;
     animation: fallDown 4s linear forwards;
@@ -558,51 +528,6 @@ input, textarea, select {
     80% { transform: translateY(-5px); }
 }
 
-/* Specific RSVP form cursor fixes */
-.rsvp-form input, .rsvp-form textarea, .rsvp-form select {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+4p2U8J+QvTwvdGV4dD48L3N2Zz4='), text !important;
-}
-
-.rsvp-form input:focus, .rsvp-form textarea:focus, .rsvp-form select:focus {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+4p2U8J+QvTwvdGV4dD48L3N2Zz4='), text !important;
-}
-
-.rsvp-form input:hover, .rsvp-form textarea:hover, .rsvp-form select:hover {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+4p2U8J+QvTwvdGV4dD48L3N2Zz4='), text !important;
-}
-
-/* RSVP form labels and buttons */
-.rsvp-form label, .rsvp-form button, .rsvp-form .form-group {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4='), pointer !important;
-}
-
-/* Gender poll buttons specific fix */
-.gender-poll-buttons .gender-btn {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4='), pointer !important;
-}
-
-.gender-poll-buttons .gender-btn:hover {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyOCIgZmlsbD0iI2Q0YTU3NCI+8J+QvTwvdGV4dD48L3N2Zz4='), pointer !important;
-}
-
-.gender-poll-buttons .gender-btn:active {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNiIgZmlsbD0iI2ZmOGMwMCI+8J+QvzwvdGV4dD48L3N2Zz4='), pointer !important;
-}
-
-/* Special bee cursor for links */
-a[href] {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+4p2U8J+QvTwvdGV4dD48L3N2Zz4='), pointer !important;
-}
-
-/* Ensure bee cursor on all interactive elements */
-[onclick], [role="button"], .btn, .button, .link, .clickable-element {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4='), pointer !important;
-}
-
-/* Override any conflicting cursor styles */
-*:not(input):not(textarea):not(select) {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4='), auto !important;
-}
 
 /* Honey Transition Overlay */
 .honey-transition-overlay {

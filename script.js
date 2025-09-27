@@ -107,86 +107,11 @@ function createBulletproofBackHandler() {
     console.log('Bulletproof back to story handler attached');
 }
 
-// Bee Cursor Fallback - Ensure bee cursor always works
-function ensureBeeCursor() {
-    const beeCursorSVG = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4=';
-    const honeyCursorSVG = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNiIgZmlsbD0iI2ZmOGMwMCI+8J+QvzwvdGV4dD48L3N2Zz4=';
-    
-    // Apply bee cursor to ALL elements - most aggressive approach
-    const allElements = document.querySelectorAll('*');
-    allElements.forEach(el => {
-        if (!el.style.cursor || el.style.cursor === 'default' || el.style.cursor === 'auto') {
-            el.style.cursor = beeCursorSVG + ', auto';
-        }
-    });
-    
-    // Apply to document body and html
-    document.documentElement.style.cursor = beeCursorSVG + ', auto';
-    document.body.style.cursor = beeCursorSVG + ', auto';
-    
-    // Apply to all interactive elements
-    const interactiveElements = document.querySelectorAll('button, a, [onclick], [role="button"], .clickable, .carousel-btn, .gender-btn, .open-invitation-btn, .cta-button, .nav-link, .instagram-link, .honey-drop');
-    interactiveElements.forEach(el => {
-        el.style.cursor = beeCursorSVG + ', pointer';
-        
-        // Add hover effect
-        el.addEventListener('mouseenter', () => {
-            el.style.cursor = honeyCursorSVG + ', pointer';
-        });
-        
-        el.addEventListener('mouseleave', () => {
-            el.style.cursor = beeCursorSVG + ', pointer';
-        });
-    });
-    
-    // Apply to input fields
-    const inputElements = document.querySelectorAll('input, textarea, select');
-    inputElements.forEach(el => {
-        el.style.cursor = beeCursorSVG + ', text';
-    });
-    
-    console.log('Bee cursor applied via JavaScript fallback to all elements');
-}
-
-// Reapply bee cursor when new elements are added
-function reapplyBeeCursor() {
-    setTimeout(ensureBeeCursor, 100);
-}
-
-// Watch for dynamically added elements
-const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-        if (mutation.addedNodes.length > 0) {
-            reapplyBeeCursor();
-        }
-    });
-});
-
-// Start observing when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
-    
-    // Ensure bee cursor is applied
-    ensureBeeCursor();
-    
-    // Reapply bee cursor every 2 seconds to ensure it's always maintained
-    setInterval(ensureBeeCursor, 2000);
-    
-    // Also reapply on mouse movement to catch any missed elements
-    document.addEventListener('mousemove', function() {
-        ensureBeeCursor();
-    });
-});
 
 // Postcard Opening Animation
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, setting up postcard');
     
-    // Ensure bee cursor is applied
-    ensureBeeCursor();
     
     // Simple setup without particles for now
     const envelope = document.getElementById('envelope');
