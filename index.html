@@ -177,7 +177,6 @@
                 <li><a href="#rsvp" class="nav-link">RSVP</a></li>
                 <li><a href="#registry" class="nav-link">Registry</a></li>
                 <li><a href="#details" class="nav-link">Details</a></li>
-                <li><a href="#guest-messages" class="nav-link">Messages</a></li>
             </ul>
             <div class="hamburger">
                 <span></span>
@@ -598,87 +597,6 @@
         </div>
     </section>
 
-    <!-- Guest Messages Section -->
-    <section id="guest-messages" class="guest-messages-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">🍯 Share Your Sweet Messages 🍯</h2>
-                <p class="section-subtitle">Join our public wall of excitement and see what others are saying!</p>
-            </div>
-            
-                <!-- Public Wall Only -->
-                <div class="public-wall-only">
-                <div class="wall-container">
-                    <div class="wall-intro">
-                        <p>Join our public wall of excitement! Share your predictions and see what others are saying! 🎉</p>
-                    </div>
-                    
-                    <!-- Public Wall Form -->
-                    <div class="public-wall-form">
-                        <h3>✍️ Leave a Public Message</h3>
-                        <form class="wall-message-form" onsubmit="handleWallFormSubmit(event)">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="wall-name">Your Name *</label>
-                                    <input type="text" id="wall-name" name="name" required placeholder="Enter your name">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="wall-prediction">Your Prediction (optional)</label>
-                                    <select id="wall-prediction" name="prediction">
-                                        <option value="">Choose your prediction...</option>
-                                        <option value="Buzzing Boy 🐝">Buzzing Boy 🐝</option>
-                                        <option value="Queen Bee 👑">Queen Bee 👑</option>
-                                        <option value="Sweet Surprise 🍯">Sweet Surprise 🍯</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="wall-message">Your Message *</label>
-                                <textarea id="wall-message" name="message" rows="3" placeholder="Share your excitement, predictions, or well-wishes for our little bee! 🐝" required></textarea>
-                            </div>
-                            
-                            <button type="submit" class="submit-wall-btn">
-                                <span class="btn-text">Post to Wall</span>
-                                <span class="btn-icon">🗨️</span>
-                            </button>
-                        </form>
-                        
-                        <!-- Test Google Sheets Connection -->
-                        <div class="test-connection">
-                            <button type="button" class="test-btn" onclick="testGoogleSheetsConnection()">
-                                🧪 Test Google Sheets Connection
-                            </button>
-                            <div id="test-result" class="test-result"></div>
-                    </div>
-                </div>
-                
-                    <!-- Featured Messages Carousel -->
-                    <div class="featured-messages">
-                        <h3>🌟 Live Messages Wall</h3>
-                        <div class="messages-carousel">
-                            <div class="carousel-container">
-                                <div class="carousel-track" id="messages-track">
-                                    <!-- Real user messages will be loaded here dynamically -->
-                                    <div class="loading-messages">
-                                        <div class="loading-spinner">🍯</div>
-                                        <p>Loading sweet messages...</p>
-                                    </div>
-                                </div>
-                                <button class="carousel-btn prev" onclick="moveCarousel(-1)">❮</button>
-                                <button class="carousel-btn next" onclick="moveCarousel(1)">❯</button>
-                            </div>
-                            <div class="carousel-dots">
-                                <!-- Dots will be generated dynamically -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
     <footer class="footer">
