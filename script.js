@@ -2782,7 +2782,7 @@ Teja & Supraja 🍯`
     }
 };
 
-// Send Email Function
+// Send Email Function with Rich Parameters
 async function sendEmail(templateType, recipientEmail, recipientName, additionalData = {}) {
     try {
         // Check if EmailJS is available
@@ -2799,12 +2799,39 @@ async function sendEmail(templateType, recipientEmail, recipientName, additional
             return false;
         }
 
-        // Prepare email data
+        // Prepare comprehensive email data with all event details
         const emailData = {
+            // Basic recipient info
             to_email: recipientEmail,
             to_name: recipientName,
+            email: recipientEmail,
+            name: recipientName,
+            
+            // Event details
+            title: 'Baby Bee Gender Reveal',
+            host_names: 'Teja & Supraja',
+            event_date: 'Saturday, October 25th, 2025',
+            event_time: '11:00 AM',
+            venue: 'Teja & Supraja\'s Hive',
+            map_link: 'https://maps.google.com/?q=6565+Scenery+Ct,+San+Jose,+CA+95120',
+            
+            // Guest info
+            guest_name: recipientName,
+            
+            // Event details
+            notes: 'We\'re buzzing with excitement and would love for you to join us for our special gender reveal celebration!',
+            rsvp_link: 'https://tejamukka.github.io/baby-bee-gender-reveal/#rsvp',
+            calendar_link: 'https://tejamukka.github.io/baby-bee-gender-reveal/#details',
+            registry_link: 'https://www.amazon.com/baby-reg/teja-mukka-january-2026-sanjose/321NAVMSWVSFH',
+            dress_code: 'Wear yellow to support boy, pink for girl!',
+            web_version_link: 'https://tejamukka.github.io/baby-bee-gender-reveal/',
+            contact_email: 'tejamukka@gmail.com',
+            
+            // Template content
             subject: template.subject,
             message: template.message,
+            
+            // Additional data from function calls
             ...additionalData
         };
 
@@ -2853,7 +2880,11 @@ function sendRSVPConfirmationEmail(rsvpData) {
     
     sendEmail('rsvpConfirmation', rsvpData.email, rsvpData.name, {
         guests: rsvpData.guests,
-        prediction: rsvpData.prediction || 'Not specified'
+        prediction: rsvpData.prediction || 'Not specified',
+        // Additional RSVP-specific data
+        rsvp_status: rsvpData.attending || 'Yes',
+        dietary_restrictions: rsvpData.dietary || 'None',
+        message: rsvpData.message || ''
     });
 }
 
@@ -2894,7 +2925,23 @@ function testEmailSystem() {
     const testEmail = 'tejamukka@gmail.com'; // Replace with your email
     const testName = 'Teja';
     
-    console.log('Sending test welcome email...');
+    console.log('Sending test welcome email with all parameters...');
+    console.log('Available parameters being sent:');
+    console.log('- title: Baby Bee Gender Reveal');
+    console.log('- host_names: Teja & Supraja');
+    console.log('- event_date: Saturday, October 25th, 2025');
+    console.log('- event_time: 11:00 AM');
+    console.log('- venue: Teja & Supraja\'s Hive');
+    console.log('- map_link: Google Maps link');
+    console.log('- rsvp_link: RSVP page link');
+    console.log('- calendar_link: Calendar page link');
+    console.log('- registry_link: Amazon registry link');
+    console.log('- dress_code: Wear yellow to support boy, pink for girl!');
+    console.log('- web_version_link: Website link');
+    console.log('- contact_email: tejamukka@gmail.com');
+    console.log('- guest_name: ' + testName);
+    console.log('- email: ' + testEmail);
+    
     sendWelcomeEmail(testEmail, testName);
 }
 
