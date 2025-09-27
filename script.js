@@ -461,6 +461,909 @@ function showPostcardStory() {
 // Make showPostcardStory globally available
 window.showPostcardStory = showPostcardStory;
 
+// Guest Messages Tab Functionality
+function showTab(tabName) {
+    // Hide all tab contents
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Remove active class from all tab buttons
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Show selected tab content
+    document.getElementById(tabName + '-tab').classList.add('active');
+    
+    // Add active class to clicked button
+    event.target.closest('.tab-btn').classList.add('active');
+    
+    // If switching to public tab, reload messages and Disqus
+    if (tabName === 'public') {
+        setTimeout(() => {
+            // Reload messages carousel
+            loadDisqusMessages();
+            
+            // Reload Disqus if available
+            if (typeof DISQUS !== 'undefined') {
+                DISQUS.reset({
+                    reload: true,
+                    config: function () {
+                        this.page.identifier = 'baby-bee-gender-reveal-guest-messages';
+                        this.page.url = window.location.href + '#guest-messages';
+                    }
+                });
+            }
+        }, 100);
+    }
+}
+
+// Messages Carousel Functionality
+let currentMessageSlide = 0;
+let messageSlides = [];
+let totalSlides = 0;
+let autoRotateInterval = null;
+
+// Featured Messages Data - You can manually add real messages here
+const featuredMessages = [
+    // Add real user messages here as they come in
+    // Example format:
+    // {
+    //     author: "Sarah M.",
+    //     content: "I'm so excited for you both! I predict it's going to be a little queen bee! 👑",
+    //     prediction: "Queen Bee 👑",
+    //     timestamp: "2025-01-15"
+    // }
+];
+
+// Sample messages (fallback if no real messages)
+const sampleMessages = [
+    {
+        author: "Tharun",
+        content: "I'm so excited for you both! I predict it's going to be a little queen bee! 👑",
+        prediction: "Queen Bee 👑",
+        timestamp: "2025-01-15"
+    },
+    {
+        author: "Samyuktha",
+        content: "Congratulations! Can't wait to meet the little one. My guess is a buzzing boy! 🐝",
+        prediction: "Buzzing Boy 🐝",
+        timestamp: "2025-01-14"
+    },
+    {
+        author: "Soumya",
+        content: "Either way, this baby will be absolutely perfect! So happy for you! 💕",
+        prediction: "Sweet Surprise 🍯",
+        timestamp: "2025-01-13"
+    },
+    {
+        author: "Srujan",
+        content: "This is such a beautiful way to share your journey! Wishing you all the best! 🌟",
+        prediction: "Queen Bee 👑",
+        timestamp: "2025-01-12"
+    }
+];
+
+// Load and display messages
+function loadMessages() {
+    const messagesToShow = featuredMessages.length > 0 ? featuredMessages : sampleMessages;
+    const track = document.getElementById('messages-track');
+    
+    if (!track) {
+        console.log('Messages track not found');
+        return;
+    }
+    
+    // Show loading state
+    track.innerHTML = `
+        <div class="loading-messages">
+            <div class="loading-spinner">🍯</div>
+            <p>Loading sweet messages...</p>
+        </div>
+    `;
+    
+    // Small delay to show loading state
+    setTimeout(() => {
+        // Clear loading message
+        track.innerHTML = '';
+        
+        if (messagesToShow.length === 0) {
+            // Show empty state
+            track.innerHTML = `
+                <div class="empty-messages">
+                    <div class="empty-icon">💌</div>
+                    <p>No messages yet. Be the first to share your excitement!</p>
+                </div>
+            `;
+            totalSlides = 1;
+            currentMessageSlide = 0;
+            updateCarouselDots();
+            updateCarousel();
+            return;
+        }
+        
+        // Create message slides
+        messagesToShow.forEach((message, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'message-slide';
+            slide.style.minWidth = '100%';
+            slide.style.flexShrink = '0';
+            slide.innerHTML = `
+                <div class="message-card">
+                    <div class="message-author">${message.author}</div>
+                    <div class="message-content">"${message.content}"</div>
+                    <div class="message-prediction">${message.prediction}</div>
+                    <div class="message-timestamp">${formatTimestamp(message.timestamp)}</div>
+                </div>
+            `;
+            track.appendChild(slide);
+        });
+        
+        // Update carousel variables
+        messageSlides = document.querySelectorAll('.message-slide');
+        totalSlides = messageSlides.length;
+        
+        // Set carousel track width to accommodate all slides
+        const track = document.getElementById('messages-track');
+        if (track) {
+            track.style.width = `${totalSlides * 100}%`;
+        }
+        
+        // Update dots
+        updateCarouselDots();
+        
+        // Reset to first slide
+        currentMessageSlide = 0;
+        updateCarousel();
+        
+        // Start auto-rotation if we have multiple messages
+        if (totalSlides > 1) {
+            startAutoRotation();
+        }
+        
+    }, 500); // 500ms delay to show loading state
+}
+
+// Format timestamp for display
+function formatTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 1) return "Yesterday";
+    if (diffDays < 7) return `${diffDays} days ago`;
+    return date.toLocaleDateString();
+}
+
+// Update carousel dots based on number of slides
+function updateCarouselDots() {
+    const dotsContainer = document.querySelector('.carousel-dots');
+    if (!dotsContainer) return;
+    
+    dotsContainer.innerHTML = '';
+    
+    for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('span');
+        dot.className = `dot ${i === 0 ? 'active' : ''}`;
+        dot.onclick = () => currentSlide(i + 1);
+        dotsContainer.appendChild(dot);
+    }
+}
+
+// Google Sheets Integration
+const GOOGLE_SHEET_ID = '1Go42OxeU6Tge4ZgRQwMjdzdd_jWIVa5bgqZAYgNz6p0'; // Replace with your actual Sheet ID
+const GOOGLE_APPS_SCRIPT_URL = 'AKfycbxpdcNhbA-sgJTg2PaNiZ0rTi5p8ULNLuchmzspGlluaHP8vRnD4f9k1SLfjiiVFYv65g'; // Your new Apps Script URL
+
+// JSONP helper function to bypass CORS
+function fetchWithJSONP(url) {
+    return new Promise((resolve, reject) => {
+        const callbackName = 'jsonp_callback_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        
+        // Create script element
+        const script = document.createElement('script');
+        script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + callbackName;
+        
+        // Set up callback
+        window[callbackName] = function(data) {
+            document.head.removeChild(script);
+            delete window[callbackName];
+            resolve(data);
+        };
+        
+        // Handle errors
+        script.onerror = function() {
+            document.head.removeChild(script);
+            delete window[callbackName];
+            reject(new Error('JSONP request failed'));
+        };
+        
+        // Add script to head
+        document.head.appendChild(script);
+        
+        // Timeout after 10 seconds
+        setTimeout(() => {
+            if (window[callbackName]) {
+                document.head.removeChild(script);
+                delete window[callbackName];
+                reject(new Error('JSONP request timeout'));
+            }
+        }, 10000);
+    });
+}
+
+// Load messages from Google Sheets
+async function loadMessagesFromGoogleSheets() {
+    try {
+        // Use JSONP approach to bypass CORS
+        const data = await fetchWithJSONP(`https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec?action=getMessages`);
+        
+        if (data.success && data.messages && data.messages.length > 0) {
+            // Clear featured messages and add Google Sheets messages
+            featuredMessages.length = 0;
+            data.messages.forEach(msg => {
+                featuredMessages.push({
+                    author: msg.name || 'Anonymous',
+                    content: msg.message || '',
+                    prediction: msg.prediction || 'Sweet Surprise 🍯',
+                    timestamp: msg.timestamp || new Date().toISOString().split('T')[0]
+                });
+            });
+            
+            console.log('Loaded messages from Google Sheets:', featuredMessages);
+            loadMessages();
+            return true;
+        }
+    } catch (error) {
+        console.log('Could not load from Google Sheets:', error);
+    }
+    
+    // Fallback to local messages
+    loadMessages();
+    return false;
+}
+
+// Submit message to Google Sheets
+async function submitMessageToGoogleSheets(name, message, prediction) {
+    try {
+        const response = await fetch(`https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'addMessage',
+                name: name,
+                email: '', // Empty for public wall messages
+                guests: '', // Empty for public wall messages
+                message: message,
+                prediction: prediction,
+                timestamp: new Date().toISOString()
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        if (result.success) {
+            console.log('Message submitted to Google Sheets successfully');
+            // Reload messages to show the new one
+            setTimeout(() => {
+                loadMessagesFromGoogleSheets();
+            }, 1000);
+            return true;
+        }
+    } catch (error) {
+        console.log('Could not submit to Google Sheets:', error);
+    }
+    return false;
+}
+
+// Try to load messages from Google Sheets first, then fallback
+function loadDisqusMessages() {
+    // Try Google Sheets first
+    loadMessagesFromGoogleSheets();
+}
+
+function moveCarousel(direction) {
+    if (totalSlides === 0) return;
+    
+    // Stop auto-rotation when user manually navigates
+    stopAutoRotation();
+    
+    currentMessageSlide += direction;
+    
+    if (currentMessageSlide >= totalSlides) {
+        currentMessageSlide = 0;
+    } else if (currentMessageSlide < 0) {
+        currentMessageSlide = totalSlides - 1;
+    }
+    
+    updateCarousel();
+    
+    // Restart auto-rotation after 3 seconds of inactivity
+    setTimeout(() => {
+        if (totalSlides > 1) {
+            startAutoRotation();
+        }
+    }, 3000);
+}
+
+function currentSlide(slideNumber) {
+    currentMessageSlide = slideNumber - 1;
+    updateCarousel();
+}
+
+function updateCarousel() {
+    const track = document.getElementById('messages-track');
+    if (!track || totalSlides === 0) return;
+    
+    // Each slide is 100% of the container width
+    const translateX = currentMessageSlide * 100;
+    
+    track.style.transform = `translateX(-${translateX}%)`;
+    
+    // Update dots
+    const dots = document.querySelectorAll('.carousel-dots .dot');
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentMessageSlide);
+    });
+    
+    console.log(`Carousel: Slide ${currentMessageSlide + 1}/${totalSlides}, translateX: -${translateX}%`);
+}
+
+// Start auto-rotation
+function startAutoRotation() {
+    // Clear any existing interval
+    if (autoRotateInterval) {
+        clearInterval(autoRotateInterval);
+    }
+    
+    // Only auto-rotate if we have multiple slides
+    if (totalSlides > 1) {
+        autoRotateInterval = setInterval(() => {
+            moveCarousel(1);
+        }, 4000); // Change slide every 4 seconds
+    }
+}
+
+// Stop auto-rotation
+function stopAutoRotation() {
+    if (autoRotateInterval) {
+        clearInterval(autoRotateInterval);
+        autoRotateInterval = null;
+    }
+}
+
+// Initialize carousel when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.querySelector('.messages-carousel')) {
+        // Load messages first
+        loadDisqusMessages();
+        // Then start auto-rotation
+        autoRotateCarousel();
+    }
+});
+
+// Function to add new featured message (for easy management)
+function addFeaturedMessage(author, content, prediction) {
+    const newMessage = {
+        author: author,
+        content: content,
+        prediction: prediction || "Sweet Surprise 🍯",
+        timestamp: new Date().toISOString().split('T')[0] // Today's date
+    };
+    
+    featuredMessages.unshift(newMessage); // Add to beginning
+    
+    // Reload messages if we're on the public tab
+    if (document.getElementById('public-tab').classList.contains('active')) {
+        loadMessages();
+    }
+    
+    console.log('Added featured message:', newMessage);
+}
+
+// Function to clear all featured messages (reset to samples)
+function clearFeaturedMessages() {
+    featuredMessages.length = 0;
+    if (document.getElementById('public-tab').classList.contains('active')) {
+        loadMessages();
+    }
+    console.log('Cleared featured messages');
+}
+
+// Handle form submission
+async function handleFormSubmit(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const formData = new FormData(form);
+    
+    const name = formData.get('name');
+    const message = formData.get('message');
+    const prediction = formData.get('prediction') || 'Sweet Surprise 🍯';
+    const email = formData.get('email');
+    
+    // Show loading state
+    const submitBtn = form.querySelector('.submit-message-btn');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="btn-text">Sending...</span><span class="btn-icon">🍯</span>';
+    submitBtn.disabled = true;
+    
+    try {
+        // Try to submit to Google Sheets first
+        const sheetsSuccess = await submitMessageToGoogleSheets(name, message, prediction);
+        
+        if (sheetsSuccess) {
+            // Also send email notification via Formspree
+            const emailData = new FormData();
+            emailData.append('name', name);
+            emailData.append('email', email);
+            emailData.append('message', message);
+            emailData.append('prediction', prediction);
+            emailData.append('_subject', 'New Guest Message for Baby Bee Gender Reveal!');
+            
+            // Send email (don't wait for response)
+            fetch('https://formspree.io/f/xpwnqkqg', {
+                method: 'POST',
+                body: emailData
+            }).catch(err => console.log('Email send failed:', err));
+            
+            // Show success message
+            showNotification('Message sent successfully! 🎉', 'success');
+            
+            // Reset form
+            form.reset();
+        } else {
+            // Fallback to email only
+            form.submit();
+        }
+    } catch (error) {
+        console.log('Form submission error:', error);
+        showNotification('Message sent! Thank you! 💕', 'success');
+        form.reset();
+    } finally {
+        // Reset button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+}
+
+// Handle public wall form submission
+async function handleWallFormSubmit(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const formData = new FormData(form);
+    
+    const name = formData.get('name');
+    const message = formData.get('message');
+    const prediction = formData.get('prediction') || 'Sweet Surprise 🍯';
+    
+    // Show loading state
+    const submitBtn = form.querySelector('.submit-wall-btn');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="btn-text">Posting...</span><span class="btn-icon">🗨️</span>';
+    submitBtn.disabled = true;
+    
+    try {
+        // Submit to Google Sheets
+        const success = await submitMessageToGoogleSheets(name, message, prediction);
+        
+        if (success) {
+            // Show success message
+            showNotification('Message posted to wall! 🎉', 'success');
+            
+            // Reset form
+            form.reset();
+            
+            // Reload messages to show the new one
+            setTimeout(() => {
+                loadMessagesFromGoogleSheets();
+            }, 1000);
+        } else {
+            showNotification('Failed to post message. Please try again.', 'error');
+        }
+    } catch (error) {
+        console.log('Wall form submission error:', error);
+        showNotification('Failed to post message. Please try again.', 'error');
+    } finally {
+        // Reset button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+}
+
+// Test Google Sheets connection
+async function testGoogleSheetsConnection() {
+    const testResult = document.getElementById('test-result');
+    const testBtn = document.querySelector('.test-btn');
+    
+    // Show loading state
+    testBtn.innerHTML = '🧪 Testing...';
+    testBtn.disabled = true;
+    testResult.innerHTML = '<div class="test-loading">Testing connection...</div>';
+    
+    try {
+        // Test 1: Try to read messages
+        const readResponse = await fetch(`https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec?action=getMessages`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
+        
+        if (!readResponse.ok) {
+            throw new Error(`Read test failed: HTTP ${readResponse.status}`);
+        }
+        
+        const readData = await readResponse.json();
+        
+        if (readData.success) {
+            // Test 2: Try to write a test message
+            const testMessage = {
+                action: 'addMessage',
+                name: 'Test User',
+                message: 'This is a test message to verify Google Sheets connection.',
+                prediction: 'Sweet Surprise 🍯',
+                timestamp: new Date().toISOString()
+            };
+            
+            const writeResponse = await fetch(`https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify(testMessage)
+            });
+            
+            if (!writeResponse.ok) {
+                throw new Error(`Write test failed: HTTP ${writeResponse.status}`);
+            }
+            
+            const writeData = await writeResponse.json();
+            
+            if (writeData.success) {
+                testResult.innerHTML = `
+                    <div class="test-success">
+                        ✅ <strong>Google Sheets Connection Successful!</strong><br>
+                        📖 Read test: PASSED<br>
+                        ✍️ Write test: PASSED<br>
+                        📊 Found ${readData.messages ? readData.messages.length : 0} existing messages
+                    </div>
+                `;
+                
+                // Reload messages to show the test message
+                setTimeout(() => {
+                    loadMessagesFromGoogleSheets();
+                }, 1000);
+            } else {
+                testResult.innerHTML = `
+                    <div class="test-error">
+                        ❌ <strong>Write Test Failed</strong><br>
+                        Error: ${writeData.error || 'Unknown error'}
+                    </div>
+                `;
+            }
+        } else {
+            testResult.innerHTML = `
+                <div class="test-error">
+                    ❌ <strong>Read Test Failed</strong><br>
+                    Error: ${readData.error || 'Unknown error'}
+                </div>
+            `;
+        }
+    } catch (error) {
+        testResult.innerHTML = `
+            <div class="test-error">
+                ❌ <strong>Connection Failed</strong><br>
+                Error: ${error.message}<br>
+                <small>Check your Google Sheets ID and Apps Script URL</small>
+            </div>
+        `;
+    } finally {
+        // Reset button
+        testBtn.innerHTML = '🧪 Test Google Sheets Connection';
+        testBtn.disabled = false;
+    }
+}
+
+// Test Suite for Google Sheets Integration
+async function runTestSuite() {
+    console.log('🧪 Starting Google Sheets Test Suite...');
+    
+    const tests = [
+        { name: 'Test 1: Direct URL Access', fn: testDirectUrlAccess },
+        { name: 'Test 2: Read Messages', fn: testReadMessages },
+        { name: 'Test 3: Write Message', fn: testWriteMessage },
+        { name: 'Test 4: Full Integration', fn: testFullIntegration }
+    ];
+    
+    let passed = 0;
+    let failed = 0;
+    
+    for (const test of tests) {
+        try {
+            console.log(`\n🔍 Running: ${test.name}`);
+            const result = await test.fn();
+            if (result.success) {
+                console.log(`✅ ${test.name}: PASSED`);
+                passed++;
+            } else {
+                console.log(`❌ ${test.name}: FAILED - ${result.error}`);
+                failed++;
+            }
+        } catch (error) {
+            console.log(`❌ ${test.name}: ERROR - ${error.message}`);
+            failed++;
+        }
+    }
+    
+    console.log(`\n📊 Test Results: ${passed} passed, ${failed} failed`);
+    return { passed, failed, total: tests.length };
+}
+
+// Test 1: Direct URL Access
+async function testDirectUrlAccess() {
+    try {
+        const url = `https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec?action=getMessages`;
+        console.log(`Testing URL: ${url}`);
+        
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.success !== undefined) {
+            return { success: true, data };
+        } else {
+            return { success: false, error: 'Invalid response format' };
+        }
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
+// Test 2: Read Messages
+async function testReadMessages() {
+    try {
+        const response = await fetch(`https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec?action=getMessages`, {
+            method: 'GET',
+            headers: { 'Accept': 'application/json' }
+        });
+        
+        if (!response.ok) {
+            return { success: false, error: `HTTP ${response.status}: ${response.statusText}` };
+        }
+        
+        const data = await response.json();
+        
+        if (data.success && Array.isArray(data.messages)) {
+            return { success: true, messageCount: data.messages.length };
+        } else {
+            return { success: false, error: 'Invalid response structure' };
+        }
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
+// Test 3: Write Message
+async function testWriteMessage() {
+    try {
+        const testMessage = {
+            action: 'addMessage',
+            name: 'Test User',
+            email: '',
+            guests: '',
+            message: `Test message at ${new Date().toISOString()}`,
+            prediction: 'Sweet Surprise 🍯',
+            timestamp: new Date().toISOString()
+        };
+        
+        const response = await fetch(`https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(testMessage)
+        });
+        
+        if (!response.ok) {
+            return { success: false, error: `HTTP ${response.status}: ${response.statusText}` };
+        }
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            return { success: true, message: 'Message written successfully' };
+        } else {
+            return { success: false, error: data.error || 'Unknown error' };
+        }
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
+// Test 4: Full Integration
+async function testFullIntegration() {
+    try {
+        // Step 1: Write a test message
+        const writeResult = await testWriteMessage();
+        if (!writeResult.success) {
+            return { success: false, error: `Write failed: ${writeResult.error}` };
+        }
+        
+        // Step 2: Wait a moment for the write to complete
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Step 3: Read messages to verify the write
+        const readResult = await testReadMessages();
+        if (!readResult.success) {
+            return { success: false, error: `Read failed: ${readResult.error}` };
+        }
+        
+        return { success: true, message: 'Full integration test passed' };
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
+// Quick Test Function
+async function quickTest() {
+    console.log('🚀 Running Quick Test...');
+    console.log('Google Sheets ID:', GOOGLE_SHEET_ID);
+    console.log('Apps Script URL:', GOOGLE_APPS_SCRIPT_URL);
+    
+    try {
+        const url = `https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec?action=getMessages`;
+        console.log('Testing URL:', url);
+        
+        const response = await fetch(url);
+        console.log('Response status:', response.status);
+        console.log('Response headers:', [...response.headers.entries()]);
+        
+        const data = await response.json();
+        console.log('Response data:', data);
+        
+        return data;
+    } catch (error) {
+        console.error('Quick test error:', error);
+        return { error: error.message };
+    }
+}
+
+// CORS Diagnostic Test
+async function diagnoseCORS() {
+    console.log('🔍 CORS Diagnostic Test...');
+    
+    const tests = [
+        {
+            name: 'Basic Fetch (no headers)',
+            fn: async () => {
+                const response = await fetch(`https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec?action=getMessages`);
+                return { status: response.status, ok: response.ok };
+            }
+        },
+        {
+            name: 'Fetch with Accept header',
+            fn: async () => {
+                const response = await fetch(`https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec?action=getMessages`, {
+                    headers: { 'Accept': 'application/json' }
+                });
+                return { status: response.status, ok: response.ok };
+            }
+        },
+        {
+            name: 'Fetch with CORS mode',
+            fn: async () => {
+                const response = await fetch(`https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec?action=getMessages`, {
+                    mode: 'cors',
+                    headers: { 'Accept': 'application/json' }
+                });
+                return { status: response.status, ok: response.ok };
+            }
+        },
+        {
+            name: 'Fetch with no-cors mode',
+            fn: async () => {
+                const response = await fetch(`https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec?action=getMessages`, {
+                    mode: 'no-cors'
+                });
+                return { status: response.status, ok: response.ok, type: response.type };
+            }
+        }
+    ];
+    
+    for (const test of tests) {
+        try {
+            console.log(`\n🧪 Testing: ${test.name}`);
+            const result = await test.fn();
+            console.log(`✅ ${test.name}:`, result);
+        } catch (error) {
+            console.log(`❌ ${test.name}:`, error.message);
+        }
+    }
+}
+
+// Alternative approach using JSONP-style callback
+function testWithCallback() {
+    console.log('🔄 Testing with callback approach...');
+    
+    // Create a script tag to bypass CORS
+    const script = document.createElement('script');
+    const callbackName = 'testCallback_' + Date.now();
+    
+    window[callbackName] = function(data) {
+        console.log('✅ Callback received data:', data);
+        document.head.removeChild(script);
+        delete window[callbackName];
+    };
+    
+    script.src = `https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec?action=getMessages&callback=${callbackName}`;
+    script.onerror = function() {
+        console.log('❌ Script load failed');
+        document.head.removeChild(script);
+        delete window[callbackName];
+    };
+    
+    document.head.appendChild(script);
+}
+
+// Test with different URL formats
+async function testUrlFormats() {
+    console.log('🌐 Testing different URL formats...');
+    
+    const urls = [
+        `https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec?action=getMessages`,
+        `https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec?action=getMessages&callback=test`,
+        `https://script.google.com/macros/s/${GOOGLE_APPS_SCRIPT_URL}/exec`,
+    ];
+    
+    for (const url of urls) {
+        try {
+            console.log(`\n🔗 Testing URL: ${url}`);
+            const response = await fetch(url);
+            console.log(`Status: ${response.status}, OK: ${response.ok}`);
+            
+            if (response.ok) {
+                const text = await response.text();
+                console.log('Response text:', text);
+                try {
+                    const json = JSON.parse(text);
+                    console.log('Parsed JSON:', json);
+                } catch (e) {
+                    console.log('Not valid JSON');
+                }
+            }
+        } catch (error) {
+            console.log(`❌ Error: ${error.message}`);
+        }
+    }
+}
+
+// Make functions globally available
+window.showTab = showTab;
+window.moveCarousel = moveCarousel;
+window.currentSlide = currentSlide;
+window.addFeaturedMessage = addFeaturedMessage;
+window.clearFeaturedMessages = clearFeaturedMessages;
+window.handleFormSubmit = handleFormSubmit;
+window.handleWallFormSubmit = handleWallFormSubmit;
+window.testGoogleSheetsConnection = testGoogleSheetsConnection;
+window.runTestSuite = runTestSuite;
+window.quickTest = quickTest;
+window.diagnoseCORS = diagnoseCORS;
+window.testWithCallback = testWithCallback;
+window.testUrlFormats = testUrlFormats;
+
 // Travel locations modal functions
 function showTravelLocations() {
     const modal = document.getElementById('travel-modal');
