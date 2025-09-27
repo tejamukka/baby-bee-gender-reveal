@@ -112,11 +112,20 @@ function ensureBeeCursor() {
     const beeCursorSVG = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4=';
     const honeyCursorSVG = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNiIgZmlsbD0iI2ZmOGMwMCI+8J+QvzwvdGV4dD48L3N2Zz4=';
     
-    // Apply bee cursor to all elements
+    // Apply bee cursor to ALL elements - most aggressive approach
+    const allElements = document.querySelectorAll('*');
+    allElements.forEach(el => {
+        if (!el.style.cursor || el.style.cursor === 'default' || el.style.cursor === 'auto') {
+            el.style.cursor = beeCursorSVG + ', auto';
+        }
+    });
+    
+    // Apply to document body and html
+    document.documentElement.style.cursor = beeCursorSVG + ', auto';
     document.body.style.cursor = beeCursorSVG + ', auto';
     
     // Apply to all interactive elements
-    const interactiveElements = document.querySelectorAll('button, a, [onclick], [role="button"], .clickable, .carousel-btn, .gender-btn, .open-invitation-btn, .cta-button, .nav-link, .instagram-link');
+    const interactiveElements = document.querySelectorAll('button, a, [onclick], [role="button"], .clickable, .carousel-btn, .gender-btn, .open-invitation-btn, .cta-button, .nav-link, .instagram-link, .honey-drop');
     interactiveElements.forEach(el => {
         el.style.cursor = beeCursorSVG + ', pointer';
         
@@ -136,7 +145,7 @@ function ensureBeeCursor() {
         el.style.cursor = beeCursorSVG + ', text';
     });
     
-    console.log('Bee cursor applied via JavaScript fallback');
+    console.log('Bee cursor applied via JavaScript fallback to all elements');
 }
 
 // Reapply bee cursor when new elements are added
@@ -158,6 +167,17 @@ document.addEventListener('DOMContentLoaded', function() {
     observer.observe(document.body, {
         childList: true,
         subtree: true
+    });
+    
+    // Ensure bee cursor is applied
+    ensureBeeCursor();
+    
+    // Reapply bee cursor every 2 seconds to ensure it's always maintained
+    setInterval(ensureBeeCursor, 2000);
+    
+    // Also reapply on mouse movement to catch any missed elements
+    document.addEventListener('mousemove', function() {
+        ensureBeeCursor();
     });
 });
 
@@ -553,7 +573,7 @@ function loadMessages() {
     const track = document.getElementById('messages-track');
     
     if (!track) {
-        console.log('Messages track not found');
+        console.log('Messages track not found - skipping message loading');
         return;
     }
     
@@ -642,7 +662,10 @@ function formatTimestamp(timestamp) {
 // Update carousel dots based on number of slides
 function updateCarouselDots() {
     const dotsContainer = document.querySelector('.carousel-dots');
-    if (!dotsContainer) return;
+    if (!dotsContainer) {
+        console.log('Carousel dots container not found - skipping dots creation');
+        return;
+    }
     
     dotsContainer.innerHTML = '';
     
@@ -1203,10 +1226,15 @@ setInterval(createFloatingBee, 15000);
     });
 
 // Registry Link Handling
-document.querySelectorAll('.registry-link').forEach(link => {
+document.querySelectorAll('.registry-link, .success-registry-link').forEach(link => {
     link.addEventListener('click', function(e) {
-        const itemName = this.closest('.registry-item').querySelector('h3').textContent;
-        showNotification(`Opening ${itemName} registry... 🛍️`, 'info');
+        const itemName = this.closest('.registry-item, .success-registry-single')?.querySelector('h3, h5')?.textContent || 'Amazon Registry';
+        showNotification(`🎁 Opening ${itemName} registry... Thanks for helping us prepare for Baby Bee! 🛍️`, 'success');
+        
+        // Track registry view
+        if (window.guestPersonalization) {
+            window.guestPersonalization.markSectionComplete('registry');
+        }
         
         // Allow the link to open normally - no preventDefault()
         // The link will open in a new tab as specified by target="_blank"
@@ -1216,11 +1244,11 @@ document.querySelectorAll('.registry-link').forEach(link => {
 // Map Link Handling
 document.querySelector('.map-link').addEventListener('click', function(e) {
     e.preventDefault();
-    showNotification('Opening directions to Teja & Suppu\'s Hive... 🗺️', 'info');
+    showNotification('🗺️ Opening directions to Teja & Suppu\'s Hive... See you there! 🏠', 'success');
     
     // In a real app, you would open Google Maps or Apple Maps
     setTimeout(() => {
-        showNotification('Map would open here! 📍', 'success');
+        showNotification('📍 Map would open here! Get ready for the party! 🎉', 'success');
     }, 1000);
 });
 
@@ -1395,9 +1423,14 @@ rsvpForm.addEventListener('submit', function(e) {
                 showRSVPSuccess();
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
-        rsvpForm.reset();
+                rsvpForm.reset();
                 this.classList.remove('submitting');
                 showNotification('RSVP submitted successfully! Check your email! 📧', 'success');
+                
+                // Send confirmation email to the user
+                setTimeout(() => {
+                    sendRSVPConfirmationEmail(rsvpData);
+                }, 1000);
             } else {
                 throw new Error('Submission failed');
             }
@@ -1638,7 +1671,7 @@ function loadRSVPData() {
 
 function exportRSVPs() {
     // With Formspree, export is done through the Formspree dashboard
-    showNotification('📧 Export RSVPs through your Formspree dashboard! Check your email for the link.', 'info');
+    showNotification('📧 Export RSVPs through your Formspree dashboard! Check your email for the link. 🎉', 'success');
 }
 
 
@@ -1858,7 +1891,10 @@ let honeyGame = {
 // Start the honey drop game
 function startHoneyGame() {
     const overlay = document.getElementById('honey-game-overlay');
-    if (!overlay) return;
+    if (!overlay) {
+        console.log('Honey game overlay not found - skipping game start');
+        return;
+    }
     
     // Reset game state
     honeyGame.isActive = true;
@@ -1874,9 +1910,13 @@ function startHoneyGame() {
     }, 10);
     
     // Update UI
-    document.getElementById('honey-count').textContent = honeyGame.score;
-    document.getElementById('collected-facts').innerHTML = '';
-    document.getElementById('game-message').textContent = 'Click the falling honey drops to collect sweet baby facts!';
+    const honeyCount = document.getElementById('honey-count');
+    const collectedFacts = document.getElementById('collected-facts');
+    const gameMessage = document.getElementById('game-message');
+    
+    if (honeyCount) honeyCount.textContent = honeyGame.score;
+    if (collectedFacts) collectedFacts.innerHTML = '';
+    if (gameMessage) gameMessage.textContent = 'Click the falling honey drops to collect sweet baby facts!';
     
     // Start dropping honey
     honeyGame.dropInterval = setInterval(createHoneyDrop, 1500);
@@ -1884,7 +1924,10 @@ function startHoneyGame() {
     // Game timer (optional - game can run indefinitely)
     setTimeout(() => {
         if (honeyGame.isActive) {
-            document.getElementById('game-message').textContent = `Great job! You collected ${honeyGame.score} honey drops! Keep playing!`;
+            const gameMessage = document.getElementById('game-message');
+            if (gameMessage) {
+                gameMessage.textContent = `Great job! You collected ${honeyGame.score} honey drops! Keep playing!`;
+            }
         }
     }, 30000);
     
@@ -1941,24 +1984,24 @@ function createHoneyDrop() {
     
     // Add click handler with better event handling
     drop.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+    e.preventDefault();
+            e.stopPropagation();
         console.log('Honey drop clicked!');
         collectHoneyDrop(this);
     });
-    
+        
     // Add touch handler for mobile
     drop.addEventListener('touchstart', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+            e.preventDefault();
+            e.stopPropagation();
         console.log('Honey drop touched!');
         collectHoneyDrop(this);
     });
     
     // Add mousedown as backup
     drop.addEventListener('mousedown', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+            e.preventDefault();
+            e.stopPropagation();
         console.log('Honey drop mousedown!');
         collectHoneyDrop(this);
     });
@@ -2018,7 +2061,10 @@ function collectHoneyDrop(dropElement) {
 // Add fact to collection display
 function addFactToCollection(fact) {
     const factsContainer = document.getElementById('collected-facts');
-    if (!factsContainer) return;
+    if (!factsContainer) {
+        console.log('Facts container not found - skipping fact addition');
+        return;
+    }
     
     const factElement = document.createElement('div');
     factElement.className = 'fact-item';
@@ -2039,7 +2085,10 @@ function addFactToCollection(fact) {
     ];
     
     const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-    document.getElementById('game-message').textContent = randomMessage;
+    const gameMessage = document.getElementById('game-message');
+    if (gameMessage) {
+        gameMessage.textContent = randomMessage;
+    }
 }
 
 // Play honey collect sound (optional - works on GitHub Pages)
@@ -2078,9 +2127,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (totalHoney > 0) {
         console.log(`Welcome back! You've collected ${totalHoney} honey drops total! 🍯`);
         
-        // Maybe show this info somewhere on the page
+        // Show this info in the notification system
         setTimeout(() => {
-            showNotification(`🍯 Welcome back, honey collector! You've gathered ${totalHoney} drops total!`, 'info');
+            showNotification(`🍯 Welcome back, honey collector! You've gathered ${totalHoney} drops total!`, 'success');
         }, 2000);
     }
 });
@@ -2127,20 +2176,20 @@ const guestPersonalization = {
     showWelcomeMessage() {
         const data = this.getGuestData();
         
-        if (data.visits === 0) {
+        if (data.visits === 1) {
             // First time visitor
-            setTimeout(() => {
-                showNotification('🐝 Welcome to our Baby Bee celebration! Explore and collect honey drops! 🍯', 'info');
+    setTimeout(() => {
+                showNotification('🐝 Welcome to our Baby Bee celebration! Explore and collect honey drops! 🍯', 'success');
             }, 3000);
         } else if (data.name) {
             // Returning visitor with name
             setTimeout(() => {
                 showNotification(`🍯 Welcome back, ${data.name}! You've visited ${data.visits} times and collected ${data.honeyCollected} honey drops!`, 'success');
-            }, 2000);
+    }, 2000);
         } else {
             // Returning visitor without name
             setTimeout(() => {
-                showNotification(`🐝 Welcome back! This is visit #${data.visits}. Don't forget to RSVP! 💕`, 'info');
+                showNotification(`🐝 Welcome back! This is visit #${data.visits}. Don't forget to RSVP! 💕`, 'success');
             }, 2000);
         }
         
@@ -2195,7 +2244,7 @@ const guestPersonalization = {
         const rewards = {
             'home': '🏠 You explored our story! Here\'s a bonus honey drop! 🍯',
             'rsvp': '📝 RSVP completed! You\'re officially part of the hive! 🐝',
-            'registry': '🎁 Registry viewed! Thanks for helping us prepare! 💕',
+            'registry': '🎁 Registry viewed! Thanks for helping us prepare for Baby Bee! 💕',
             'details': '📅 Event details noted! See you at the party! 🎉',
             'guest-messages': '💌 Messages section explored! Thanks for spreading the love! ✨'
         };
@@ -2262,12 +2311,12 @@ function enhanceRSVPSubmission() {
         // Get form data for personalization
         const formData = new FormData(rsvpForm);
         const rsvpData = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            guests: formData.get('guests'),
-            attending: formData.get('attending'),
+        name: formData.get('name'),
+        email: formData.get('email'),
+        guests: formData.get('guests'),
+        attending: formData.get('attending'),
             prediction: formData.get('gender-prediction'),
-            message: formData.get('message'),
+        message: formData.get('message'),
             timestamp: new Date().toISOString()
         };
         
@@ -2606,7 +2655,7 @@ function updateHoneyDisplay() {
         
         // Add bounce animation
         honeyAmount.style.animation = 'none';
-        setTimeout(() => {
+    setTimeout(() => {
             honeyAmount.style.animation = 'honeyBounce 0.5s ease';
         }, 10);
     }
@@ -2625,4 +2674,225 @@ document.head.appendChild(honeyBounceStyle);
 
 // Export functions for global access
 window.guestPersonalization = guestPersonalization;
+
+// ========================================
+// EMAIL SYSTEM - EmailJS Integration
+// ========================================
+
+// EmailJS Configuration
+const EMAILJS_CONFIG = {
+    serviceId: 'service_qittxes', // Your EmailJS service ID
+    templateId: 'template_rpi1rbl', // Your EmailJS template ID
+    publicKey: '2wpg-B7rwnaW3Ifpv' // Your EmailJS public key
+};
+
+// Initialize EmailJS when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize EmailJS with your public key
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init(EMAILJS_CONFIG.publicKey);
+        console.log('EmailJS initialized successfully');
+    } else {
+        console.log('EmailJS not loaded - check your internet connection');
+    }
+});
+
+// Email Templates
+const EMAIL_TEMPLATES = {
+    welcome: {
+        subject: '🐝 Welcome to our Baby Bee Celebration!',
+        message: `
+            <h2>🐝 Welcome to our Baby Bee Celebration!</h2>
+            <p>Hi {{name}},</p>
+            <p>Thank you for joining our special celebration! We're so excited to share this journey with you.</p>
+            <p><strong>Event Details:</strong></p>
+            <ul>
+                <li>📅 Date: Saturday, October 25th, 2025</li>
+                <li>⏰ Time: 11:00 AM</li>
+                <li>📍 Location: Teja & Supraja's Hive, 6565 Scenery Ct, San Jose, CA 95120</li>
+            </ul>
+            <p>Don't forget to:</p>
+            <ul>
+                <li>🎯 Make your gender prediction</li>
+                <li>🎁 Check out our registry</li>
+                <li>🍯 Collect honey drops on our website</li>
+            </ul>
+            <p>Can't wait to celebrate with you!</p>
+            <p>With love,<br>Teja & Supraja 🍯</p>
+        `
+    },
+    
+    rsvpConfirmation: {
+        subject: '🎉 RSVP Confirmed - See you at our Baby Bee Party!',
+        message: `
+            <h2>🎉 RSVP Confirmed!</h2>
+            <p>Hi {{name}},</p>
+            <p>Thank you for confirming your attendance! We're thrilled you'll be joining us for our Baby Bee celebration.</p>
+            <p><strong>Your RSVP Details:</strong></p>
+            <ul>
+                <li>👥 Guests: {{guests}}</li>
+                <li>🎯 Gender Prediction: {{prediction}}</li>
+                <li>📧 Email: {{email}}</li>
+            </ul>
+            <p><strong>Event Reminder:</strong></p>
+            <ul>
+                <li>📅 Saturday, October 25th, 2025 at 11:00 AM</li>
+                <li>📍 Teja & Supraja's Hive, 6565 Scenery Ct, San Jose, CA 95120</li>
+                <li>👗 Dress Code: Wear yellow to support boy, pink for girl!</li>
+            </ul>
+            <p>We can't wait to see you there!</p>
+            <p>With love,<br>Teja & Supraja 🍯</p>
+        `
+    },
+    
+    genderReveal: {
+        subject: '🍯 The Big Reveal - Baby Bee Gender Announcement!',
+        message: `
+            <h2>🍯 The Big Reveal!</h2>
+            <p>Hi {{name}},</p>
+            <p>The moment you've been waiting for is here! We're excited to share the gender of our little Baby Bee!</p>
+            <p><strong>Drumroll please... 🥁</strong></p>
+            <p style="font-size: 24px; text-align: center; margin: 20px 0;">
+                {{gender_reveal}}
+            </p>
+            <p>Thank you for being part of this special journey with us. Your love and support mean the world to us!</p>
+            <p>With love,<br>Teja & Supraja 🍯</p>
+        `
+    },
+    
+    thankYou: {
+        subject: '💕 Thank You for Celebrating with Us!',
+        message: `
+            <h2>💕 Thank You for Celebrating with Us!</h2>
+            <p>Hi {{name}},</p>
+            <p>What an amazing celebration it was! Thank you for making our Baby Bee gender reveal party so special.</p>
+            <p>We're so grateful for your love, support, and the wonderful memories we created together.</p>
+            <p>Stay tuned for updates about our little one's arrival!</p>
+            <p>With love and gratitude,<br>Teja & Supraja 🍯</p>
+        `
+    }
+};
+
+// Send Email Function
+async function sendEmail(templateType, recipientEmail, recipientName, additionalData = {}) {
+    try {
+        // Check if EmailJS is available
+        if (typeof emailjs === 'undefined') {
+            console.error('EmailJS not loaded');
+            showNotification('Email service not available. Please check your connection.', 'error');
+            return false;
+        }
+
+        // Get template
+        const template = EMAIL_TEMPLATES[templateType];
+        if (!template) {
+            console.error('Email template not found:', templateType);
+            return false;
+        }
+
+        // Prepare email data
+        const emailData = {
+            to_email: recipientEmail,
+            to_name: recipientName,
+            subject: template.subject,
+            message: template.message,
+            ...additionalData
+        };
+
+        // Replace placeholders in message
+        emailData.message = emailData.message
+            .replace(/\{\{name\}\}/g, recipientName)
+            .replace(/\{\{email\}\}/g, recipientEmail)
+            .replace(/\{\{guests\}\}/g, additionalData.guests || '')
+            .replace(/\{\{prediction\}\}/g, additionalData.prediction || '')
+            .replace(/\{\{gender_reveal\}\}/g, additionalData.gender_reveal || '');
+
+        // Send email
+        const result = await emailjs.send(
+            EMAILJS_CONFIG.serviceId,
+            EMAILJS_CONFIG.templateId,
+            emailData
+        );
+
+        console.log('Email sent successfully:', result);
+        showNotification(`📧 Email sent to ${recipientName}!`, 'success');
+        return true;
+
+    } catch (error) {
+        console.error('Email sending failed:', error);
+        showNotification('Failed to send email. Please try again later.', 'error');
+        return false;
+    }
+}
+
+// Send Welcome Email
+function sendWelcomeEmail(email, name) {
+    if (!email || !name) {
+        console.error('Email and name are required');
+        return;
+    }
+    
+    sendEmail('welcome', email, name);
+}
+
+// Send RSVP Confirmation Email
+function sendRSVPConfirmationEmail(rsvpData) {
+    if (!rsvpData.email || !rsvpData.name) {
+        console.error('RSVP data incomplete');
+        return;
+    }
+    
+    sendEmail('rsvpConfirmation', rsvpData.email, rsvpData.name, {
+        guests: rsvpData.guests,
+        prediction: rsvpData.prediction || 'Not specified'
+    });
+}
+
+// Send Gender Reveal Email
+function sendGenderRevealEmail(email, name, gender) {
+    if (!email || !name || !gender) {
+        console.error('Gender reveal data incomplete');
+        return;
+    }
+    
+    const genderReveal = gender === 'boy' ? 
+        'It\'s a BOY! 👶🍯 Our little prince is on the way!' : 
+        'It\'s a GIRL! 👶🍯 Our little princess is on the way!';
+    
+    sendEmail('genderReveal', email, name, {
+        gender_reveal: genderReveal
+    });
+}
+
+// Send Thank You Email
+function sendThankYouEmail(email, name) {
+    if (!email || !name) {
+        console.error('Thank you email data incomplete');
+        return;
+    }
+    
+    sendEmail('thankYou', email, name);
+}
+
+// Test Email Function (for debugging)
+function testEmailSystem() {
+    console.log('Testing EmailJS configuration...');
+    console.log('Service ID:', EMAILJS_CONFIG.serviceId);
+    console.log('Template ID:', EMAILJS_CONFIG.templateId);
+    console.log('Public Key:', EMAILJS_CONFIG.publicKey);
+    
+    // Test with a sample email (replace with your email for testing)
+    const testEmail = 'tejamukka@gmail.com'; // Replace with your email
+    const testName = 'Teja';
+    
+    console.log('Sending test welcome email...');
+    sendWelcomeEmail(testEmail, testName);
+}
+
+// Export email functions for global access
+window.sendWelcomeEmail = sendWelcomeEmail;
+window.sendRSVPConfirmationEmail = sendRSVPConfirmationEmail;
+window.sendGenderRevealEmail = sendGenderRevealEmail;
+window.sendThankYouEmail = sendThankYouEmail;
+window.testEmailSystem = testEmailSystem;
 window.trackSectionView = trackSectionView;
