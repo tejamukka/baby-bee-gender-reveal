@@ -2799,7 +2799,7 @@ async function sendEmail(templateType, recipientEmail, recipientName, additional
             return false;
         }
 
-        // Prepare comprehensive email data with all event details
+        // Prepare comprehensive email data with all event details (from actual website)
         const emailData = {
             // Basic recipient info
             to_email: recipientEmail,
@@ -2807,25 +2807,30 @@ async function sendEmail(templateType, recipientEmail, recipientName, additional
             email: recipientEmail,
             name: recipientName,
             
-            // Event details
-            title: 'Baby Bee Gender Reveal',
+            // Event details (from index.html)
+            title: 'Baby Bee Gender Reveal Party',
             host_names: 'Teja & Supraja',
             event_date: 'Saturday, October 25th, 2025',
-            event_time: '11:00 AM',
+            event_time: '11:00 AM - 2:00 PM',
             venue: 'Teja & Supraja\'s Hive',
-            map_link: 'https://maps.google.com/?q=6565+Scenery+Ct,+San+Jose,+CA+95120',
+            map_link: 'https://maps.google.com/maps?q=6565+Scenery+Ct,+San+Jose,+CA+95120',
             
             // Guest info
             guest_name: recipientName,
             
-            // Event details
+            // Event details (from actual website)
             notes: 'We\'re buzzing with excitement and would love for you to join us for our special gender reveal celebration!',
             rsvp_link: 'https://tejamukka.github.io/baby-bee-gender-reveal/#rsvp',
             calendar_link: 'https://tejamukka.github.io/baby-bee-gender-reveal/#details',
-            registry_link: 'https://www.amazon.com/baby-reg/teja-mukka-january-2026-sanjose/321NAVMSWVSFH',
+            registry_link: 'https://www.amazon.com/baby-reg/teja-mukka-january-2026-sanjose/321NAVMSWVSFH?ref_=cm_sw_r_apin_dp_6R40G52KKG1MHT6XXJCB&language=en-US',
             dress_code: 'Wear yellow to support boy, pink for girl!',
             web_version_link: 'https://tejamukka.github.io/baby-bee-gender-reveal/',
             contact_email: 'tejamukka@gmail.com',
+            
+            // Additional event details (from website)
+            event_description: 'Join Teja & Supraja for their gender reveal celebration! What will baby bee? 🐝',
+            timezone: 'America/Los_Angeles',
+            full_address: '6565 Scenery Ct, San Jose, CA 95120',
             
             // Template content
             subject: template.subject,
@@ -2926,19 +2931,22 @@ function testEmailSystem() {
     const testName = 'Teja';
     
     console.log('Sending test welcome email with all parameters...');
-    console.log('Available parameters being sent:');
-    console.log('- title: Baby Bee Gender Reveal');
+    console.log('Available parameters being sent (from actual website):');
+    console.log('- title: Baby Bee Gender Reveal Party');
     console.log('- host_names: Teja & Supraja');
     console.log('- event_date: Saturday, October 25th, 2025');
-    console.log('- event_time: 11:00 AM');
+    console.log('- event_time: 11:00 AM - 2:00 PM');
     console.log('- venue: Teja & Supraja\'s Hive');
-    console.log('- map_link: Google Maps link');
-    console.log('- rsvp_link: RSVP page link');
-    console.log('- calendar_link: Calendar page link');
-    console.log('- registry_link: Amazon registry link');
+    console.log('- full_address: 6565 Scenery Ct, San Jose, CA 95120');
+    console.log('- map_link: https://maps.google.com/maps?q=6565+Scenery+Ct,+San+Jose,+CA+95120');
+    console.log('- rsvp_link: https://tejamukka.github.io/baby-bee-gender-reveal/#rsvp');
+    console.log('- calendar_link: https://tejamukka.github.io/baby-bee-gender-reveal/#details');
+    console.log('- registry_link: https://www.amazon.com/baby-reg/teja-mukka-january-2026-sanjose/321NAVMSWVSFH...');
     console.log('- dress_code: Wear yellow to support boy, pink for girl!');
-    console.log('- web_version_link: Website link');
+    console.log('- web_version_link: https://tejamukka.github.io/baby-bee-gender-reveal/');
     console.log('- contact_email: tejamukka@gmail.com');
+    console.log('- timezone: America/Los_Angeles');
+    console.log('- event_description: Join Teja & Supraja for their gender reveal celebration! What will baby bee? 🐝');
     console.log('- guest_name: ' + testName);
     console.log('- email: ' + testEmail);
     
