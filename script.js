@@ -2728,7 +2728,7 @@ async function sendEmail(templateType, recipientEmail, recipientName, additional
             title: 'Baby Bee Gender Reveal Party',
             host_names: 'Teja & Supraja',
             event_date: 'Saturday, October 25th, 2025',
-            event_time: '11:00 AM - 2:00 PM',
+            event_time: 'Starting at 11AM',
             venue: 'Teja & Supraja\'s Hive',
             map_link: 'https://maps.google.com/maps?q=6565+Scenery+Ct,+San+Jose,+CA+95120',
             
@@ -2888,7 +2888,7 @@ function testEmailSystem() {
     console.log('- title: Baby Bee Gender Reveal Party');
     console.log('- host_names: Teja & Supraja');
     console.log('- event_date: Saturday, October 25th, 2025');
-    console.log('- event_time: 11:00 AM - 2:00 PM');
+    console.log('- event_time: Starting at 11AM');
     console.log('- venue: Teja & Supraja\'s Hive');
     console.log('- full_address: 6565 Scenery Ct, San Jose, CA 95120');
     console.log('- map_link: https://maps.google.com/maps?q=6565+Scenery+Ct,+San+Jose,+CA+95120');

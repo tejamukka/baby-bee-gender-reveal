@@ -35,7 +35,7 @@ Visit the live website: [https://tejamukka.github.io/baby-bee-gender-reveal](htt
 ## 📅 Event Details
 
 - **Date**: Saturday, October 25th, 2025
-- **Time**: 11:00 AM - 2:00 PM (Pacific)
+- **Time**: Starting at 11AM (Pacific)
 - **Location**: 6565 Scenery Ct, San Jose, CA 95120
 - **Contact**: tejamukka@gmail.com | (682) 408-1746
 
