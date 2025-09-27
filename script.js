@@ -1939,15 +1939,27 @@ function createHoneyDrop() {
     drop.style.left = randomX + 'px';
     drop.style.top = '-50px';
     
-    // Add click handler
+    // Add click handler with better event handling
     drop.addEventListener('click', function(e) {
         e.preventDefault();
+        e.stopPropagation();
+        console.log('Honey drop clicked!');
         collectHoneyDrop(this);
     });
     
     // Add touch handler for mobile
     drop.addEventListener('touchstart', function(e) {
         e.preventDefault();
+        e.stopPropagation();
+        console.log('Honey drop touched!');
+        collectHoneyDrop(this);
+    });
+    
+    // Add mousedown as backup
+    drop.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Honey drop mousedown!');
         collectHoneyDrop(this);
     });
     
@@ -1963,13 +1975,25 @@ function createHoneyDrop() {
 
 // Collect a honey drop
 function collectHoneyDrop(dropElement) {
-    if (!honeyGame.isActive || dropElement.classList.contains('collected')) return;
+    console.log('collectHoneyDrop called', { isActive: honeyGame.isActive, alreadyCollected: dropElement.classList.contains('collected') });
+    
+    if (!honeyGame.isActive || dropElement.classList.contains('collected')) {
+        console.log('Honey drop collection blocked:', { isActive: honeyGame.isActive, alreadyCollected: dropElement.classList.contains('collected') });
+        return;
+    }
     
     dropElement.classList.add('collected');
     honeyGame.score++;
     
+    console.log('Honey collected! New score:', honeyGame.score);
+    
     // Update score display
-    document.getElementById('honey-count').textContent = honeyGame.score;
+    const honeyCountElement = document.getElementById('honey-count');
+    if (honeyCountElement) {
+        honeyCountElement.textContent = honeyGame.score;
+    } else {
+        console.error('honey-count element not found!');
+    }
     
     // Add a random fact
     const randomFact = honeyGame.facts[Math.floor(Math.random() * honeyGame.facts.length)];
