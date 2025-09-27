@@ -95,6 +95,450 @@ input, textarea, select {
     cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+4p2U8J+QvTwvdGV4dD48L3N2Zz4='), text !important;
 }
 
+/* Honey Drop Game Styles */
+.honey-game-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(139, 69, 19, 0.95);
+    z-index: 15000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.honey-game-container {
+    background: linear-gradient(135deg, #fff8dc 0%, #f5deb3 100%);
+    border-radius: 20px;
+    padding: 20px;
+    max-width: 90vw;
+    max-height: 90vh;
+    width: 800px;
+    height: 600px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 3px solid #ffd700;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #ffd700;
+}
+
+.game-header h3 {
+    color: #8b4513;
+    font-family: 'Kalam', cursive;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.game-stats {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.honey-score {
+    background: linear-gradient(135deg, #ffd700 0%, #ffb347 100%);
+    padding: 8px 15px;
+    border-radius: 20px;
+    color: #8b4513;
+    font-weight: bold;
+    font-family: 'Kalam', cursive;
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+}
+
+.close-game-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.close-game-btn:hover {
+    background: #c82333;
+    transform: scale(1.1);
+}
+
+.game-area {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(to bottom, #87ceeb 0%, #98fb98 100%);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid #ffd700;
+}
+
+.game-message {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: #8b4513;
+    font-family: 'Kalam', cursive;
+    font-weight: bold;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.honey-drop {
+    position: absolute;
+    font-size: 2rem;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10;
+    animation: fallDown 4s linear forwards;
+    transition: transform 0.1s ease;
+}
+
+.honey-drop:hover {
+    transform: scale(1.2);
+    filter: brightness(1.2);
+}
+
+.honey-drop.collected {
+    animation: collectHoney 0.5s ease forwards;
+}
+
+@keyframes fallDown {
+    from {
+        top: -50px;
+        opacity: 1;
+    }
+    to {
+        top: 450px;
+        opacity: 0.7;
+    }
+}
+
+@keyframes collectHoney {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5) rotate(180deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(0) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.collected-facts {
+    margin-top: 15px;
+    max-height: 100px;
+    overflow-y: auto;
+    padding: 10px;
+    background: rgba(255, 248, 220, 0.5);
+    border-radius: 10px;
+    border: 1px solid #ffd700;
+}
+
+.fact-item {
+    background: linear-gradient(135deg, #fff8dc 0%, #f0e68c 100%);
+    padding: 8px 12px;
+    margin: 5px 0;
+    border-radius: 15px;
+    color: #8b4513;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem;
+    border-left: 4px solid #ffd700;
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.honey-game-btn {
+    background: linear-gradient(135deg, #ffd700 0%, #ffb347 100%);
+    color: #8b4513;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-family: 'Kalam', cursive;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+    border: 2px solid #ffd700;
+}
+
+.honey-game-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+    background: linear-gradient(135deg, #ffb347 0%, #ffd700 100%);
+}
+
+.honey-game-btn:active {
+    transform: translateY(-1px);
+}
+
+/* Mobile Responsive for Honey Game */
+@media (max-width: 768px) {
+    .honey-game-container {
+        width: 95vw;
+        height: 80vh;
+        padding: 15px;
+    }
+    
+    .game-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .game-area {
+        height: 300px;
+    }
+    
+    .honey-drop {
+        font-size: 1.5rem;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .honey-game-btn {
+        font-size: 1rem;
+        padding: 12px 25px;
+    }
+}
+
+/* Navigation Personalization Styles */
+.nav-personalization {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.honey-counter {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(135deg, #ffd700 0%, #ffb347 100%);
+    padding: 5px 12px;
+    border-radius: 20px;
+    color: #8b4513;
+    font-weight: bold;
+    font-family: 'Kalam', cursive;
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.honey-counter:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+.honey-icon {
+    font-size: 1.2rem;
+    animation: honeyGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes honeyGlow {
+    from { filter: brightness(1); }
+    to { filter: brightness(1.3) drop-shadow(0 0 5px rgba(255, 215, 0, 0.6)); }
+}
+
+.guest-progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-family: 'Kalam', cursive;
+    font-size: 0.9rem;
+}
+
+.progress-bar {
+    width: 80px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ffd700 0%, #ffb347 100%);
+    border-radius: 10px;
+    width: 0%;
+    transition: width 0.5s ease;
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+    animation: progressShine 2s linear infinite;
+}
+
+@keyframes progressShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.progress-text {
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Mobile Navigation Personalization */
+@media (max-width: 768px) {
+    .nav-personalization {
+        gap: 10px;
+        margin-right: 10px;
+    }
+    
+    .honey-counter {
+        padding: 4px 8px;
+        font-size: 0.9rem;
+    }
+    
+    .progress-bar {
+        width: 60px;
+        height: 6px;
+    }
+    
+    .progress-text {
+        font-size: 0.8rem;
+    }
+    
+    .guest-progress {
+        display: none; /* Hide progress bar on mobile to save space */
+    }
+}
+
+/* Personalized Welcome Banner */
+.personalized-welcome {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 183, 71, 0.1) 100%);
+    padding: 15px 20px;
+    margin: 20px;
+    border-radius: 15px;
+    border-left: 4px solid #ffd700;
+    color: #8b4513;
+    font-family: 'Kalam', cursive;
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.2);
+    animation: welcomeFadeIn 0.5s ease;
+}
+
+@keyframes welcomeFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.welcome-name {
+    font-weight: bold;
+    color: #d4a574;
+}
+
+.welcome-stats {
+    font-size: 0.9rem;
+    margin-top: 5px;
+    opacity: 0.8;
+}
+
+/* Achievement Badges */
+.achievement-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(135deg, #ffd700 0%, #ffb347 100%);
+    color: #8b4513;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    font-family: 'Kalam', cursive;
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+    animation: badgeAppear 0.5s ease;
+    margin: 2px;
+}
+
+@keyframes badgeAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.achievement-icon {
+    font-size: 1rem;
+}
+
+/* Section completion indicators */
+.section-completed::after {
+    content: '✅';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.2rem;
+    animation: checkmarkBounce 0.5s ease;
+}
+
+@keyframes checkmarkBounce {
+    0%, 20%, 60%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    80% { transform: translateY(-5px); }
+}
+
 /* Specific RSVP form cursor fixes */
 .rsvp-form input, .rsvp-form textarea, .rsvp-form select {
     cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+4p2U8J+QvTwvdGV4dD48L3N2Zz4='), text !important;
