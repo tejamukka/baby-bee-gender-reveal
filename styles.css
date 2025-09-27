@@ -2898,10 +2898,11 @@ body {
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 40px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    gap: 4rem;
 }
 
 .nav-logo {
@@ -2912,6 +2913,8 @@ body {
     text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.2);
     letter-spacing: 1px;
     transition: all 0.3s ease;
+    padding: 0 2rem;
+    white-space: nowrap;
 }
 
 .nav-logo:hover {
@@ -2923,9 +2926,10 @@ body {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 3rem;
+    gap: 2.5rem;
     align-items: center;
     position: relative;
+    padding: 0 1rem;
 }
 
 .nav-menu::before {
