@@ -71,8 +71,27 @@ button, a, .clickable, .carousel-btn, .gender-btn, .open-invitation-btn, .cta-bu
     cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48dGV4dCB5PSIxOCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzhGNEE1MyI+8J+QnTwvdGV4dD48L3N2Zz4K'), pointer;
 }
 
+/* Hover states for buttons and interactive elements */
+button:hover, a:hover, .clickable:hover, .carousel-btn:hover, .gender-btn:hover, .open-invitation-btn:hover, .cta-button:hover, .nav-link:hover, .instagram-link:hover, [onclick]:hover {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48dGV4dCB5PSIxOCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzhGNEE1MyI+8J+QnTwvdGV4dD48L3N2Zz4K'), pointer;
+}
+
 input, textarea, select {
     cursor: text;
+}
+
+/* Hover states for input fields */
+input:hover, textarea:hover, select:hover {
+    cursor: text;
+}
+
+/* Honey drop game cursor */
+.honey-drop {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48dGV4dCB5PSIxOCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzhGNEE1MyI+8J+QnTwvdGV4dD48L3N2Zz4K'), pointer;
+}
+
+.honey-drop:hover {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48dGV4dCB5PSIxOCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzhGNEE1MyI+8J+QnTwvdGV4dD48L3N2Zz4K'), pointer;
 }
 
 /* Honey Drop Game Styles */
