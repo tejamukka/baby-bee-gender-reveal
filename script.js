@@ -360,9 +360,30 @@ function showPostcardStory() {
         postcardOverlay.style.height = '100vh';
         postcardOverlay.style.width = '100vw';
         postcardOverlay.style.overflow = 'auto';
+        postcardOverlay.style.display = 'flex';
+        postcardOverlay.style.flexDirection = 'column';
         postcard.style.height = '100vh';
         postcard.style.width = '100vw';
         postcard.style.overflow = 'auto';
+        postcard.style.display = 'flex';
+        postcard.style.flexDirection = 'column';
+        
+        // Ensure journey content is scrollable
+        const journeyContent = postcard.querySelector('.journey-content');
+        if (journeyContent) {
+            journeyContent.style.flex = '1';
+            journeyContent.style.overflowY = 'auto';
+            journeyContent.style.webkitOverflowScrolling = 'touch';
+            journeyContent.style.minHeight = '0';
+        }
+        
+        // Ensure all journey items are visible
+        const journeyItems = postcard.querySelectorAll('.journey-item');
+        journeyItems.forEach(item => {
+            item.style.display = 'flex';
+            item.style.width = '100%';
+            item.style.marginBottom = '10px';
+        });
     }
     
     // Hide main navbar

@@ -2202,6 +2202,8 @@ a[href] {
         -webkit-overflow-scrolling: touch;
         touch-action: manipulation;
         overflow-y: auto;
+        height: 100vh;
+        width: 100vw;
     }
     
     .envelope {
@@ -2220,6 +2222,8 @@ a[href] {
         min-height: 100vh;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        display: flex;
+        flex-direction: column;
     }
     
     .postcard-header {
@@ -2238,31 +2242,49 @@ a[href] {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         min-height: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     
     .journey-item {
         padding: 12px;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: nowrap;
     }
     
     .journey-year {
         font-size: 16px;
         min-width: 50px;
         margin-right: 12px;
+        flex-shrink: 0;
     }
     
     .journey-icon {
         font-size: 20px;
         margin-right: 12px;
         min-width: 25px;
+        flex-shrink: 0;
+    }
+    
+    .journey-text {
+        flex: 1;
+        min-width: 0;
     }
     
     .journey-text h3 {
         font-size: 16px;
+        margin-bottom: 5px;
     }
     
     .journey-text p {
         font-size: 12px;
         line-height: 1.3;
+        word-wrap: break-word;
     }
     
     /* Mobile Font Adjustments for Combined Years */
@@ -2297,11 +2319,17 @@ a[href] {
     .postcard-footer {
         padding: 20px 15px;
         flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80px;
     }
     
     .open-invitation-btn {
         padding: 12px 24px;
         font-size: 14px;
+        width: auto;
+        min-width: 200px;
     }
     
     .wax-seal {
