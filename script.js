@@ -675,9 +675,6 @@ function selectGender(value) {
         case 'girl':
             message = '👑 Perfect! Remember to wear pink to support our queen bee!';
             break;
-        case 'surprise':
-            message = '🍯 Sweet! Either way, our little honey bee will be perfect!';
-            break;
     }
     
     // Show notification
@@ -1702,9 +1699,6 @@ function selectPollOption(option) {
             break;
         case 'girl':
             message = '👑 Queen bee vibes! Our little princess will rule the hive!';
-            break;
-        case 'surprise':
-            message = '🍯 Sweet surprise! Either way, our little bee will be perfect!';
             break;
     }
     
