@@ -721,5 +721,27 @@
             (d.head || d.body).appendChild(s);
         })();
     </script>
+    
+    <!-- Debug Functions -->
+    <script>
+        // Make debug functions available immediately
+        window.forceLoadMessages = function() {
+            console.log('Force loading messages...');
+            if (typeof loadMessages === 'function') {
+                loadMessages();
+            } else {
+                console.log('loadMessages function not found');
+            }
+        };
+        
+        window.debugCarousel = function() {
+            console.log('Debug carousel state...');
+            console.log('Total slides:', typeof totalSlides !== 'undefined' ? totalSlides : 'undefined');
+            console.log('Current slide:', typeof currentMessageSlide !== 'undefined' ? currentMessageSlide : 'undefined');
+            console.log('Featured messages:', typeof featuredMessages !== 'undefined' ? featuredMessages : 'undefined');
+            console.log('Sample messages:', typeof sampleMessages !== 'undefined' ? sampleMessages : 'undefined');
+            console.log('Carousel track:', document.getElementById('messages-track'));
+        };
+    </script>
 </body>
 </html>

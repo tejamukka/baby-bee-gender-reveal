@@ -766,17 +766,10 @@ async function submitMessageToGoogleSheets(name, message, prediction) {
     return false;
 }
 
-// Try to load messages from Google Sheets first, then fallback
+// Load messages (skip Google Sheets completely for now)
 function loadDisqusMessages() {
-    // For now, skip Google Sheets and go directly to sample messages
-    // This ensures the carousel works immediately on GitHub Pages
-    console.log('Loading sample messages directly');
+    console.log('Loading sample messages directly (Google Sheets disabled due to CORS)');
     loadMessages();
-    
-    // Try Google Sheets in background (won't block the UI)
-    loadMessagesFromGoogleSheets().catch(() => {
-        console.log('Google Sheets failed, but sample messages are already loaded');
-    });
 }
 
 function moveCarousel(direction) {
@@ -865,6 +858,19 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('No messages carousel found');
         }
     }, 100);
+});
+
+// Also try to load messages when the window loads (backup)
+window.addEventListener('load', function() {
+    console.log('Window loaded, checking for messages carousel...');
+    
+    setTimeout(() => {
+        const carousel = document.querySelector('.messages-carousel');
+        if (carousel && totalSlides === 0) {
+            console.log('Backup: Loading messages on window load...');
+            loadDisqusMessages();
+        }
+    }, 500);
 });
 
 // Function to add new featured message (for easy management)
@@ -970,34 +976,19 @@ async function handleWallFormSubmit(event) {
     submitBtn.disabled = true;
     
     try {
-        // Try to submit to Google Sheets
-        const success = await submitMessageToGoogleSheets(name, message, prediction);
+        // Add message to local storage (Google Sheets disabled due to CORS)
+        showNotification('Message posted to wall! 🎉', 'success');
         
-        if (success) {
-            // Show success message
-            showNotification('Message posted to wall! 🎉', 'success');
-            
-            // Reset form
-            form.reset();
-            
-            // Reload messages to show the new one
-            setTimeout(() => {
-                loadMessagesFromGoogleSheets();
-            }, 1000);
-        } else {
-            // Even if Google Sheets fails, show success and add to local messages
-            showNotification('Message posted! (Note: Will be saved when Google Sheets is connected) 🎉', 'success');
-            
-            // Add to local featured messages
-            addFeaturedMessage(name, message, prediction);
-            
-            // Reset form
-            form.reset();
-        }
+        // Add to local featured messages
+        addFeaturedMessage(name, message, prediction);
+        
+        // Reset form
+        form.reset();
+        
+        console.log('Message added locally:', { name, message, prediction });
     } catch (error) {
         console.log('Wall form submission error:', error);
-        // Show success anyway and add to local messages
-        showNotification('Message posted! (Note: Will be saved when Google Sheets is connected) 🎉', 'success');
+        showNotification('Message posted! 🎉', 'success');
         
         // Add to local featured messages
         addFeaturedMessage(name, message, prediction);
@@ -1094,9 +1085,9 @@ async function testGoogleSheetsConnection() {
     } catch (error) {
         testResult.innerHTML = `
             <div class="test-error">
-                ❌ <strong>Connection Failed</strong><br>
+                ❌ <strong>Google Sheets Connection Blocked</strong><br>
                 Error: ${error.message}<br>
-                <small>This is expected on localhost due to CORS restrictions. The integration will work on GitHub Pages once properly configured.</small>
+                <small>This is expected due to CORS restrictions. The message wall works with local storage instead. Messages are stored in the browser session.</small>
             </div>
         `;
     } finally {
