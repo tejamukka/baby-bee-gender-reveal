@@ -32,43 +32,20 @@ This guide will help you set up EmailJS to send automated emails to your guests 
 2. Click "Create New Template"
 3. Use this template:
 
-**Template ID:** `baby_bee_template`
+**Template ID:** `template_rpi1rbl` (or create a new one)
 
 **Subject:** `{{subject}}`
 
-**Content:**
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Baby Bee Celebration</title>
-    <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #FFD700, #FFA500); padding: 20px; text-align: center; border-radius: 10px; }
-        .content { padding: 20px; background: #fff; border-radius: 10px; margin-top: 20px; }
-        .footer { text-align: center; margin-top: 20px; color: #666; }
-        h1, h2 { color: #8B4513; }
-        ul { padding-left: 20px; }
-        li { margin-bottom: 5px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>🐝 Baby Bee Celebration 🍯</h1>
-        </div>
-        <div class="content">
-            {{message}}
-        </div>
-        <div class="footer">
-            <p>With love,<br>Teja & Supraja 🍯</p>
-        </div>
-    </div>
-</body>
-</html>
+**Content:** (Use plain text format for better compatibility)
 ```
+{{message}}
+```
+
+**Important Notes:**
+- Use **plain text** format instead of HTML for better email client compatibility
+- The template should be simple with just `{{message}}` as the content
+- All formatting is handled in the JavaScript code
+- This prevents HTML rendering issues in email clients
 
 4. **Copy your Template ID** (you'll need this later)
 
@@ -129,11 +106,20 @@ sendThankYouEmail('user@example.com', 'John Doe');
 1. **"EmailJS not loaded"** - Check your internet connection
 2. **"Email sending failed"** - Verify your Service ID, Template ID, and Public Key
 3. **Emails not received** - Check spam folder, verify email service setup
+4. **HTML showing as raw code** - Use plain text template format instead of HTML
+
+### Email Formatting Issues:
+If emails show HTML code instead of formatted text:
+1. **Go to your EmailJS template**
+2. **Change template format to "Plain Text"**
+3. **Use only `{{message}}` in the template content**
+4. **Remove any HTML tags from the template**
 
 ### Testing:
 - Use the browser console to test email functions
 - Check EmailJS dashboard for delivery status
 - Verify your email service is properly connected
+- Test with different email clients (Gmail, Outlook, etc.)
 
 ## 📊 Free Tier Limits
 - **200 emails per month** (free tier)

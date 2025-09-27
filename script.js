@@ -1423,7 +1423,7 @@ rsvpForm.addEventListener('submit', function(e) {
                 showRSVPSuccess();
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
-                rsvpForm.reset();
+        rsvpForm.reset();
                 this.classList.remove('submitting');
                 showNotification('RSVP submitted successfully! Check your email! 📧', 'success');
                 
@@ -2697,79 +2697,88 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Email Templates
+// Email Templates - Simplified for better compatibility
 const EMAIL_TEMPLATES = {
     welcome: {
         subject: '🐝 Welcome to our Baby Bee Celebration!',
-        message: `
-            <h2>🐝 Welcome to our Baby Bee Celebration!</h2>
-            <p>Hi {{name}},</p>
-            <p>Thank you for joining our special celebration! We're so excited to share this journey with you.</p>
-            <p><strong>Event Details:</strong></p>
-            <ul>
-                <li>📅 Date: Saturday, October 25th, 2025</li>
-                <li>⏰ Time: 11:00 AM</li>
-                <li>📍 Location: Teja & Supraja's Hive, 6565 Scenery Ct, San Jose, CA 95120</li>
-            </ul>
-            <p>Don't forget to:</p>
-            <ul>
-                <li>🎯 Make your gender prediction</li>
-                <li>🎁 Check out our registry</li>
-                <li>🍯 Collect honey drops on our website</li>
-            </ul>
-            <p>Can't wait to celebrate with you!</p>
-            <p>With love,<br>Teja & Supraja 🍯</p>
-        `
+        message: `🐝 Welcome to our Baby Bee Celebration!
+
+Hi {{name}},
+
+Thank you for joining our special celebration! We're so excited to share this journey with you.
+
+Event Details:
+📅 Date: Saturday, October 25th, 2025
+⏰ Time: 11:00 AM
+📍 Location: Teja & Supraja's Hive, 6565 Scenery Ct, San Jose, CA 95120
+
+Don't forget to:
+🎯 Make your gender prediction
+🎁 Check out our registry
+🍯 Collect honey drops on our website
+
+Can't wait to celebrate with you!
+
+With love,
+Teja & Supraja 🍯`
     },
     
     rsvpConfirmation: {
         subject: '🎉 RSVP Confirmed - See you at our Baby Bee Party!',
-        message: `
-            <h2>🎉 RSVP Confirmed!</h2>
-            <p>Hi {{name}},</p>
-            <p>Thank you for confirming your attendance! We're thrilled you'll be joining us for our Baby Bee celebration.</p>
-            <p><strong>Your RSVP Details:</strong></p>
-            <ul>
-                <li>👥 Guests: {{guests}}</li>
-                <li>🎯 Gender Prediction: {{prediction}}</li>
-                <li>📧 Email: {{email}}</li>
-            </ul>
-            <p><strong>Event Reminder:</strong></p>
-            <ul>
-                <li>📅 Saturday, October 25th, 2025 at 11:00 AM</li>
-                <li>📍 Teja & Supraja's Hive, 6565 Scenery Ct, San Jose, CA 95120</li>
-                <li>👗 Dress Code: Wear yellow to support boy, pink for girl!</li>
-            </ul>
-            <p>We can't wait to see you there!</p>
-            <p>With love,<br>Teja & Supraja 🍯</p>
-        `
+        message: `🎉 RSVP Confirmed!
+
+Hi {{name}},
+
+Thank you for confirming your attendance! We're thrilled you'll be joining us for our Baby Bee celebration.
+
+Your RSVP Details:
+👥 Guests: {{guests}}
+🎯 Gender Prediction: {{prediction}}
+📧 Email: {{email}}
+
+Event Reminder:
+📅 Saturday, October 25th, 2025 at 11:00 AM
+📍 Teja & Supraja's Hive, 6565 Scenery Ct, San Jose, CA 95120
+👗 Dress Code: Wear yellow to support boy, pink for girl!
+
+We can't wait to see you there!
+
+With love,
+Teja & Supraja 🍯`
     },
     
     genderReveal: {
         subject: '🍯 The Big Reveal - Baby Bee Gender Announcement!',
-        message: `
-            <h2>🍯 The Big Reveal!</h2>
-            <p>Hi {{name}},</p>
-            <p>The moment you've been waiting for is here! We're excited to share the gender of our little Baby Bee!</p>
-            <p><strong>Drumroll please... 🥁</strong></p>
-            <p style="font-size: 24px; text-align: center; margin: 20px 0;">
-                {{gender_reveal}}
-            </p>
-            <p>Thank you for being part of this special journey with us. Your love and support mean the world to us!</p>
-            <p>With love,<br>Teja & Supraja 🍯</p>
-        `
+        message: `🍯 The Big Reveal!
+
+Hi {{name}},
+
+The moment you've been waiting for is here! We're excited to share the gender of our little Baby Bee!
+
+Drumroll please... 🥁
+
+{{gender_reveal}}
+
+Thank you for being part of this special journey with us. Your love and support mean the world to us!
+
+With love,
+Teja & Supraja 🍯`
     },
     
     thankYou: {
         subject: '💕 Thank You for Celebrating with Us!',
-        message: `
-            <h2>💕 Thank You for Celebrating with Us!</h2>
-            <p>Hi {{name}},</p>
-            <p>What an amazing celebration it was! Thank you for making our Baby Bee gender reveal party so special.</p>
-            <p>We're so grateful for your love, support, and the wonderful memories we created together.</p>
-            <p>Stay tuned for updates about our little one's arrival!</p>
-            <p>With love and gratitude,<br>Teja & Supraja 🍯</p>
-        `
+        message: `💕 Thank You for Celebrating with Us!
+
+Hi {{name}},
+
+What an amazing celebration it was! Thank you for making our Baby Bee gender reveal party so special.
+
+We're so grateful for your love, support, and the wonderful memories we created together.
+
+Stay tuned for updates about our little one's arrival!
+
+With love and gratitude,
+Teja & Supraja 🍯`
     }
 };
 
