@@ -2848,7 +2848,7 @@ async function sendEmail(templateType, recipientEmail, recipientName, additional
             .replace(/\{\{prediction\}\}/g, additionalData.prediction || '')
             .replace(/\{\{gender_reveal\}\}/g, additionalData.gender_reveal || '');
 
-        // Send email
+        // Send email to recipient
         const result = await emailjs.send(
             EMAILJS_CONFIG.serviceId,
             EMAILJS_CONFIG.templateId,
@@ -2857,6 +2857,35 @@ async function sendEmail(templateType, recipientEmail, recipientName, additional
 
         console.log('Email sent successfully:', result);
         showNotification(`📧 Email sent to ${recipientName}!`, 'success');
+        
+        // Send backup copy to you (Teja)
+        if (templateType === 'rsvpConfirmation') {
+            try {
+                const backupEmailData = {
+                    ...emailData,
+                    to_email: 'tejamukkapersonal@gmail.com',
+                    to_name: 'Teja',
+                    name: 'Teja',
+                    guest_name: 'Teja',
+                    email: 'tejamukkapersonal@gmail.com',
+                    // Add RSVP count information
+                    rsvp_count: additionalData.rsvp_count || '1',
+                    backup_note: `Backup copy - Original sent to ${recipientName} (${recipientEmail})`
+                };
+                
+                await emailjs.send(
+                    EMAILJS_CONFIG.serviceId,
+                    EMAILJS_CONFIG.templateId,
+                    backupEmailData
+                );
+                
+                console.log('Backup email sent to Teja successfully');
+            } catch (backupError) {
+                console.error('Backup email failed:', backupError);
+                // Don't show error to user, just log it
+            }
+        }
+        
         return true;
 
     } catch (error) {
@@ -2883,13 +2912,20 @@ function sendRSVPConfirmationEmail(rsvpData) {
         return;
     }
     
+    // Get current RSVP count from localStorage or default to 1
+    const currentRSVPCount = parseInt(localStorage.getItem('totalRSVPCount') || '0') + 1;
+    localStorage.setItem('totalRSVPCount', currentRSVPCount.toString());
+    
     sendEmail('rsvpConfirmation', rsvpData.email, rsvpData.name, {
         guests: rsvpData.guests,
         prediction: rsvpData.prediction || 'Not specified',
         // Additional RSVP-specific data
         rsvp_status: rsvpData.attending || 'Yes',
         dietary_restrictions: rsvpData.dietary || 'None',
-        message: rsvpData.message || ''
+        message: rsvpData.message || '',
+        // RSVP count information
+        rsvp_count: currentRSVPCount.toString(),
+        total_guests: rsvpData.guests || '1'
     });
 }
 
@@ -2949,6 +2985,9 @@ function testEmailSystem() {
     console.log('- event_description: Join Teja & Supraja for their gender reveal celebration! What will baby bee? 🐝');
     console.log('- guest_name: ' + testName);
     console.log('- email: ' + testEmail);
+    console.log('- rsvp_count: [incremental count for each RSVP]');
+    console.log('- total_guests: [number of guests from RSVP]');
+    console.log('- backup_note: [for backup emails to tejamukkapersonal@gmail.com]');
     
     sendWelcomeEmail(testEmail, testName);
 }
