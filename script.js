@@ -851,18 +851,20 @@ function stopAutoRotation() {
 
 // Initialize carousel when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    if (document.querySelector('.messages-carousel')) {
-        // Load messages first
-        loadDisqusMessages();
+    console.log('DOM loaded, checking for messages carousel...');
+    
+    // Wait a bit for the page to fully load
+    setTimeout(() => {
+        const carousel = document.querySelector('.messages-carousel');
+        console.log('Messages carousel found:', !!carousel);
         
-        // Fallback: if no messages load after 5 seconds, show sample messages
-        setTimeout(() => {
-            if (totalSlides === 0) {
-                console.log('Timeout reached, loading sample messages');
-                loadMessages();
-            }
-        }, 5000);
-    }
+        if (carousel) {
+            console.log('Loading messages...');
+            loadDisqusMessages();
+        } else {
+            console.log('No messages carousel found');
+        }
+    }, 100);
 });
 
 // Function to add new featured message (for easy management)
@@ -1391,6 +1393,14 @@ window.quickTest = quickTest;
 window.diagnoseCORS = diagnoseCORS;
 window.testWithCallback = testWithCallback;
 window.testUrlFormats = testUrlFormats;
+window.forceLoadMessages = loadMessages;
+window.debugCarousel = function() {
+    console.log('Total slides:', totalSlides);
+    console.log('Current slide:', currentMessageSlide);
+    console.log('Featured messages:', featuredMessages);
+    console.log('Sample messages:', sampleMessages);
+    console.log('Carousel track:', document.getElementById('messages-track'));
+};
 
 // Travel locations modal functions
 function showTravelLocations() {
