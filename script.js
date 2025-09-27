@@ -186,19 +186,36 @@ function openPostcard() {
     console.log('Opening postcard');
     const envelope = document.getElementById('envelope');
     const postcard = document.getElementById('postcard');
+    const postcardOverlay = document.getElementById('postcard-overlay');
     
-    if (!envelope || !postcard) {
+    if (!envelope || !postcard || !postcardOverlay) {
         console.log('Elements not found');
         return;
     }
     
-    // Hide envelope
+    // Hide envelope and mark overlay as postcard-open
     envelope.classList.add('clicked');
+    postcardOverlay.classList.add('postcard-open');
     
     // Show postcard after a short delay
     setTimeout(() => {
         postcard.classList.add('open');
         console.log('Postcard opened');
+        
+        // Show scroll indicator on mobile after postcard is open
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+            setTimeout(() => {
+                const scrollIndicator = document.querySelector('.scroll-indicator');
+                if (scrollIndicator) {
+                    scrollIndicator.classList.add('show');
+                    // Hide scroll indicator after 5 seconds
+                    setTimeout(() => {
+                        scrollIndicator.classList.remove('show');
+                    }, 5000);
+                }
+            }, 1000); // Show after 1 second to let user see the content
+        }
     }, 300);
 }
 
@@ -290,6 +307,25 @@ function openInvitation() {
     setTimeout(() => {
         postcardOverlay.style.display = 'none';
         postcardOverlay.classList.remove('closing');
+        postcardOverlay.classList.remove('postcard-open');
+        
+        // Reset all postcard states
+        const envelope = document.getElementById('envelope');
+        const postcard = document.getElementById('postcard');
+        const floatingBtn = document.querySelector('.floating-open-btn');
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        if (envelope) envelope.classList.remove('clicked');
+        if (postcard) postcard.classList.remove('open');
+        if (floatingBtn) floatingBtn.classList.remove('show');
+        if (scrollIndicator) scrollIndicator.classList.remove('show');
+        
+        // Restore main content sections
+        const mainSections = document.querySelectorAll('#home, #rsvp, #registry, #details, #main-navbar');
+        mainSections.forEach(section => {
+            if (section) {
+                section.style.display = '';
+            }
+        });
         
         // Reset button state
         if (openBtn) {
@@ -395,10 +431,24 @@ function showPostcardStory() {
     postcardOverlay.style.display = 'flex';
     postcardOverlay.style.opacity = '0';
     postcardOverlay.style.transform = 'scale(0.8)';
+    postcardOverlay.classList.add('show');
     
-    // Show envelope first, then allow user to click to open postcard
+    // Hide main content sections to prevent bleed-through
+    const mainSections = document.querySelectorAll('#home, #rsvp, #registry, #details, #main-navbar');
+    mainSections.forEach(section => {
+        if (section) {
+            section.style.display = 'none';
+        }
+    });
+    
+    // Reset all states to show envelope first
     envelope.classList.remove('clicked');
     postcard.classList.remove('open');
+    postcardOverlay.classList.remove('postcard-open');
+    
+    // Hide scroll indicator when showing envelope
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    if (scrollIndicator) scrollIndicator.classList.remove('show');
     
     // Animate in the overlay with envelope visible
     setTimeout(() => {
