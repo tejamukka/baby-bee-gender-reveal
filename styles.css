@@ -4538,6 +4538,45 @@ section {
         line-height: 1.2;
     }
     
+    /* Make 2025 block more obvious on mobile */
+    .year-2025.upcoming-event {
+        animation: pulse-mobile 2s infinite;
+        border-width: 3px;
+        box-shadow: 0 8px 25px rgba(212, 165, 116, 0.4);
+    }
+    
+    .year-2025.upcoming-event::after {
+        content: "👆 Tap to continue";
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #d4a574;
+        color: white;
+        padding: 4px 8px;
+        font-size: 10px;
+        font-weight: 600;
+        border-radius: 8px;
+        white-space: nowrap;
+        animation: bounce-mobile 1.5s infinite;
+    }
+    
+    @keyframes pulse-mobile {
+        0%, 100% { 
+            box-shadow: 0 8px 25px rgba(212, 165, 116, 0.4);
+            transform: scale(1);
+        }
+        50% { 
+            box-shadow: 0 12px 35px rgba(212, 165, 116, 0.6);
+            transform: scale(1.02);
+        }
+    }
+    
+    @keyframes bounce-mobile {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(-3px); }
+    }
+    
     .subtitle {
         font-size: 1rem;
         white-space: normal;

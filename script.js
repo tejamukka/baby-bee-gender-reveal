@@ -222,20 +222,12 @@ function openPostcard() {
         postcard.classList.add('open');
         console.log('Postcard opened');
         
-        // Show scroll indicator on mobile after postcard is open
-        const isMobile = window.innerWidth <= 768;
-        if (isMobile) {
-            setTimeout(() => {
-                const scrollIndicator = document.querySelector('.scroll-indicator');
-                if (scrollIndicator) {
-                    scrollIndicator.classList.add('show');
-                    // Hide scroll indicator after 5 seconds
-                    setTimeout(() => {
-                        scrollIndicator.classList.remove('show');
-                    }, 5000);
-                }
-            }, 1000); // Show after 1 second to let user see the content
-        }
+        // Auto-navigate to invitation after 10 seconds
+        setTimeout(() => {
+            console.log('Auto-navigating to invitation after 10 seconds');
+            openInvitation();
+        }, 10000);
+        
     }, 300);
 }
 
