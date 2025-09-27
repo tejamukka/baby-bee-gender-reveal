@@ -396,11 +396,11 @@ function showPostcardStory() {
     postcardOverlay.style.opacity = '0';
     postcardOverlay.style.transform = 'scale(0.8)';
     
-    // Set envelope as clicked and postcard as open immediately (skip envelope animation)
-    envelope.classList.add('clicked');
-    postcard.classList.add('open');
+    // Show envelope first, then allow user to click to open postcard
+    envelope.classList.remove('clicked');
+    postcard.classList.remove('open');
     
-    // Animate in the overlay with postcard already open
+    // Animate in the overlay with envelope visible
     setTimeout(() => {
         postcardOverlay.style.transition = 'all 0.5s ease';
         postcardOverlay.style.opacity = '1';
