@@ -1827,3 +1827,778 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Honey Drop Game System (GitHub Pages Compatible)
+let honeyGame = {
+    isActive: false,
+    score: 0,
+    gameInterval: null,
+    dropInterval: null,
+    collectedFacts: [],
+    
+    facts: [
+        "🍯 At 5 months, I can taste what mommy eats through the amniotic fluid!",
+        "👂 I can hear your conversations and recognize familiar voices already!",
+        "🎵 Classical music helps my brain development - just like Pooh's humming!",
+        "💕 My heart beats twice as fast as mommy's - about 150 beats per minute!",
+        "👶 I'm about the size of a banana and growing stronger every day!",
+        "🌙 I have my own sleep schedule and dream cycles in the womb!",
+        "🤸 I practice breathing movements even though I don't need air yet!",
+        "👀 My eyes are developing and I can see light filtering through mommy's belly!",
+        "🦴 My bones are hardening and I'm developing my unique fingerprints!",
+        "🧠 My brain is growing rapidly - 250,000 neurons per minute!",
+        "💪 I can grip things with my tiny hands and even suck my thumb!",
+        "🎭 I make facial expressions and might even smile in the womb!",
+        "🍼 I'm practicing swallowing and my digestive system is developing!",
+        "🎪 I can do somersaults and kicks - my own little circus show!",
+        "💝 I can feel mommy's emotions through her heartbeat and hormones!"
+    ]
+};
+
+// Start the honey drop game
+function startHoneyGame() {
+    const overlay = document.getElementById('honey-game-overlay');
+    if (!overlay) return;
+    
+    // Reset game state
+    honeyGame.isActive = true;
+    honeyGame.score = 0;
+    honeyGame.collectedFacts = [];
+    
+    // Show overlay
+    overlay.style.display = 'flex';
+    overlay.style.opacity = '0';
+    setTimeout(() => {
+        overlay.style.transition = 'opacity 0.3s ease';
+        overlay.style.opacity = '1';
+    }, 10);
+    
+    // Update UI
+    document.getElementById('honey-count').textContent = honeyGame.score;
+    document.getElementById('collected-facts').innerHTML = '';
+    document.getElementById('game-message').textContent = 'Click the falling honey drops to collect sweet baby facts!';
+    
+    // Start dropping honey
+    honeyGame.dropInterval = setInterval(createHoneyDrop, 1500);
+    
+    // Game timer (optional - game can run indefinitely)
+    setTimeout(() => {
+        if (honeyGame.isActive) {
+            document.getElementById('game-message').textContent = `Great job! You collected ${honeyGame.score} honey drops! Keep playing!`;
+        }
+    }, 30000);
+    
+    console.log('Honey drop game started!');
+}
+
+// Close the honey drop game
+function closeHoneyGame() {
+    const overlay = document.getElementById('honey-game-overlay');
+    if (!overlay) return;
+    
+    // Stop game
+    honeyGame.isActive = false;
+    if (honeyGame.dropInterval) {
+        clearInterval(honeyGame.dropInterval);
+        honeyGame.dropInterval = null;
+    }
+    
+    // Save score to localStorage (GitHub Pages compatible persistence)
+    const totalHoney = parseInt(localStorage.getItem('totalHoneyCollected') || '0') + honeyGame.score;
+    localStorage.setItem('totalHoneyCollected', totalHoney.toString());
+    localStorage.setItem('lastGameScore', honeyGame.score.toString());
+    
+    // Hide overlay
+    overlay.style.opacity = '0';
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        
+        // Show completion message
+        if (honeyGame.score > 0) {
+            showNotification(`🍯 Amazing! You collected ${honeyGame.score} honey drops! Total lifetime honey: ${totalHoney}`, 'success');
+        }
+    }, 300);
+    
+    console.log(`Game ended. Score: ${honeyGame.score}, Total: ${totalHoney}`);
+}
+
+// Create a falling honey drop
+function createHoneyDrop() {
+    if (!honeyGame.isActive) return;
+    
+    const gameArea = document.getElementById('honey-game-area');
+    if (!gameArea) return;
+    
+    const drop = document.createElement('div');
+    drop.className = 'honey-drop';
+    drop.innerHTML = '🍯';
+    
+    // Random position
+    const gameAreaWidth = gameArea.offsetWidth;
+    const randomX = Math.random() * (gameAreaWidth - 50);
+    drop.style.left = randomX + 'px';
+    drop.style.top = '-50px';
+    
+    // Add click handler
+    drop.addEventListener('click', function(e) {
+        e.preventDefault();
+        collectHoneyDrop(this);
+    });
+    
+    // Add touch handler for mobile
+    drop.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        collectHoneyDrop(this);
+    });
+    
+    gameArea.appendChild(drop);
+    
+    // Remove drop after animation completes
+    setTimeout(() => {
+        if (drop.parentNode && !drop.classList.contains('collected')) {
+            drop.remove();
+        }
+    }, 4500);
+}
+
+// Collect a honey drop
+function collectHoneyDrop(dropElement) {
+    if (!honeyGame.isActive || dropElement.classList.contains('collected')) return;
+    
+    dropElement.classList.add('collected');
+    honeyGame.score++;
+    
+    // Update score display
+    document.getElementById('honey-count').textContent = honeyGame.score;
+    
+    // Add a random fact
+    const randomFact = honeyGame.facts[Math.floor(Math.random() * honeyGame.facts.length)];
+    if (!honeyGame.collectedFacts.includes(randomFact)) {
+        honeyGame.collectedFacts.push(randomFact);
+        addFactToCollection(randomFact);
+    }
+    
+    // Remove the drop after animation
+    setTimeout(() => {
+        if (dropElement.parentNode) {
+            dropElement.remove();
+        }
+    }, 500);
+    
+    // Play collection sound effect (optional)
+    playHoneyCollectSound();
+    
+    console.log(`Honey collected! Score: ${honeyGame.score}`);
+}
+
+// Add fact to collection display
+function addFactToCollection(fact) {
+    const factsContainer = document.getElementById('collected-facts');
+    if (!factsContainer) return;
+    
+    const factElement = document.createElement('div');
+    factElement.className = 'fact-item';
+    factElement.textContent = fact;
+    
+    factsContainer.appendChild(factElement);
+    
+    // Auto-scroll to bottom
+    factsContainer.scrollTop = factsContainer.scrollHeight;
+    
+    // Update game message
+    const messages = [
+        "Sweet! You found a honey fact! 🍯",
+        "Buzz buzz! Another sweet discovery! 🐝",
+        "Honey-licious knowledge collected! 🍯✨",
+        "You're becoming a honey expert! 👑",
+        "Amazing! Keep collecting those sweet facts! 🌟"
+    ];
+    
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+    document.getElementById('game-message').textContent = randomMessage;
+}
+
+// Play honey collect sound (optional - works on GitHub Pages)
+function playHoneyCollectSound() {
+    // Create a simple audio context for sound effects
+    try {
+        if (typeof AudioContext !== 'undefined' || typeof webkitAudioContext !== 'undefined') {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            
+            // Create a simple "pop" sound
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
+    } catch (error) {
+        // Silently fail if audio context is not supported
+        console.log('Audio not supported, playing silently');
+    }
+}
+
+// Initialize honey game stats on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Show lifetime honey collected (if any)
+    const totalHoney = parseInt(localStorage.getItem('totalHoneyCollected') || '0');
+    if (totalHoney > 0) {
+        console.log(`Welcome back! You've collected ${totalHoney} honey drops total! 🍯`);
+        
+        // Maybe show this info somewhere on the page
+        setTimeout(() => {
+            showNotification(`🍯 Welcome back, honey collector! You've gathered ${totalHoney} drops total!`, 'info');
+        }, 2000);
+    }
+});
+
+// Make game functions globally available
+window.startHoneyGame = startHoneyGame;
+window.closeHoneyGame = closeHoneyGame;
+
+// Guest Personalization System (GitHub Pages Compatible)
+const guestPersonalization = {
+    // Get guest data from localStorage
+    getGuestData() {
+        const data = localStorage.getItem('babyBeeGuestData');
+        return data ? JSON.parse(data) : {
+            name: '',
+            visits: 0,
+            firstVisit: new Date().toISOString(),
+            lastVisit: new Date().toISOString(),
+            predictions: [],
+            completedSections: [],
+            honeyCollected: 0,
+            preferences: {}
+        };
+    },
+    
+    // Save guest data to localStorage
+    saveGuestData(data) {
+        data.lastVisit = new Date().toISOString();
+        data.visits++;
+        localStorage.setItem('babyBeeGuestData', JSON.stringify(data));
+    },
+    
+    // Track section completion
+    markSectionComplete(sectionId) {
+        const data = this.getGuestData();
+        if (!data.completedSections.includes(sectionId)) {
+            data.completedSections.push(sectionId);
+            this.saveGuestData(data);
+            this.showSectionCompletionReward(sectionId);
+        }
+    },
+    
+    // Show personalized welcome message
+    showWelcomeMessage() {
+        const data = this.getGuestData();
+        
+        if (data.visits === 0) {
+            // First time visitor
+            setTimeout(() => {
+                showNotification('🐝 Welcome to our Baby Bee celebration! Explore and collect honey drops! 🍯', 'info');
+            }, 3000);
+        } else if (data.name) {
+            // Returning visitor with name
+            setTimeout(() => {
+                showNotification(`🍯 Welcome back, ${data.name}! You've visited ${data.visits} times and collected ${data.honeyCollected} honey drops!`, 'success');
+            }, 2000);
+        } else {
+            // Returning visitor without name
+            setTimeout(() => {
+                showNotification(`🐝 Welcome back! This is visit #${data.visits}. Don't forget to RSVP! 💕`, 'info');
+            }, 2000);
+        }
+        
+        this.saveGuestData(data);
+    },
+    
+    // Save guest prediction
+    savePrediction(prediction, confidence = 'medium') {
+        const data = this.getGuestData();
+        const newPrediction = {
+            prediction,
+            confidence,
+            timestamp: new Date().toISOString()
+        };
+        
+        data.predictions.push(newPrediction);
+        this.saveGuestData(data);
+        
+        // Show personalized message based on prediction history
+        this.showPredictionMessage(data.predictions);
+    },
+    
+    // Show prediction-based message
+    showPredictionMessage(predictions) {
+        if (predictions.length === 1) {
+            showNotification('🎯 Your first prediction is recorded! Come back anytime to change it! 🍯', 'success');
+        } else if (predictions.length > 1) {
+            const lastTwo = predictions.slice(-2);
+            if (lastTwo[0].prediction === lastTwo[1].prediction) {
+                showNotification(`💪 You're sticking with ${lastTwo[1].prediction}! Confidence is key! 🐝`, 'success');
+            } else {
+                showNotification(`🤔 Changed your mind? That's okay! ${lastTwo[1].prediction} it is! 🍯`, 'info');
+            }
+        }
+    },
+    
+    // Track RSVP submission
+    saveRSVPData(rsvpData) {
+        const data = this.getGuestData();
+        data.name = rsvpData.name;
+        data.email = rsvpData.email;
+        data.rsvpSubmitted = true;
+        data.rsvpData = rsvpData;
+        this.saveGuestData(data);
+        
+        // Mark RSVP section as complete
+        this.markSectionComplete('rsvp');
+    },
+    
+    // Show section completion reward
+    showSectionCompletionReward(sectionId) {
+        const rewards = {
+            'home': '🏠 You explored our story! Here\'s a bonus honey drop! 🍯',
+            'rsvp': '📝 RSVP completed! You\'re officially part of the hive! 🐝',
+            'registry': '🎁 Registry viewed! Thanks for helping us prepare! 💕',
+            'details': '📅 Event details noted! See you at the party! 🎉',
+            'guest-messages': '💌 Messages section explored! Thanks for spreading the love! ✨'
+        };
+        
+        const reward = rewards[sectionId] || '✨ Section completed! You\'re awesome! 🍯';
+        showNotification(reward, 'success');
+        
+        // Give bonus honey for section completion
+        const currentHoney = parseInt(localStorage.getItem('totalHoneyCollected') || '0');
+        localStorage.setItem('totalHoneyCollected', (currentHoney + 1).toString());
+    },
+    
+    // Get personalized content
+    getPersonalizedContent() {
+        const data = this.getGuestData();
+        const content = {
+            welcomeText: data.name ? `Welcome back, ${data.name}!` : 'Welcome to our celebration!',
+            visitCount: data.visits,
+            completionPercentage: Math.round((data.completedSections.length / 5) * 100),
+            lastPrediction: data.predictions.length > 0 ? data.predictions[data.predictions.length - 1].prediction : null,
+            suggestedAction: this.getSuggestedAction(data)
+        };
+        
+        return content;
+    },
+    
+    // Get suggested next action
+    getSuggestedAction(data) {
+        if (!data.rsvpSubmitted) return 'rsvp';
+        if (!data.completedSections.includes('registry')) return 'registry';
+        if (!data.completedSections.includes('details')) return 'details';
+        if (!data.completedSections.includes('guest-messages')) return 'guest-messages';
+        if (data.honeyCollected < 10) return 'honey-game';
+        return 'explore';
+    },
+    
+    // Show personalized CTA
+    updatePersonalizedCTA() {
+        const data = this.getGuestData();
+        const ctaButton = document.getElementById('rsvpButton');
+        
+        if (!ctaButton) return;
+        
+        if (data.rsvpSubmitted) {
+            ctaButton.innerHTML = '🎉 Thanks for RSVPing! Play Honey Game! 🍯';
+            ctaButton.onclick = startHoneyGame;
+        } else if (data.visits > 1) {
+            ctaButton.innerHTML = '💕 Ready to RSVP? We\'re waiting! 🐝';
+        }
+    }
+};
+
+// Section visibility tracking
+function trackSectionView(sectionId) {
+    guestPersonalization.markSectionComplete(sectionId);
+}
+
+// Enhanced RSVP form submission with personalization
+function enhanceRSVPSubmission() {
+    const rsvpForm = document.getElementById('rsvpForm');
+    if (!rsvpForm) return;
+    
+    rsvpForm.addEventListener('submit', function(e) {
+        // Get form data for personalization
+        const formData = new FormData(rsvpForm);
+        const rsvpData = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            guests: formData.get('guests'),
+            attending: formData.get('attending'),
+            prediction: formData.get('gender-prediction'),
+            message: formData.get('message'),
+            timestamp: new Date().toISOString()
+        };
+        
+        // Save to personalization system
+        guestPersonalization.saveRSVPData(rsvpData);
+        
+        // Save prediction if provided
+        if (rsvpData.prediction) {
+            guestPersonalization.savePrediction(rsvpData.prediction, 'high');
+        }
+    });
+}
+
+// Enhanced gender prediction with personalization
+function enhanceGenderPrediction() {
+    const genderButtons = document.querySelectorAll('.gender-btn');
+    genderButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const prediction = this.querySelector('.gender-text').textContent;
+            guestPersonalization.savePrediction(prediction);
+        });
+    });
+}
+
+// Intersection Observer for section tracking
+function setupSectionTracking() {
+    const sections = document.querySelectorAll('section[id]');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+                trackSectionView(entry.target.id);
+            }
+        });
+    }, {
+        threshold: 0.5,
+        rootMargin: '-10% 0px -10% 0px'
+    });
+    
+    sections.forEach(section => observer.observe(section));
+}
+
+// Update navigation personalization elements
+function updateNavPersonalization() {
+    const totalHoney = parseInt(localStorage.getItem('totalHoneyCollected') || '0');
+    const personalContent = guestPersonalization.getPersonalizedContent();
+    
+    // Update honey counter
+    const honeyAmount = document.getElementById('nav-honey-amount');
+    if (honeyAmount) {
+        honeyAmount.textContent = totalHoney;
+    }
+    
+    // Update progress bar
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-text');
+    const guestProgress = document.getElementById('guest-progress');
+    
+    if (progressFill && progressText && personalContent.visitCount > 0) {
+        progressFill.style.width = personalContent.completionPercentage + '%';
+        progressText.textContent = personalContent.completionPercentage + '%';
+        
+        // Show progress bar for returning visitors
+        if (guestProgress && personalContent.visitCount > 1) {
+            guestProgress.style.display = 'flex';
+        }
+    }
+    
+    // Add click handler to honey counter for stats
+    const honeyCounter = document.getElementById('nav-honey-counter');
+    if (honeyCounter) {
+        honeyCounter.addEventListener('click', function() {
+            showPersonalizedStats();
+        });
+    }
+}
+
+// Show personalized stats modal
+function showPersonalizedStats() {
+    const personalContent = guestPersonalization.getPersonalizedContent();
+    const guestData = guestPersonalization.getGuestData();
+    
+    const statsHTML = `
+        <div class="personalized-stats-modal">
+            <div class="stats-header">
+                <h3>🍯 Your Baby Bee Journey 🍯</h3>
+                <button class="close-stats-btn" onclick="closePersonalizedStats()">&times;</button>
+            </div>
+            <div class="stats-content">
+                <div class="stat-item">
+                    <span class="stat-icon">👋</span>
+                    <span class="stat-label">Welcome ${guestData.name || 'Guest'}!</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">📊</span>
+                    <span class="stat-label">Progress: ${personalContent.completionPercentage}%</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">🍯</span>
+                    <span class="stat-label">Honey Collected: ${guestData.honeyCollected}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">👁️</span>
+                    <span class="stat-label">Visits: ${personalContent.visitCount}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">✅</span>
+                    <span class="stat-label">Sections Completed: ${guestData.completedSections.length}/5</span>
+                </div>
+                ${personalContent.lastPrediction ? `
+                <div class="stat-item">
+                    <span class="stat-icon">🔮</span>
+                    <span class="stat-label">Latest Prediction: ${personalContent.lastPrediction}</span>
+                </div>
+                ` : ''}
+                <div class="achievements-section">
+                    <h4>🏆 Achievements</h4>
+                    <div class="achievements-list" id="achievements-list">
+                        ${generateAchievements(guestData)}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="stats-overlay" onclick="closePersonalizedStats()"></div>
+    `;
+    
+    // Remove existing modal
+    const existingModal = document.querySelector('.personalized-stats-modal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
+    // Add new modal
+    document.body.insertAdjacentHTML('beforeend', statsHTML);
+    
+    // Add styles dynamically
+    if (!document.getElementById('stats-modal-styles')) {
+        const styles = document.createElement('style');
+        styles.id = 'stats-modal-styles';
+        styles.textContent = `
+            .personalized-stats-modal {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, #fff8dc 0%, #f5deb3 100%);
+                border-radius: 20px;
+                padding: 25px;
+                max-width: 400px;
+                width: 90vw;
+                max-height: 80vh;
+                overflow-y: auto;
+                z-index: 20000;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                border: 3px solid #ffd700;
+                animation: modalSlideIn 0.3s ease;
+            }
+            
+            .stats-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(139, 69, 19, 0.8);
+                z-index: 19000;
+                backdrop-filter: blur(5px);
+            }
+            
+            @keyframes modalSlideIn {
+                from {
+                    opacity: 0;
+                    transform: translate(-50%, -60%);
+                }
+                to {
+                    opacity: 1;
+                    transform: translate(-50%, -50%);
+                }
+            }
+            
+            .stats-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+                border-bottom: 2px solid #ffd700;
+            }
+            
+            .stats-header h3 {
+                color: #8b4513;
+                font-family: 'Kalam', cursive;
+                margin: 0;
+            }
+            
+            .close-stats-btn {
+                background: #dc3545;
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 35px;
+                height: 35px;
+                font-size: 1.2rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+            }
+            
+            .close-stats-btn:hover {
+                background: #c82333;
+                transform: scale(1.1);
+            }
+            
+            .stat-item {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px;
+                margin: 8px 0;
+                background: rgba(255, 255, 255, 0.6);
+                border-radius: 10px;
+                color: #8b4513;
+                font-family: 'Open Sans', sans-serif;
+                font-weight: 500;
+            }
+            
+            .stat-icon {
+                font-size: 1.2rem;
+            }
+            
+            .achievements-section {
+                margin-top: 20px;
+                padding-top: 15px;
+                border-top: 1px solid #ffd700;
+            }
+            
+            .achievements-section h4 {
+                color: #8b4513;
+                font-family: 'Kalam', cursive;
+                margin-bottom: 10px;
+            }
+            
+            .achievements-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+        `;
+        document.head.appendChild(styles);
+    }
+}
+
+// Generate achievements based on guest data
+function generateAchievements(guestData) {
+    const achievements = [];
+    
+    if (guestData.visits >= 1) {
+        achievements.push('<div class="achievement-badge"><span class="achievement-icon">🐝</span>First Visit</div>');
+    }
+    
+    if (guestData.visits >= 3) {
+        achievements.push('<div class="achievement-badge"><span class="achievement-icon">🍯</span>Frequent Visitor</div>');
+    }
+    
+    if (guestData.rsvpSubmitted) {
+        achievements.push('<div class="achievement-badge"><span class="achievement-icon">📝</span>RSVP Master</div>');
+    }
+    
+    if (guestData.completedSections.length >= 3) {
+        achievements.push('<div class="achievement-badge"><span class="achievement-icon">🌟</span>Explorer</div>');
+    }
+    
+    if (guestData.completedSections.length === 5) {
+        achievements.push('<div class="achievement-badge"><span class="achievement-icon">👑</span>Completionist</div>');
+    }
+    
+    if (guestData.honeyCollected >= 5) {
+        achievements.push('<div class="achievement-badge"><span class="achievement-icon">🍯</span>Honey Collector</div>');
+    }
+    
+    if (guestData.honeyCollected >= 20) {
+        achievements.push('<div class="achievement-badge"><span class="achievement-icon">🏆</span>Honey Master</div>');
+    }
+    
+    if (guestData.predictions.length > 0) {
+        achievements.push('<div class="achievement-badge"><span class="achievement-icon">🔮</span>Fortune Teller</div>');
+    }
+    
+    if (achievements.length === 0) {
+        achievements.push('<div class="achievement-badge"><span class="achievement-icon">✨</span>Getting Started</div>');
+    }
+    
+    return achievements.join('');
+}
+
+// Close personalized stats modal
+function closePersonalizedStats() {
+    const modal = document.querySelector('.personalized-stats-modal');
+    const overlay = document.querySelector('.stats-overlay');
+    
+    if (modal) modal.remove();
+    if (overlay) overlay.remove();
+}
+
+// Initialize personalization system
+document.addEventListener('DOMContentLoaded', function() {
+    // Show welcome message
+    guestPersonalization.showWelcomeMessage();
+    
+    // Update personalized CTA
+    guestPersonalization.updatePersonalizedCTA();
+    
+    // Update navigation personalization
+    updateNavPersonalization();
+    
+    // Setup section tracking
+    setupSectionTracking();
+    
+    // Enhance form submissions
+    enhanceRSVPSubmission();
+    enhanceGenderPrediction();
+    
+    // Show personalized stats in console for debugging
+    const personalContent = guestPersonalization.getPersonalizedContent();
+    console.log('🍯 Guest Personalization Data:', personalContent);
+});
+
+// Update navigation when honey is collected
+function updateHoneyDisplay() {
+    const totalHoney = parseInt(localStorage.getItem('totalHoneyCollected') || '0');
+    const honeyAmount = document.getElementById('nav-honey-amount');
+    if (honeyAmount) {
+        honeyAmount.textContent = totalHoney;
+        
+        // Add bounce animation
+        honeyAmount.style.animation = 'none';
+        setTimeout(() => {
+            honeyAmount.style.animation = 'honeyBounce 0.5s ease';
+        }, 10);
+    }
+}
+
+// Add honey bounce animation
+const honeyBounceStyle = document.createElement('style');
+honeyBounceStyle.textContent = `
+    @keyframes honeyBounce {
+        0%, 20%, 60%, 100% { transform: scale(1); }
+        40% { transform: scale(1.2); }
+        80% { transform: scale(1.1); }
+    }
+`;
+document.head.appendChild(honeyBounceStyle);
+
+// Export functions for global access
+window.guestPersonalization = guestPersonalization;
+window.trackSectionView = trackSectionView;
