@@ -1021,7 +1021,7 @@ function showFunnyBeeMessage(attending, name) {
     if (attending === 'yes') {
         const yesMessages = [
             {
-                title: "You're BEE-lievable! 🐝",
+                title: "You're un-BEE-lievable! 🐝",
                 message: "We're buzzing with excitement that you'll be joining our hive! Get ready for some sweet celebrations!"
             },
             {
