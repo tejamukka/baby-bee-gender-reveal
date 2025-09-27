@@ -147,48 +147,140 @@ function openPostcard() {
 
 // Function to open the main invitation
 function openInvitation() {
-    console.log('Opening invitation with envelope closing animation');
+    console.log('Opening invitation with honey bee magic');
     const postcardOverlay = document.getElementById('postcard-overlay');
     const mainNavbar = document.getElementById('main-navbar');
+    const heroSection = document.getElementById('home');
     
     if (!postcardOverlay || !mainNavbar) {
         console.log('Elements not found for invitation opening');
         return;
     }
     
-    // Mobile-specific handling
-    const isMobile = window.innerWidth <= 768;
-    if (isMobile) {
-        console.log('Mobile device - using optimized animation');
-        // Ensure proper mobile sizing before animation
-        postcardOverlay.style.height = '100vh';
-        postcardOverlay.style.width = '100vw';
+    // Add honey bee magic to button
+    const openBtn = document.querySelector('.open-invitation-btn');
+    if (openBtn) {
+        openBtn.style.opacity = '0.8';
+        openBtn.style.transform = 'scale(0.95)';
+        openBtn.textContent = '🍯 Buzzing...';
     }
+    
+    // Create honey drip particles
+    createHoneyDrips();
+    
+    // Create floating bees during transition
+    createTransitionBees();
     
     // Start the envelope closing animation
     postcardOverlay.classList.add('closing');
     
-    // Show main navbar and content after animation starts
+    // Create honey-themed transition overlay
+    const honeyOverlay = document.createElement('div');
+    honeyOverlay.className = 'honey-transition-overlay';
+    document.body.appendChild(honeyOverlay);
+    
+    // Quick transition - show main content faster
     setTimeout(() => {
+        // Prepare main content
         mainNavbar.style.display = 'block';
+        mainNavbar.style.opacity = '0';
+        mainNavbar.style.transform = 'translateY(-15px)';
         
-        // Fade in the main content
+        if (heroSection) {
+            heroSection.style.opacity = '0';
+            heroSection.style.transform = 'translateY(15px)';
+        }
+        
+        // Fade in honey overlay
+        honeyOverlay.style.opacity = '1';
+        
+        // Quick reveal of main content
         setTimeout(() => {
+            mainNavbar.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            mainNavbar.style.opacity = '1';
+            mainNavbar.style.transform = 'translateY(0)';
             mainNavbar.classList.add('visible');
+            
+            if (heroSection) {
+                heroSection.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+                heroSection.style.opacity = '1';
+                heroSection.style.transform = 'translateY(0)';
+            }
+            
+            // Remove honey overlay quickly
+            setTimeout(() => {
+                honeyOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    if (document.body.contains(honeyOverlay)) {
+                        document.body.removeChild(honeyOverlay);
+                    }
+                }, 300);
+            }, 500);
+            
+        }, 100);
+        
+        // Quick scroll to top
+        setTimeout(() => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }, 200);
         
-        // Scroll to top of main content
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }, 300);
+    }, 200);
     
-    // Hide postcard overlay after animation completes
+    // Hide postcard overlay quickly
     setTimeout(() => {
         postcardOverlay.style.display = 'none';
         postcardOverlay.classList.remove('closing');
-    }, 1200);
+        
+        // Reset button state
+        if (openBtn) {
+            openBtn.style.opacity = '1';
+            openBtn.style.transform = 'scale(1)';
+            openBtn.textContent = 'Open the Invitation';
+        }
+    }, 800);
+}
+
+// Create honey drip particles during transition
+function createHoneyDrips() {
+    for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+            const drip = document.createElement('div');
+            drip.className = 'honey-drip-transition';
+            drip.style.left = Math.random() * window.innerWidth + 'px';
+            drip.style.animationDelay = Math.random() * 0.5 + 's';
+            document.body.appendChild(drip);
+            
+            setTimeout(() => {
+                if (document.body.contains(drip)) {
+                    document.body.removeChild(drip);
+                }
+            }, 2000);
+        }, i * 100);
+    }
+}
+
+// Create floating bees during transition
+function createTransitionBees() {
+    for (let i = 0; i < 3; i++) {
+        setTimeout(() => {
+            const bee = document.createElement('div');
+            bee.className = 'transition-bee';
+            bee.textContent = '🐝';
+            bee.style.left = Math.random() * window.innerWidth + 'px';
+            bee.style.top = Math.random() * window.innerHeight + 'px';
+            bee.style.animationDelay = Math.random() * 0.3 + 's';
+            document.body.appendChild(bee);
+            
+            setTimeout(() => {
+                if (document.body.contains(bee)) {
+                    document.body.removeChild(bee);
+                }
+            }, 1500);
+        }, i * 200);
+    }
 }
 
 // Function to show the postcard story (for "Back to Our Story" button)
@@ -249,6 +341,7 @@ function showTravelLocations() {
     }
 }
 
+
 function closeTravelLocations() {
     const modal = document.getElementById('travel-modal');
     if (modal) {
@@ -286,6 +379,193 @@ function selectAttendance(value) {
         hiddenInput.value = value;
     }
 }
+
+// Function to handle gender prediction selection
+function selectGender(value) {
+    // Remove selected class from all gender buttons
+    document.querySelectorAll('.gender-btn').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+    
+    // Add selected class to clicked button
+    const selectedBtn = document.querySelector(`.gender-${value}`);
+    if (selectedBtn) {
+        selectedBtn.classList.add('selected');
+    }
+    
+    // Set the hidden input value
+    const hiddenInput = document.getElementById('gender-prediction');
+    if (hiddenInput) {
+        hiddenInput.value = value;
+    }
+    
+    // Show dress code message based on selection
+    let message = '';
+    switch(value) {
+        case 'boy':
+            message = '🐝 Great choice! Don\'t forget to wear yellow to support our buzzing boy!';
+            break;
+        case 'girl':
+            message = '👑 Perfect! Remember to wear pink to support our queen bee!';
+            break;
+        case 'surprise':
+            message = '🍯 Sweet! Either way, our little honey bee will be perfect!';
+            break;
+    }
+    
+    // Show notification
+    if (message) {
+        showNotification(message);
+    }
+}
+
+// Function to add event to calendar
+function addToCalendar() {
+    // Find the AddEvent button and trigger it
+    const addEventBtn = document.querySelector('.addeventatc');
+    if (addEventBtn) {
+        addEventBtn.click();
+    } else {
+        // Fallback: create a temporary AddEvent button
+        const tempBtn = document.createElement('div');
+        tempBtn.className = 'addeventatc';
+        tempBtn.title = 'Add to Calendar';
+        tempBtn.innerHTML = 'Add to Calendar';
+        
+        // Add the required spans for AddEvent
+        const startSpan = document.createElement('span');
+        startSpan.className = 'start';
+        startSpan.textContent = '10/25/2025 11:00 AM';
+        
+        const endSpan = document.createElement('span');
+        endSpan.className = 'end';
+        endSpan.textContent = '10/25/2025 02:00 PM';
+        
+        const timezoneSpan = document.createElement('span');
+        timezoneSpan.className = 'timezone';
+        timezoneSpan.textContent = 'America/Los_Angeles';
+        
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'title';
+        titleSpan.textContent = 'Baby Bee Gender Reveal Party';
+        
+        const descriptionSpan = document.createElement('span');
+        descriptionSpan.className = 'description';
+        descriptionSpan.textContent = 'Join Teja & Supraja for their gender reveal celebration! What will baby bee? 🐝';
+        
+        const locationSpan = document.createElement('span');
+        locationSpan.className = 'location';
+        locationSpan.textContent = '6565 Scenery Ct, San Jose, CA 95120';
+        
+        const organizerSpan = document.createElement('span');
+        organizerSpan.className = 'organizer';
+        organizerSpan.textContent = 'Teja & Supraja';
+        
+        const organizerEmailSpan = document.createElement('span');
+        organizerEmailSpan.className = 'organizer_email';
+        organizerEmailSpan.textContent = 'tejamukka@gmail.com';
+        
+        tempBtn.appendChild(startSpan);
+        tempBtn.appendChild(endSpan);
+        tempBtn.appendChild(timezoneSpan);
+        tempBtn.appendChild(titleSpan);
+        tempBtn.appendChild(descriptionSpan);
+        tempBtn.appendChild(locationSpan);
+        tempBtn.appendChild(organizerSpan);
+        tempBtn.appendChild(organizerEmailSpan);
+        
+        // Add to body temporarily and click
+        document.body.appendChild(tempBtn);
+        tempBtn.click();
+        document.body.removeChild(tempBtn);
+    }
+}
+
+// Fun Facts Carousel for Event Details
+let currentFunFact = 1;
+const totalFunFacts = 5;
+
+function nextFunFact() {
+    currentFunFact++;
+    if (currentFunFact > totalFunFacts) {
+        currentFunFact = 1;
+    }
+    showFunFact(currentFunFact);
+}
+
+function previousFunFact() {
+    currentFunFact--;
+    if (currentFunFact < 1) {
+        currentFunFact = totalFunFacts;
+    }
+    showFunFact(currentFunFact);
+}
+
+function showFunFact(factNumber) {
+    // Hide all facts
+    for (let i = 1; i <= totalFunFacts; i++) {
+        const fact = document.getElementById(`funFact${i}`);
+        const dot = document.querySelector(`.fun-fact-indicator .dot:nth-child(${i})`);
+        if (fact) fact.classList.remove('active');
+        if (dot) dot.classList.remove('active');
+    }
+    
+    // Show current fact
+    const currentFact = document.getElementById(`funFact${factNumber}`);
+    const currentDot = document.querySelector(`.fun-fact-indicator .dot:nth-child(${factNumber})`);
+    if (currentFact) currentFact.classList.add('active');
+    if (currentDot) currentDot.classList.add('active');
+    
+    currentFunFact = factNumber;
+}
+
+// Auto-advance fun facts
+setInterval(() => {
+    nextFunFact();
+}, 4000);
+
+// RSVP Facts Carousel
+let currentRSVPFact = 1;
+const totalRSVPFacts = 5;
+
+function nextRSVPFact() {
+    currentRSVPFact++;
+    if (currentRSVPFact > totalRSVPFacts) {
+        currentRSVPFact = 1;
+    }
+    showRSVPFact(currentRSVPFact);
+}
+
+function previousRSVPFact() {
+    currentRSVPFact--;
+    if (currentRSVPFact < 1) {
+        currentRSVPFact = totalRSVPFacts;
+    }
+    showRSVPFact(currentRSVPFact);
+}
+
+function showRSVPFact(factNumber) {
+    // Hide all facts
+    for (let i = 1; i <= totalRSVPFacts; i++) {
+        const fact = document.getElementById(`rsvpFact${i}`);
+        const dot = document.querySelector(`[data-fact="${i}"]`);
+        if (fact) fact.classList.remove('active');
+        if (dot) dot.classList.remove('active');
+    }
+    
+    // Show current fact
+    const currentFact = document.getElementById(`rsvpFact${factNumber}`);
+    const currentDot = document.querySelector(`[data-fact="${factNumber}"]`);
+    if (currentFact) currentFact.classList.add('active');
+    if (currentDot) currentDot.classList.add('active');
+    
+    currentRSVPFact = factNumber;
+}
+
+// Auto-advance RSVP facts
+setInterval(() => {
+    nextRSVPFact();
+}, 4000);
 
 // Floating particles removed for now to fix click issues
 
@@ -1130,3 +1410,93 @@ if ('ontouchstart' in window) {
         });
     });
 }
+
+// Gender Prediction Poll Function
+function selectPollOption(option) {
+    // Remove selected class from all options
+    document.querySelectorAll('.poll-option').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+    
+    // Add selected class to clicked option
+    event.target.closest('.poll-option').classList.add('selected');
+    
+    // Show a fun message based on selection
+    let message = '';
+    switch(option) {
+        case 'boy':
+            message = '🐝 Buzzing boy it is! Can\'t wait to meet our little drone bee!';
+            break;
+        case 'girl':
+            message = '👑 Queen bee vibes! Our little princess will rule the hive!';
+            break;
+        case 'surprise':
+            message = '🍯 Sweet surprise! Either way, our little bee will be perfect!';
+            break;
+    }
+    
+    // Show notification
+    showNotification(message);
+    
+    // Optional: Store the selection (you could send this to a server)
+    localStorage.setItem('genderPrediction', option);
+}
+
+// Baby Facts Carousel
+let currentBabyFact = 0;
+const totalBabyFacts = 6;
+
+function nextBabyFact() {
+    currentBabyFact++;
+    if (currentBabyFact >= totalBabyFacts) {
+        currentBabyFact = 0;
+    }
+    showBabyFact(currentBabyFact);
+}
+
+function previousBabyFact() {
+    currentBabyFact--;
+    if (currentBabyFact < 0) {
+        currentBabyFact = totalBabyFacts - 1;
+    }
+    showBabyFact(currentBabyFact);
+}
+
+function showBabyFact(index) {
+    // Hide all slides
+    document.querySelectorAll('.carousel-slide').forEach(slide => {
+        slide.classList.remove('active');
+    });
+    
+    // Show current slide
+    const slides = document.querySelectorAll('.carousel-slide');
+    if (slides[index]) {
+        slides[index].classList.add('active');
+    }
+    
+    // Update dots
+    document.querySelectorAll('.dot').forEach(dot => {
+        dot.classList.remove('active');
+    });
+    
+    const dots = document.querySelectorAll('.dot');
+    if (dots[index]) {
+        dots[index].classList.add('active');
+    }
+    
+    currentBabyFact = index;
+}
+
+// Auto-advance baby facts carousel
+setInterval(() => {
+    nextBabyFact();
+}, 5000);
+
+// Add click handlers for dots
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.dot').forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            showBabyFact(index);
+        });
+    });
+});
