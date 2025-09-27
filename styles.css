@@ -2641,7 +2641,9 @@ input:hover, textarea:hover, select:hover {
         touch-action: manipulation;
         overflow: hidden;
         height: 100vh;
+        height: 100dvh; /* Dynamic viewport height for better mobile support */
         width: 100vw;
+        width: 100dvw; /* Dynamic viewport width for better mobile support */
         position: fixed;
         top: 0;
         left: 0;
@@ -2658,10 +2660,13 @@ input:hover, textarea:hover, select:hover {
     
     .postcard {
         width: 100vw;
+        width: 100dvw; /* Dynamic viewport width */
         height: 100vh;
+        height: 100dvh; /* Dynamic viewport height */
         max-width: none;
         max-height: none;
         min-height: 100vh;
+        min-height: 100dvh; /* Dynamic viewport height */
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         display: flex;
@@ -4419,6 +4424,32 @@ section {
     
     .bee {
         font-size: 1.5rem;
+    }
+}
+
+/* iPhone Pro Max and larger mobile screens */
+@media (max-width: 430px) and (min-height: 900px) {
+    .postcard-overlay {
+        height: 100vh;
+        height: 100dvh;
+        width: 100vw;
+        width: 100dvw;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10000;
+        overflow: hidden;
+    }
+    
+    .postcard {
+        width: 100vw;
+        width: 100dvw;
+        height: 100vh;
+        height: 100dvh;
+        min-height: 100vh;
+        min-height: 100dvh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 }
 

@@ -147,11 +147,7 @@ function openPostcard() {
         postcard.classList.add('open');
         console.log('Postcard opened');
         
-        // Auto-navigate to invitation after 10 seconds
-        setTimeout(() => {
-            console.log('Auto-navigating to invitation after 10 seconds');
-            openInvitation();
-        }, 10000);
+        // Auto-navigation removed - users can manually click to continue
         
     }, 300);
 }
