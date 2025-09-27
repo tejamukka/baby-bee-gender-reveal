@@ -62,26 +62,26 @@
     left: 100%;
 }
 
-/* Bee Cursor Theme */
-body {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="24" font-size="24">🐝</text></svg>'), auto;
+/* Bee Cursor Theme - Enhanced with proper encoding */
+* {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4='), auto !important;
 }
 
 /* Interactive elements with special bee cursor */
-button, a, .clickable, .carousel-btn, .gender-btn, .open-invitation-btn, .cta-button {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="24" font-size="24">🐝</text></svg>'), pointer;
+button, a, .clickable, .carousel-btn, .gender-btn, .open-invitation-btn, .cta-button, .nav-link, .instagram-link {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4='), pointer !important;
 }
 
 /* Hover effects for bee cursor */
-button:hover, a:hover, .clickable:hover, .carousel-btn:hover, .gender-btn:hover, .open-invitation-btn:hover, .cta-button:hover {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="24" font-size="28">🐝</text></svg>'), pointer;
+button:hover, a:hover, .clickable:hover, .carousel-btn:hover, .gender-btn:hover, .open-invitation-btn:hover, .cta-button:hover, .nav-link:hover, .instagram-link:hover {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyOCIgZmlsbD0iI2Q0YTU3NCI+8J+QvTwvdGV4dD48L3N2Zz4='), pointer !important;
     transform: scale(1.02);
     transition: transform 0.2s ease;
 }
 
 /* Special bee cursor for active states */
-button:active, .cta-button:active, .open-invitation-btn:active {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="24" font-size="26">🍯</text></svg>'), pointer;
+button:active, .cta-button:active, .open-invitation-btn:active, .gender-btn:active {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNiIgZmlsbD0iI2ZmOGMwMCI+8J+QvzwvdGV4dD48L3N2Zz4='), pointer !important;
 }
 
 /* Bee cursor for text selection */
@@ -92,12 +92,53 @@ button:active, .cta-button:active, .open-invitation-btn:active {
 
 /* Bee cursor for input fields */
 input, textarea, select {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="24" font-size="24">✏️</text></svg>'), text;
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+4p2U8J+QvTwvdGV4dD48L3N2Zz4='), text !important;
+}
+
+/* Specific RSVP form cursor fixes */
+.rsvp-form input, .rsvp-form textarea, .rsvp-form select {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+4p2U8J+QvTwvdGV4dD48L3N2Zz4='), text !important;
+}
+
+.rsvp-form input:focus, .rsvp-form textarea:focus, .rsvp-form select:focus {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+4p2U8J+QvTwvdGV4dD48L3N2Zz4='), text !important;
+}
+
+.rsvp-form input:hover, .rsvp-form textarea:hover, .rsvp-form select:hover {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+4p2U8J+QvTwvdGV4dD48L3N2Zz4='), text !important;
+}
+
+/* RSVP form labels and buttons */
+.rsvp-form label, .rsvp-form button, .rsvp-form .form-group {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4='), pointer !important;
+}
+
+/* Gender poll buttons specific fix */
+.gender-poll-buttons .gender-btn {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4='), pointer !important;
+}
+
+.gender-poll-buttons .gender-btn:hover {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyOCIgZmlsbD0iI2Q0YTU3NCI+8J+QvTwvdGV4dD48L3N2Zz4='), pointer !important;
+}
+
+.gender-poll-buttons .gender-btn:active {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNiIgZmlsbD0iI2ZmOGMwMCI+8J+QvzwvdGV4dD48L3N2Zz4='), pointer !important;
 }
 
 /* Special bee cursor for links */
 a[href] {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="24" font-size="24">🔗</text></svg>'), pointer;
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+4p2U8J+QvTwvdGV4dD48L3N2Zz4='), pointer !important;
+}
+
+/* Ensure bee cursor on all interactive elements */
+[onclick], [role="button"], .btn, .button, .link, .clickable-element {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4='), pointer !important;
+}
+
+/* Override any conflicting cursor styles */
+*:not(input):not(textarea):not(select) {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48dGV4dCB5PSIyNCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzhmNDUxMyI+8J+QvTwvdGV4dD48L3N2Zz4='), auto !important;
 }
 
 /* Honey Transition Overlay */
@@ -2160,9 +2201,10 @@ a[href] {
     .postcard-overlay {
         -webkit-overflow-scrolling: touch;
         touch-action: manipulation;
+        overflow-y: auto;
     }
     
-    .envelope, .postcard {
+    .envelope {
         width: 90vw;
         max-width: 350px;
         height: 70vh;
@@ -2170,8 +2212,19 @@ a[href] {
         min-height: 250px;
     }
     
+    .postcard {
+        width: 100vw;
+        height: 100vh;
+        max-width: none;
+        max-height: none;
+        min-height: 100vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
     .postcard-header {
         padding: 12px 15px 8px 15px;
+        flex-shrink: 0;
     }
     
     .postcard-title {
@@ -2181,9 +2234,10 @@ a[href] {
     .journey-content {
         padding: 15px;
         gap: 12px;
-        max-height: 60vh;
+        flex: 1;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        min-height: 0;
     }
     
     .journey-item {
@@ -2238,6 +2292,16 @@ a[href] {
         padding: 3px 8px;
         top: 6px;
         right: 6px;
+    }
+    
+    .postcard-footer {
+        padding: 20px 15px;
+        flex-shrink: 0;
+    }
+    
+    .open-invitation-btn {
+        padding: 12px 24px;
+        font-size: 14px;
     }
     
     .wax-seal {
